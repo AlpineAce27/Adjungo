@@ -1,0 +1,42 @@
+[
+  {
+    "company": "Roofers United",
+    "login": "client1",
+    "password": "client1",
+    "website": "www.RoofersUnited.com",
+    "contactEmail": "inquire@RoofersUnited.com",
+    "contactPhone": "1-800-555-1111",
+    "companyBio": "This is a company bio for a fake roofing company.",
+    "individual": "false"
+  },
+  {
+    "company": "Scanners Inc",
+    "login": "client2",
+    "password": "client2",
+    "website": "www.ScannersIncorporated.com",
+    "contactEmail": "inquire@Scanner.com",
+    "contactPhone": "1-800-555-2222",
+    "companyBio": "This is a company bio for a fake scanninga company.",
+    "individual": "false"
+  },
+  {
+    "company": "JS Films",
+    "login": "client3",
+    "password": "client3",
+    "website": null,
+    "contactEmail": "js@gmail.com",
+    "contactPhone": "1-800-555-3333",
+    "companyBio": "My name is Jack Smith and I make short films.",
+    "individual": "true"
+  },
+  {
+    "company": "Big Oil",
+    "login": "client4",
+    "password": "client4",
+    "website": "www.bigoilconglomrate.com",
+    "contactEmail": "regionUT@bigoilcon.com",
+    "contactPhone": "1-800-555-4444",
+    "companyBio": ".",
+    "individual": "true"
+  }
+]

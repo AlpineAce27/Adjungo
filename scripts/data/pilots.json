@@ -1,0 +1,42 @@
+[
+    {
+      "fname": "Xavier",
+      "lname": "Hobbs",
+      "login": "pilot1",
+      "password": "pilot1",
+      "contactEmail": "XHobss@gmail.com",
+      "contactPhone": "1-800-555-2111",
+      "bio": "My name is Xavier and I'm a novice drone pilot.",
+      "part107Cert": 1452084
+    },
+    {
+     "fname": "Charlie",
+      "lname": "Charleston",
+      "login": "pilot2",
+      "password": "pilot2",
+      "contactEmail": "CharChar@gmail.com",
+      "contactPhone": "1-800-555-3111",
+      "bio": "My name is Charlie and I'm an experienced drone pilot.",
+      "part107Cert": 2432689
+    },
+    {
+     "fname": "Jebediah",
+      "lname": "Karman",
+      "login": "pilot3",
+      "password": "pilot3",
+      "contactEmail": "JK@KSC.com",
+      "contactPhone": "1-800-555-4111",
+      "bio": "Hi, I'm jeb, I tend to crash a lot.",
+      "part107Cert": 1649182
+    },
+    {
+      "fname": "Isaac",
+      "lname": "Fredrickson",
+      "login": "pilot4",
+      "password": "pilot4",
+      "contactEmail": "IFredrickson@yahoo.com",
+      "contactPhone": "1-800-555-5111",
+      "bio": "My name is Isaac, I have a wealth of drone exprience includeing a drone degree, 2000 flight hours, and 1000 maintenanc hours.",
+      "part107Cert": 3473204
+    }
+  ]

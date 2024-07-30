@@ -1,0 +1,50 @@
+[
+  {
+    "reviewedPilot": 1,
+    "clientReviewing": 1,
+    "reviewContent": "Xavier has been great to work with.",
+    "pilotRating": 4.5
+  },
+  {
+    "reviewedPilot": 1,
+    "clientReviewing": 3,
+    "reviewContent": "While Xavier is rather new, he makes up for it with professionalism and persistence.",
+    "pilotRating": 4.2
+  },
+  {
+    "reviewedPilot": 2,
+    "clientReviewing": 2,
+    "reviewContent": "Charlie is an excellent pilot and is always very professional.",
+    "pilotRating": 5.0
+  },
+  {
+    "reviewedPilot": 2,
+    "clientReviewing": 4,
+    "reviewContent": "Charlie always knows exactly whats supposed to happen, his extensive experience makes him reliable.",
+    "pilotRating": 4.2
+  },
+  {
+    "reviewedPilot": 3,
+    "clientReviewing": 2,
+    "reviewContent": "This guy crashed our drone, and then got upset at us for yelling. Wouldn't recommend him.",
+    "pilotRating": 0.4
+  },
+  {
+    "reviewedPilot": 3,
+    "clientReviewing": 4,
+    "reviewContent": "Jeb is a menace. He flies like he's in a drone race. While he IS fast, I don't think he's very safe.",
+    "pilotRating": 1.3
+  },
+  {
+    "reviewedPilot": 4,
+    "clientReviewing": 2,
+    "reviewContent": "Isaac is a little older, but that makes him really patient and he's got alot of experience.",
+    "pilotRating": 3.5
+  },
+  {
+    "reviewedPilot": 4,
+    "clientReviewing": 1,
+    "reviewContent": "Isaac great. He's took a little longer than other pilots, but he still gets the job done.",
+    "pilotRating": 4.2
+  }
+]

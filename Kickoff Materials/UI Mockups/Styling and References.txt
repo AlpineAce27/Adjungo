@@ -1,0 +1,11 @@
+colors: https://coolors.co/283b36-dadada-08bfa1-bdf3e7-ffffff
+
+Big font: "Industrial" https://modernfontstacks.com/
+
+font-family: Bahnschrift, 'DIN Alternate', 'Franklin Gothic Medium', 'Nimbus Sans Narrow', sans-serif-condensed, sans-serif;
+font-weight: 500;
+
+Small Font: "System UI" https://modernfontstacks.com/
+
+font-family: system-ui, sans-serif;
+font-weight: 300;

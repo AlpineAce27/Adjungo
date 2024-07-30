@@ -1,0 +1,80 @@
+[
+  {
+    "reviewedClient": 1,
+    "pilotReviewing": 1,
+    "reviewContent": "Roofers United has been great to work with.",
+    "clientRating": 4.5
+  },
+  {
+    "reviewedClient": 1,
+    "pilotReviewing": 2,
+    "reviewContent": "They were nice, but I they're instructions could be clearer",
+    "clientRating": 3.7
+  },
+  {
+    "reviewedClient": 1,
+    "pilotReviewing": 3,
+    "reviewContent": "I crashed their drone, luckily they had a backup! Although I could do without the yelling.",
+    "clientRating": 3.0
+  },
+  {
+    "reviewedClient": 1,
+    "pilotReviewing": 4,
+    "reviewContent": "Roofers United has been absolutely perfect, great instructions, very professional, and alwasy answered my questions",
+    "clientRating": 5.0
+  },
+  {
+    "reviewedClient": 2,
+    "pilotReviewing": 1,
+    "reviewContent": "Scanners has been great to work with.",
+    "clientRating": 4.7
+  },
+  {
+    "reviewedClient": 2,
+    "pilotReviewing": 2,
+    "reviewContent": "They were nice, but I they're instructions could be clearer",
+    "clientRating": 3.7
+  },
+  {
+    "reviewedClient": 2,
+    "pilotReviewing": 3,
+    "reviewContent": "I crashed their drone, luckily they had a backup! Although I could do without the yelling.",
+    "clientRating": 1.2
+  },
+  {
+    "reviewedClient": 2,
+    "pilotReviewing": 4,
+    "reviewContent": "Scanners has been absolutely perfect, great instructions, very professional, and alwasy answered my questions",
+    "clientRating": 4.9
+  },
+  {
+    "reviewedClient": 1,
+    "pilotReviewing": 4,
+    "reviewContent": "Roofers United has been absolutely perfect, great instructions, very professional, and alwasy answered my questions",
+    "clientRating": 5.0
+  },
+  {
+    "reviewedClient": 3,
+    "pilotReviewing": 1,
+    "reviewContent": "Jack has been great to work with.",
+    "clientRating": 4.7
+  },
+  {
+    "reviewedClient": 3,
+    "pilotReviewing": 2,
+    "reviewContent": "JS Films is great, he's a chill guy with some really cool films and is awesome to work with",
+    "clientRating": 5.0
+  },
+  {
+    "reviewedClient": 4,
+    "pilotReviewing": 3,
+    "reviewContent": "This was my first job I DIDN'T crash a drone! They were very complimentary of my piloting skills.",
+    "clientRating": 4.5
+  },
+  {
+    "reviewedClient": 4,
+    "pilotReviewing": 4,
+    "reviewContent": "Big Oil is the opitome of 'too big to fail', it feels like working with the DMV, and it seemed like no one knew exactly who was in charge.",
+    "clientRating": 2.3
+  }
+]
