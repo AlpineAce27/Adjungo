@@ -5,12 +5,10 @@ import { useDispatch, useSelector } from "react-redux"
 import { NavLink, Outlet } from "react-router-dom"
 //import { connect } from 'react-redux'
 
-let usertype = await axios.get("api/auth").then(res => {
-  usertype = res.data.userType
-})
 
 function App() {
-  
+  let usertype = useSelector(state=> state.userType)
+  console.log(usertype)
   return (
     <>
     { usertype !== 'client' && usertype !== 'pilot' && <nav> 
