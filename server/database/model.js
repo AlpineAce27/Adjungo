@@ -147,11 +147,11 @@ Listing.init(
       allowNull: true,
     },
     hardwareProvided: {
-      type: DataTypes.STRING,
+      type: DataTypes.BOOLEAN,
       allowNull: true,
     },
     softwareProvided: {
-      type: DataTypes.STRING,
+      type: DataTypes.BOOLEAN,
       allowNull: true,
     },
     description: {

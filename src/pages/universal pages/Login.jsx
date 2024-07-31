@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import GreenButton from "../../components/GreenButton";
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import axios from "axios"
+import GreenButton from "../../components/GreenButton"
 
 function Login() {
   const [ClientUsername, setClientUsername] = useState("ClientUserName")
@@ -11,32 +11,39 @@ function Login() {
   const [PilotPassword, setPilotPassword] = useState("PilotPassword")
 
   const dispatch = useDispatch()
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const handleClientLogin = () => {
-      axios.post("api/auth", {
+    axios
+      .post("api/auth", {
         userType: "client",
         enteredLogin: ClientUsername,
         enteredPassword: ClientPassword,
-      }).then((response) => {
-        dispatch({ type: "LOGIN", payload: { userType: "client", userId: response.data.userId } })
+      })
+      .then((response) => {
+        dispatch({
+          type: "LOGIN",
+          payload: { userType: "client", userId: response.data.userId },
+        })
         navigate("/clientHome")
         console.log("Client logged in, redirected the user to client homepage")
       })
   }
 
   const handlePilotLogin = () => {
-    
-      axios.post("api/auth", {
+    axios.post("api/auth", {
         userType: "pilot",
         enteredLogin: PilotUsername,
         enteredPassword: PilotPassword,
-      }).then((response) => {
-        dispatch({ type: "LOGIN", payload: { userType: "pilot", userId: response.data.userId } })
+      })
+      .then((response) => {
+        dispatch({
+          type: "LOGIN",
+          payload: { userType: "pilot", userId: response.data.userId },
+        })
         navigate("/pilotHome")
         console.log("redirected the user to pilot homepage")
       })
-    
   }
 
   return (
