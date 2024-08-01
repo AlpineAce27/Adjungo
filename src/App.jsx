@@ -1,40 +1,61 @@
 import "./App.css"
-import axios from "axios"
-import { useState } from "react"
-import { useSelector } from "react-redux"
-import { NavLink, Outlet } from "react-router-dom"
-//import { connect } from 'react-redux'
+import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider,} from "react-router-dom"
+//imort universal pages
+import Home from "./pages/universal pages/Home.jsx"
+import About from "./pages/universal pages/About.jsx"
+import Login from "./pages/universal pages/Login.jsx"
+import Register from "./pages/universal pages/Register.jsx"
+import Listings from "./pages/universal pages/Listings.jsx"
+import ErrorPage from "./pages/universal pages/ErrorPage.jsx"
+import Welcome from "./pages/universal pages/Welcome.jsx"
+//import client pages
+import ClientHome from "./pages/client pages/ClientHome.jsx"
+import MyListings from "./pages/client pages/MyListings.jsx"
+import ClientAccount from "./pages/client pages/ClientAccount.jsx"
+import ClientApplications from "./pages/client pages/ClientApplications.jsx"
+import ClientSingleListing from "./pages/client pages/ClientSingleListing.jsx"
+import ClientReviews from "./pages/client pages/ClientReviews.jsx"
+import NewListing from "./pages/client pages/NewListing.jsx"
+import getOneListing from "./functions/getOneListing.js"
+//import pilot pages
+import PilotHome from "./pages/pilot pages/PilotHome.jsx"
+import PilotAccount from "./pages/pilot pages/PilotAccount.jsx"
+import PilotApplications from "./pages/pilot pages/PilotApplications.jsx"
+import PilotJobs from "./pages/pilot pages/PilotJobs.jsx"
+import PilotSingleListing from "./pages/pilot pages/PilotSingleListing.jsx"
+import PilotReviews from "./pages/pilot pages/PilotReviews.jsx"
 
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<Home/>} errorElement={<ErrorPage/>}>
+      {/* unauth routes */}
+      <Route index element={<Welcome />} />
+      <Route path="/listings" element={<Listings />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/register" element={<Register />} />
+      {/* client routes */}
+      <Route path="/clientHome" element={<ClientHome />}/>
+      <Route path="/myListings" element={<MyListings />}/>
+      <Route path="/clientAccount" element={<ClientAccount />}/>
+      <Route path="/clientApplications" element={<ClientApplications />}/>
+      {/* the loader automatically grabs the params object as an argument */}
+      <Route path="/clientListings/:listingId" element={<ClientSingleListing/>} loader={getOneListing} />
+      <Route path="/clientReviews" element={<ClientReviews />}/>
+      <Route path="/newListing" element={<NewListing />}/>
+      {/* pilot routes */}
+      <Route path="/pilotHome" element={<PilotHome />}/>
+      <Route path="/pilotAccount" element={<PilotAccount />}/>
+      <Route path="/pilotApplications" element={<PilotApplications />}/>
+      <Route path="/pilotJobs" element={<PilotJobs />}/>
+      <Route path="/pilotListings/:id" element={<PilotSingleListing />} />
+      <Route path="/pilotReviews" element={<PilotReviews />}/>
+    </Route>
+  )
+)
 
 function App() {
-  let usertype = useSelector(state=> state.userType)
-  console.log(usertype)
-  return (
-    <>
-    { usertype !== 'client' && usertype !== 'pilot' && <nav> 
-          <NavLink to="/">Home </NavLink>
-          <NavLink to="/login">Login </NavLink>
-          <NavLink to="/listings">Listings </NavLink>
-          <NavLink to="/about">About </NavLink>
-    </nav>} 
-    {usertype === 'pilot' && <nav>
-        <NavLink to="/pilotHome">Home </NavLink>
-        <NavLink to="/pilotApplications">My Applications </NavLink>
-        <NavLink to="/PilotJobs">My Jobs </NavLink>
-        <NavLink to="/listings">Listings </NavLink>
-        <NavLink to="/pilotAccount">My Account </NavLink>
-  </nav>}
-  {usertype === 'client' && <nav>
-        <NavLink to="/">Home </NavLink>
-        <NavLink to="/myListings">My Listings </NavLink>
-        <NavLink to="/clientApplications">My Applications </NavLink>
-        <NavLink to="/clientAccount">My Account </NavLink>
-  </nav>}
-
-    <Outlet />
-  </>
-  )
-  
+  return <RouterProvider router={router} />
 }
 
 export default App

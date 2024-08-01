@@ -18,7 +18,4 @@ const initalState = {
                 return state
         }
     }
-
-    // reducer({ type: "LOGIN", payload: { userType: "client", userId: 1 } }) //log in action
-    // reducer({ type: "LOGOUT" }) //log out action
     export default reducer

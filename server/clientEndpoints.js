@@ -2,6 +2,7 @@ import { Listing, Pilot, Application, PilotReview } from "./database/model.js"
 
 //return all listings with a specific client id
 export const getListingsByClient = async (req, res) => {
+  console.log(req.session)
   if (!req.session.userId) {
     res.status(401).json({ error: "Unauthorized" })
   } else {

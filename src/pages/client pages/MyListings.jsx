@@ -1,30 +1,41 @@
-import { NavLink } from "react-router-dom"
+import { NavLink, Link } from "react-router-dom"
 import axios from "axios"
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux";
 
 function MyListings() {
+  //grabbing the usertype from redux store
   let usertype = useSelector((state) => state.userType)
+  //create a state value for an array of listings
+  const [listings, setListings] = useState([])
+  //check if the user is a client
+
+
+  //if they are a client, 
   if (usertype === "client") {
-    const [listings, setListings] = useState([])
+    //if they are, grab listings where the client id matches the user
     useEffect(() => {
       axios.get("/api/mylistings").then((response) => {
         setListings(response.data)
       })
     }, [])
 
-    //console.log(listings)
-
+    //create an array of listings mapped to the axios response 
     const listingsItems = listings.map((listing) => {
+
+      //change true/false/null to more readable strings
+      //change "assigned pilot"
       if (listing.assignedPilot === null) {
         listing.assignedPilot = "None"
       }
+      //change "hardware provided"
       let hardwareProvided
       if (listing.hardwareProvided === true) {
         hardwareProvided = "Yes"
       } else {
         hardwareProvided = "No"
       }
+      //change "software provided"
       let softwareProvided
       if (listing.softwareProvided === true) {
         softwareProvided = "Yes"
@@ -32,19 +43,20 @@ function MyListings() {
         softwareProvided = "No"
       }
 
+      //create a table row with each variable in the correct spot
       return (
         <tr key={listing.listingId}>
           <td>
-            <NavLink to={`/clientListings/${listing.listingId}`}>
+            <Link to={`/clientListings/${listing.listingId}`}>
               {listing.listingId}
-            </NavLink>
+            </Link>
           </td>
           <td>
-            <NavLink to={`/clientAccount`}></NavLink>
+            <Link to={`/clientAccount`}></Link>
             {listing.clientId}
           </td>
           <td>
-            <NavLink to={`/pilotProfile/${listing.assignedPilot}`}></NavLink>
+            <Link to={`/pilotProfile/${listing.assignedPilot}`}></Link>
             {listing.assignedPilot}
           </td>
           <td>${listing.offer}</td>
@@ -57,6 +69,7 @@ function MyListings() {
       )
     })
 
+    //render all the elements we created on the page
     return (
       <>
         <h1>Welcome to your Listings</h1>
@@ -89,12 +102,11 @@ function MyListings() {
         <NavLink to="/NewListing">Create a New Listing</NavLink>
       </>
     )
-  }else{
-    return
-      <>
-        <h1>Oops!</h1>
-        <p>You must be logged in as a client to create a listing</p>
-      </>
+  } else {
+    return <>
+      <h1>Oops!</h1>
+      <p>You must be logged in as a client to create a listing</p>
+    </>
   }
 }
 

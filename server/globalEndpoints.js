@@ -28,16 +28,18 @@ export const login = async (req, res) => {
   const { enteredLogin, enteredPassword, userType } = req.body
 
   if (userType === "client") {
+    console.log("client type hit")
     const user = await Client.findOne({ where: { login: enteredLogin } })
     if (user && user.password === enteredPassword) {
       req.session.userId = user.clientId
       req.session.userType = "client"
+      console.log("Login:", req.session)
       res.send({
         success: true,
         userID: req.session.userId
        })
     } else {
-      res.send({ success: false })
+      res.status(401).send({ success: false })
     }
   } else if (userType === "pilot") {
     const user = await Pilot.findOne({ where: { login: enteredLogin } })
@@ -48,7 +50,7 @@ export const login = async (req, res) => {
         success: true,
         userID: req.session.userId })
     } else {
-      res.send({ success: false })
+      res.status(401).send({ success: false })
     }
   }
 }

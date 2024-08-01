@@ -1,13 +1,18 @@
 import axios from "axios"
-import { useState, useEffect } from "react"
 import { useLoaderData } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 
 function ClientSingleListing() {
-  //const [listing, setListing] = useState({})
+  
+  //take the data from the loader and assign it to the listing variable (this should be an entire listing object)
   const listing = useLoaderData()
+  //this loader data comes from the loader section of this route in the App.jsx
+
+  //setup the navigate functionality
   const navigate = useNavigate()
   console.log(listing)
+
+  //what to render on the page
   return (
     <>
       <h1>View a single listing</h1>
@@ -29,7 +34,6 @@ function ClientSingleListing() {
         <p>Date: {listing.date}</p>
         <p>Flight Address: {listing.flightAddress}</p>
         <p>Description: {listing.description}</p>
-
         <table>
           <thead>
             <tr>
@@ -55,11 +59,11 @@ function ClientSingleListing() {
           </tbody>
         </table>
       </div>
-
+      {/* This button isn't working yet, but just here as a placeholder */}
       <button>Edit Listing</button>
 
       <button
-        onClick={() => {
+        onClick={() => { //This will delete the listing we are currently viewing from the database, and then redirect the user back to their listings
           axios.delete(`/api/listing/${listing.listingId}`).then(() => {
             navigate("/mylistings")
           })
@@ -73,10 +77,4 @@ function ClientSingleListing() {
 
 export default ClientSingleListing
 
-async function getOneListing({params}) {
-   const {listingId} = params
-  const { data } = await axios.get(`/api/listings/${listingId}`)
-  return data
-}
 
-export { getOneListing }
