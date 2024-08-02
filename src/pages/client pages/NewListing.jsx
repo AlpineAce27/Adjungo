@@ -8,16 +8,16 @@ function NewListing() {
   let userid = useSelector((state) => state.userId)
   const navigate = useNavigate()
 
-  const [offer, setOffer] = useState()
-  const [flightDate, setFlightDate] = useState()
-  const [multiday, setMultiday] = useState()
-  const [flightAddress, setFlightAddress] = useState()
-  const [flightRadius, setFlightRadius] = useState()
-  const [hardware, setHardware] = useState()
-  const [software, setSoftware] = useState()
-  const [nightFlying, setNightflying] = useState()
-  const [crowdFlying, setCrowdflying] = useState()
-  const [description, setDescription] = useState()
+  const [offer, setOffer] = useState(10.00)
+  const [flightDate, setFlightDate] = useState(2025-12-25)
+  const [multiday, setMultiday] = useState(false)
+  const [flightAddress, setFlightAddress] = useState("123 Blue Sky Way")
+  const [flightRadius, setFlightRadius] = useState(0.1)
+  const [hardwareProvided, setHardware] = useState(false)
+  const [softwareProvided, setSoftware] = useState(false)
+  const [nightFlying, setNightflying] = useState(false)
+  const [crowdFlying, setCrowdflying] = useState(false)
+  const [description, setDescription] = useState("description")
 
   const handleListingSubmission = (e) => {
     e.preventDefault()
@@ -27,8 +27,8 @@ function NewListing() {
           offer: offer,
           flightDate: flightDate,
           multiday: multiday,
-          hardwareProvided: hardware,
-          softwareProvided: software,
+          hardwareProvided: hardwareProvided,
+          softwareProvided: softwareProvided,
           description: description,
           nightFlying: nightFlying,
           crowdFlying: crowdFlying,
@@ -65,7 +65,7 @@ function NewListing() {
           <input
             type="number"
             name="offer"
-            placeholder="$100"
+            value={offer}
             onChange={(e) => setOffer(e.target.value)}
             required
           ></input>
@@ -76,13 +76,14 @@ function NewListing() {
           <input
             type="date"
             name="flightDate"
+            value={flightDate}
             onChange={(e) => setFlightDate(e.target.value)}
           ></input>
           <br />
           <input
             type="checkbox"
             name="multiday"
-            
+            checked={multiday}
             onChange={(e) => setMultiday(e.target.value)}
           ></input>
           <label htmlFor="multiday">
@@ -93,6 +94,7 @@ function NewListing() {
           <input
             type="text"
             name="flightAddress"
+            value={flightAddress}
             onChange={(e) => setFlightAddress(e.target.value)}
             required
           ></input>
@@ -101,14 +103,17 @@ function NewListing() {
           <input
             type="number"
             name="flightRadius"
-            onChange={(e) => setFlightRadius(e.target.value)}
+            step= {0.1}
+            min ={0.1}
+            value={flightRadius}
+            onChange={(e) => setFlightRadius(Number(e.target.value).toFixed(1))}
             required
           ></input>
           <br />
           <input
             type="checkbox"
             name="hardwareProvided"
-            
+            checked={hardwareProvided}
             onChange={(e) => setHardware(e.target.value)}
           ></input>
           <label htmlFor="hardwareProvided">
@@ -118,7 +123,7 @@ function NewListing() {
           <input
             type="checkbox"
             name="softwareProvided"
-            
+            checked={softwareProvided}
             onChange={(e) => setSoftware(e.target.value)}
           ></input>
           <label htmlFor="softwareProvided">
@@ -128,7 +133,7 @@ function NewListing() {
           <input
             type="checkbox"
             name="nightFlying"
-            
+            checked={nightFlying}
             onChange={(e) => setNightflying(e.target.value)}
           ></input>
           <label htmlFor="nightFlying">
@@ -138,7 +143,7 @@ function NewListing() {
           <input
             type="checkbox"
             name="crowdFlying"
-            
+            checked={crowdFlying}
             onChange={(e) => setCrowdflying(e.target.value)}
           ></input>
           <label htmlFor="crowdFlying">
@@ -154,6 +159,7 @@ function NewListing() {
             name="description"
             rows="10"
             cols="50"
+            value={description}
             onChange={(e) => setDescription(e.target.value)}
           ></input>
           <br />

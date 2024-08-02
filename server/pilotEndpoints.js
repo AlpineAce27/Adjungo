@@ -59,6 +59,22 @@ export const getListingsByPilot = async (req, res) => {
   }
 }
 
+export const getJobsAppliedFor = async (req, res) => {
+  if (!req.session.userId) {
+    res.status(401).json({ error: "Unauthorized" })
+  } else {
+    const allListings = await Listing.findAll({
+      include: {
+        model: Application,
+        where: {
+          applyingPilot: req.session.userId,
+        },
+      },
+    })
+    res.send(allListings)
+  }
+}
+
 //remove the current user from the assigned pilot slot of a job listing
 export const resignFromJob = async (req, res) => {
   let { jobId } = req.params
@@ -69,8 +85,12 @@ export const resignFromJob = async (req, res) => {
       assignedPilot: req.session.userId,
     },
   })
-  if (req.session.userId && req.session.userType === "pilot" && listing !== null) {
-    listing.set({assignedPilot: null})
+  if (
+    req.session.userId &&
+    req.session.userType === "pilot" &&
+    listing !== null
+  ) {
+    listing.set({ assignedPilot: null })
     await listing.save()
     res.send(`Resigned from job! ${listing}`)
   } else {
@@ -88,15 +108,15 @@ export const resignFromJob = async (req, res) => {
 
 //delete an application created by the curren user (by applicationId)
 export const retractApplication = async (req, res) => {
-    const { applicationId } = req.params
-    const application = await Application.findByPk(applicationId)
-    console.log(application)
-    if (req.session.userId === application.applyingPilot) {
-      await application.destroy()
-      res.send(`Application deleted: ${applicationId}`)
-    } else {
-      res.status(401).json({
-        error: "The pilotID on the application does not match Current User ID",
-      })
-    }
+  const { applicationId } = req.params
+  const application = await Application.findByPk(applicationId)
+  console.log(application)
+  if (req.session.userId === application.applyingPilot) {
+    await application.destroy()
+    res.send(`Application deleted: ${applicationId}`)
+  } else {
+    res.status(401).json({
+      error: "The pilotID on the application does not match Current User ID",
+    })
   }
+}

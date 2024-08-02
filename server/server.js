@@ -34,6 +34,7 @@ import {
   getApplicationsbyPilot,
   createApplication,
   getListingsByPilot,
+  getJobsAppliedFor,
   resignFromJob,
   retractApplication
 } from "./pilotEndpoints.js"
@@ -77,6 +78,7 @@ app.delete('/api/denyApplication/:applicationId', denyApplication)
 app.get("/api/pendingApplications", getApplicationsbyPilot)
 app.post("/api/application/:jobId", createApplication) 
 app.get("/api/myJobs", getListingsByPilot)
+app.get("/api/appliedForJobs", getJobsAppliedFor)
 app.put("/api/myJobs/:jobId", resignFromJob)
 app.delete("/api/application/:applicationId", retractApplication)
 

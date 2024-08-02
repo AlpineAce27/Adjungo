@@ -139,7 +139,7 @@ function ClientSingleListing() {
             type="number"
             name="offer"
             value={offer}
-            onChange={(e) => setOffer(Number(e.target.value).toFixed(2))}
+            onChange={(e) => setOffer(e.target.value)}
             required
           ></input>
           <br />
@@ -175,10 +175,10 @@ function ClientSingleListing() {
           <label htmlFor="flightRadius">Flight Radius in miles:</label>
           <input
             type="number"
-            step={0.1}
             name="flightRadius"
-            value={flightRadius}
+            step={0.1}
             min = {0.1}
+            value={flightRadius}
             onChange={(e) => setFlightRadius(Number(e.target.value).toFixed(1))}
             required
           ></input>

@@ -8,14 +8,12 @@ function PilotJobs() {
   let usertype = useSelector((state) => state.userType)
   //create a state value for an array of listings
   const [listings, setListings] = useState([])
-  //check if the user is a client
 
-
-  //if they are a client, 
+  //if they are a pilot, 
   if (usertype === "pilot") {
     //if they are, grab listings where the assigned pilot matches the user
     useEffect(() => {
-      axios.get("/api/myJobs").then((response) => {
+      axios.get("/api/appliedForJobs").then((response) => {
         setListings(response.data)
       })
     }, [])
@@ -47,7 +45,7 @@ function PilotJobs() {
       return (
         <tr key={listing.listingId}>
           <td>
-            <Link to={`/pilotListings/${listing.listingId}`}>
+          <Link to={`/pilotListings/${listing.listingId}`}>
               {listing.listingId}
             </Link>
           </td>
@@ -72,7 +70,7 @@ function PilotJobs() {
     //render all the elements we created on the page
     return (
       <>
-        <h1>You're Upcoming Jobs</h1>
+        <h1>Welcome to your Listings</h1>
         <p>
           This page should show all of the jobs that the pilot is currently
           assigned to
@@ -104,7 +102,7 @@ function PilotJobs() {
   } else {
     return <>
       <h1>Oops!</h1>
-      <p>You must be logged in as a pilot to view your upcoming jobs</p>
+      <p>You must be logged in as a pilot to view jobs your applied to</p>
     </>
   }
 }

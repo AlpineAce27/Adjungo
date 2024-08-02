@@ -22,6 +22,7 @@ import PilotHome from "./pages/pilot pages/PilotHome.jsx"
 import PilotAccount from "./pages/pilot pages/PilotAccount.jsx"
 import PilotApplications from "./pages/pilot pages/PilotApplications.jsx"
 import PilotJobs from "./pages/pilot pages/PilotJobs.jsx"
+import PilotJobsApplied from "./pages/pilot pages/PilotJobsApplied.jsx"
 import PilotSingleListing from "./pages/pilot pages/PilotSingleListing.jsx"
 import PilotReviews from "./pages/pilot pages/PilotReviews.jsx"
 
@@ -48,7 +49,8 @@ const router = createBrowserRouter(
       <Route path="/pilotAccount" element={<PilotAccount />}/>
       <Route path="/pilotApplications" element={<PilotApplications />}/>
       <Route path="/pilotJobs" element={<PilotJobs />}/>
-      <Route path="/pilotListings/:id" element={<PilotSingleListing />} />
+      <Route path="/pilotJobsApplied" element={<PilotJobsApplied />}/>
+      <Route path="/pilotListings/:listingId" element={<PilotSingleListing />} loader={getOneListing}/>
       <Route path="/pilotReviews" element={<PilotReviews />}/>
     </Route>
   )

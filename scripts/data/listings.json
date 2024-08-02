@@ -354,6 +354,20 @@
       "crowdFlying": true,
       "flightAddress": "1313 Cedar Lane, Cleveland, Ohio",
       "flightRadius": 4.3
+    },
+    {
+      "clientId": 1,
+      "assignedPilot": 1,
+      "offer": 405.54,
+      "flightDate": "2024-03-23",
+      "multiday": true,
+      "hardwareProvided": true,
+      "softwareProvided": true,
+      "description": "this is a description of a job listing",
+      "nightFlying": true,
+      "crowdFlying": true,
+      "flightAddress": "1313 Cedar Lane, Cleveland, Ohio",
+      "flightRadius": 0.1
     }
   ]
   
