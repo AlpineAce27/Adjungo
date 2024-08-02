@@ -15,6 +15,7 @@ export const getAllListings = async (req, res) => {
 //return a single listing with a specific listing id
 export const getOneListing = async (req, res) => {
   const { listingId } = req.params
+  console.log("Listing:", listingId)
   if (!req.session.userId) {
     res.status(401).json({ error: "Unauthorized" })
   } else {

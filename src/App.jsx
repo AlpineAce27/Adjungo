@@ -1,5 +1,6 @@
 import "./App.css"
 import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider,} from "react-router-dom"
+import getOneListing from "./functions/getOneListing.js"
 //imort universal pages
 import Home from "./pages/universal pages/Home.jsx"
 import About from "./pages/universal pages/About.jsx"
@@ -16,7 +17,6 @@ import ClientApplications from "./pages/client pages/ClientApplications.jsx"
 import ClientSingleListing from "./pages/client pages/ClientSingleListing.jsx"
 import ClientReviews from "./pages/client pages/ClientReviews.jsx"
 import NewListing from "./pages/client pages/NewListing.jsx"
-import getOneListing from "./functions/getOneListing.js"
 //import pilot pages
 import PilotHome from "./pages/pilot pages/PilotHome.jsx"
 import PilotAccount from "./pages/pilot pages/PilotAccount.jsx"
