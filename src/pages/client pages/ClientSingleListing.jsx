@@ -7,7 +7,7 @@ import { useSelector } from "react-redux"
 function ClientSingleListing() {
   //take the data from the loader and assign it to the listing variable (this should be an entire listing object)
   //this loader data comes from the loader section of this route in the App.jsx
-  const listing = useLoaderData()
+  const [listing, setListing] = useState(useLoaderData())
   console.log("clientsinglelisting rendered")
   //create a value to determine if we are viewing this listing, or editing this listing
   const [editing, setEditing] = useState(false)
@@ -22,17 +22,17 @@ function ClientSingleListing() {
   let userid = useSelector((state) => state.userId)
 
   //values in case the user edits this listing
-  const [offer, setOffer] = useState()
-  const [flightDate, setFlightDate] = useState()
-  const [multiday, setMultiday] = useState()
-  const [flightAddress, setFlightAddress] = useState()
-  const [flightRadius, setFlightRadius] = useState()
-  const [hardware, setHardware] = useState()
-  const [software, setSoftware] = useState()
-  const [nightFlying, setNightflying] = useState()
-  const [crowdFlying, setCrowdflying] = useState()
-  const [description, setDescription] = useState()
-  const [completed, setCompleted] = useState()
+  const [offer, setOffer] = useState(listing.offer)
+  const [flightDate, setFlightDate] = useState(listing.flightDate)
+  const [multiday, setMultiday] = useState(listing.multiday)
+  const [flightAddress, setFlightAddress] = useState(listing.flightAddress)
+  const [flightRadius, setFlightRadius] = useState(listing.flightRadius)
+  const [hardwareProvided, setHardware] = useState(listing.hardwareProvided)
+  const [softwareProvided, setSoftware] = useState(listing.softwareProvided)
+  const [nightFlying, setNightflying] = useState(listing.nightFlying)
+  const [crowdFlying, setCrowdflying] = useState(listing.crowdFlying)
+  const [description, setDescription] = useState(listing.description)
+  const [completed, setCompleted] = useState(listing.completed)
 
   //setup the navigate functionality
   const navigate = useNavigate()
@@ -107,8 +107,8 @@ function ClientSingleListing() {
             offer: offer,
             flightDate: flightDate,
             multiday: multiday,
-            hardwareProvided: hardware,
-            softwareProvided: software,
+            hardwareProvided: hardwareProvided,
+            softwareProvided: softwareProvided,
             description: description,
             nightFlying: nightFlying,
             crowdFlying: crowdFlying,
@@ -117,8 +117,9 @@ function ClientSingleListing() {
             completed: completed,
           },
         })
-        .then(() => {
-          console.log("The listing changes have been saved")
+        .then((res) => {
+          console.log("The listing changes have been saved", res.data)
+          setListing(res.data)
           setEditing(!editing)
         })
     }
@@ -137,9 +138,8 @@ function ClientSingleListing() {
           <input
             type="number"
             name="offer"
-            placeholder={listing.offer}
-            value={listing.offer}
-            onChange={(e) => setOffer(e.target.value)}
+            value={offer}
+            onChange={(e) => setOffer(Number(e.target.value).toFixed(2))}
             required
           ></input>
           <br />
@@ -149,17 +149,15 @@ function ClientSingleListing() {
           <input
             type="date"
             name="flightDate"
-            placeholder={listing.flightDate}
-            value={listing.flightDate}
+            value={flightDate}
             onChange={(e) => setFlightDate(e.target.value)}
           ></input>
           <br />
           <input
             type="checkbox"
             name="multiday"
-            placeholder={listing.multiday}
-            value={listing.multiday}
-            onChange={(e) => setMultiday(e.target.value)}
+            checked={multiday}
+            onChange={(e) => setMultiday(e.target.checked)}
           ></input>
           <label htmlFor="multiday">
             This operation will take multiple days to complete
@@ -169,8 +167,7 @@ function ClientSingleListing() {
           <input
             type="text"
             name="flightAddress"
-            placeholder={listing.flightAddress}
-            value={listing.flightAddress}
+            value={flightAddress}
             onChange={(e) => setFlightAddress(e.target.value)}
             required
           ></input>
@@ -178,17 +175,19 @@ function ClientSingleListing() {
           <label htmlFor="flightRadius">Flight Radius in miles:</label>
           <input
             type="number"
+            step={0.1}
             name="flightRadius"
-            placeholder={listing.flightRadius}
-            value={listing.flight}
-            onChange={(e) => setFlightRadius(e.target.value)}
+            value={flightRadius}
+            min = {0.1}
+            onChange={(e) => setFlightRadius(Number(e.target.value).toFixed(1))}
             required
           ></input>
           <br />
           <input
             type="checkbox"
             name="hardwareProvided"
-            onChange={(e) => setHardware(e.target.value)}
+            checked={hardwareProvided}
+            onChange={(e) => setHardware(e.target.checked)}
           ></input>
           <label htmlFor="hardwareProvided">
             I can provide some or all of the hardware needed
@@ -197,7 +196,8 @@ function ClientSingleListing() {
           <input
             type="checkbox"
             name="softwareProvided"
-            onChange={(e) => setSoftware(e.target.value)}
+            checked={softwareProvided}
+            onChange={(e) => setSoftware(e.target.checked)}
           ></input>
           <label htmlFor="softwareProvided">
             I can provide some or all of the software needed
@@ -206,7 +206,8 @@ function ClientSingleListing() {
           <input
             type="checkbox"
             name="nightFlying"
-            onChange={(e) => setNightflying(e.target.value)}
+            checked={nightFlying}
+            onChange={(e) => setNightflying(e.target.checked)}
           ></input>
           <label htmlFor="nightFlying">
             This job requires flying at dusk, dawn, or at night
@@ -215,7 +216,8 @@ function ClientSingleListing() {
           <input
             type="checkbox"
             name="crowdFlying"
-            onChange={(e) => setCrowdflying(e.target.value)}
+            checked={crowdFlying}
+            onChange={(e) => setCrowdflying(e.target.checked)}
           ></input>
           <label htmlFor="crowdFlying">
             This job requires flying over people who are unaware of the
@@ -230,17 +232,15 @@ function ClientSingleListing() {
             name="description"
             rows="10"
             cols="50"
-            placeholder={listing.description}
-            value={listing.description}
+            value={description}
             onChange={(e) => setDescription(e.target.value)}
           ></input>
           <br />
           <input
             type="checkbox"
             name="completed"
-            placeholder={listing.completed}
-            value={listing.completed}
-            onChange={(e) => setCompleted(e.target.value)}
+            check={completed}
+            onChange={(e) => setCompleted(e.target.checked)}
           ></input>
           <label htmlFor="completed">
             Job is completed

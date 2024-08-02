@@ -62,7 +62,8 @@ export const editListing = async (req, res) => {
   if (req.session.userId === listing.clientId) {
     listing.set(changes)
     await listing.save()
-    res.send(`Changes saved! ${listing.listingId}`)
+    console.log(listing)
+    res.send(listing)
   } else {
     res.status(401).json({
       error: "The Client ID on the listing does not match Current User ID",
