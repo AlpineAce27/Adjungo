@@ -26,6 +26,7 @@ function Header() {
     {/*Create a navbar for a user who is logged in as a client*/}
   {usertype === 'client' && <nav>
         <NavLink to="/">Home </NavLink>
+        <NavLink to="/listings">All Listings </NavLink>
         <NavLink to="/myListings">My Listings </NavLink>
         <NavLink to="/clientApplications">My Applications </NavLink>
         <NavLink to="/clientAccount">My Account </NavLink>
