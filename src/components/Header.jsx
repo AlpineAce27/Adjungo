@@ -18,9 +18,8 @@ function Header() {
     {/*Create a navbar for a user who is logged in as a pilot*/}
     {usertype === 'pilot' && <nav>
         <NavLink to="/pilotHome">Home </NavLink>
-        <NavLink to="/pilotApplications">My Applications </NavLink>
         <NavLink to="/PilotJobs">Upcoming Jobs </NavLink>
-        <NavLink to="/PilotJobsApplied">Applied For </NavLink>
+        <NavLink to="/PilotJobsApplied">My Applications </NavLink>
         <NavLink to="/listings">All Listings </NavLink>
         <NavLink to="/pilotAccount">My Account </NavLink>
   </nav>}

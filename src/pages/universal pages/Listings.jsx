@@ -20,7 +20,7 @@ function Listings() {
     listingsItems = listings.map((listing) => {
       //change true/false/null to more readable strings
 
-      //change assiged pilot
+      //change assigned pilot
       let assignedPilot
         if(listing.assignedPilot === null){
             assignedPilot = "Unclaimed"
@@ -53,7 +53,7 @@ function Listings() {
       return (
         <tr key={listing.listingId}>
           <td>
-            <Link to={`/clientListings/${listing.listingId}`}>
+            <Link to={`/${userType}Listing/${listing.listingId}`}>
               {listing.listingId}
             </Link>
           </td>

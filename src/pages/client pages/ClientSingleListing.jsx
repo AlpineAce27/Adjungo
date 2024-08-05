@@ -8,7 +8,7 @@ function ClientSingleListing() {
   //take the data from the loader and assign it to the listing variable (this should be an entire listing object)
   //this loader data comes from the loader section of this route in the App.jsx
   const [listing, setListing] = useState(useLoaderData())
-  console.log("clientsinglelisting rendered")
+  //console.log("clientsinglelisting rendered")
   //create a value to determine if we are viewing this listing, or editing this listing
   const [editing, setEditing] = useState(false)
 
@@ -16,10 +16,11 @@ function ClientSingleListing() {
   function handleEditButton(e) {
     e.preventDefault()
     setEditing(!editing)
-  }  
+  }
 
   //figure out the user ID of this session
-  let userid = useSelector((state) => state.userId)
+  let userId = useSelector((state) => state.userId)
+  //console.log(userId)
 
   //values in case the user edits this listing
   const [offer, setOffer] = useState(listing.offer)
@@ -36,21 +37,20 @@ function ClientSingleListing() {
 
   //setup the navigate functionality
   const navigate = useNavigate()
-  console.log(listing)
 
-  if (editing === false) {//Render this if they are not in edit mode
+  if (editing === false) {
+    //Render this if they are not in edit mode
     return (
       <>
-        <h1>View a single listing</h1>
+        <h1>Listing #{listing.listingId}</h1>
         <p>
-          This page should show a single listing with all of it's details.
-          There should be a delete button
-          at the bottom, which would delete the listing. There should also be
-          an edit button which turns
-          every feild into an editable field and adds a "save changes" button
-          and "cancel" button at the bottom.
-          Links to the pilots profile should be provided, as well as a button
-          that allows the client to create a new new listing based on this completed one.
+          This page should show a single listing with all of it's details. There
+          should be a delete button at the bottom, which would delete the
+          listing. There should also be an edit button which turns every feild
+          into an editable field and adds a "save changes" button and "cancel"
+          button at the bottom. Links to the pilots profile should be provided,
+          as well as a button that allows the client to create a new new listing
+          based on this completed one.
         </p>
         <div>
           <h3>Listing Id: {listing.listingId}</h3>
@@ -84,21 +84,26 @@ function ClientSingleListing() {
             </tbody>
           </table>
         </div>
-        <button onClick={handleEditButton}>Edit Listing</button>
 
-        <button
-          onClick={() => {
-            //This will delete the listing we are currently viewing from the database, and then redirect the user back to their listings
-            axios.delete(`/api/listing/${listing.listingId}`).then(() => {
-              navigate("/mylistings")
-            })
-          }}
-        >
-          Delete Listing
-        </button>
+        {listing.clientId === userId && (
+          <div>
+            <button onClick={handleEditButton}>Edit Listing</button>
+            <button
+              onClick={() => {
+                //This will delete the listing we are currently viewing from the database, and then redirect the user back to their listings
+                axios.delete(`/api/listing/${listing.listingId}`).then(() => {
+                  navigate("/mylistings")
+                })
+              }}
+            >
+              Delete Listing
+            </button>
+          </div>
+        )}
       </>
     )
-  } else if (editing === true) { //Render this if they clicked the edit button
+  } else if (editing === true) {
+    //Render this if they clicked the edit button
     const handleListingEdit = (e) => {
       e.preventDefault()
       axios
@@ -177,7 +182,7 @@ function ClientSingleListing() {
             type="number"
             name="flightRadius"
             step={0.1}
-            min = {0.1}
+            min={0.1}
             value={flightRadius}
             onChange={(e) => setFlightRadius(Number(e.target.value).toFixed(1))}
             required
@@ -242,9 +247,7 @@ function ClientSingleListing() {
             check={completed}
             onChange={(e) => setCompleted(e.target.checked)}
           ></input>
-          <label htmlFor="completed">
-            Job is completed
-          </label>
+          <label htmlFor="completed">Job is completed</label>
           <br />
           <input type="submit" value="Save Changes"></input>
         </form>

@@ -23,7 +23,7 @@ export const getOneListingByClient = async (req, res) => {
     const listing = await Listing.findOne({
       where: {
         listingId: listingId,
-        clientId: req.session.userId,
+        //clientId: req.session.userId,
       },
     })
     res.send(listing)

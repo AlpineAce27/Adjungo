@@ -37,7 +37,7 @@ export const login = async (req, res) => {
       console.log("Login:", req.session)
       res.send({
         success: true,
-        userID: req.session.userId
+        userId: user.clientId
        })
     } else {
       res.status(401).send({ success: false })
@@ -49,7 +49,7 @@ export const login = async (req, res) => {
       req.session.userType = "pilot"
       res.send({
         success: true,
-        userID: req.session.userId })
+        userId: user.pilotId })
     } else {
       res.status(401).send({ success: false })
     }

@@ -33,7 +33,7 @@ function Login() {
         })
         //now that the user is logged in and redux values are updated, redirect the user to their home/dashboard
         navigate("/clientHome")
-        //console.log("Client logged in, redirected the user to client homepage")
+        console.log(`Client logged in, userId: ${response.data.userId}, redirected the user to client homepage`)
       })
       .catch((error) => {
         console.log(error)

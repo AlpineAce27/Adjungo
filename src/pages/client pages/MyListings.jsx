@@ -47,7 +47,7 @@ function MyListings() {
       return (
         <tr key={listing.listingId}>
           <td>
-            <Link to={`/clientListings/${listing.listingId}`}>
+            <Link to={`/clientListing/${listing.listingId}`}>
               {listing.listingId}
             </Link>
           </td>

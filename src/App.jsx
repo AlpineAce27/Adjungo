@@ -41,7 +41,7 @@ const router = createBrowserRouter(
       <Route path="/clientAccount" element={<ClientAccount />}/>
       <Route path="/clientApplications" element={<ClientApplications />}/>
       {/* the loader automatically grabs the params object as an argument */}
-      <Route path="/clientListings/:listingId" element={<ClientSingleListing/>} loader={getOneListing} />
+      <Route path="/clientListing/:listingId" element={<ClientSingleListing/>} loader={getOneListing} />
       <Route path="/clientReviews" element={<ClientReviews />}/>
       <Route path="/newListing" element={<NewListing />}/>
       {/* pilot routes */}
@@ -50,7 +50,7 @@ const router = createBrowserRouter(
       <Route path="/pilotApplications" element={<PilotApplications />}/>
       <Route path="/pilotJobs" element={<PilotJobs />}/>
       <Route path="/pilotJobsApplied" element={<PilotJobsApplied />}/>
-      <Route path="/pilotListings/:listingId" element={<PilotSingleListing />} loader={getOneListing}/>
+      <Route path="/pilotListing/:listingId" element={<PilotSingleListing />} loader={getOneListing}/>
       <Route path="/pilotReviews" element={<PilotReviews />}/>
     </Route>
   )

@@ -47,7 +47,7 @@ function PilotJobs() {
       return (
         <tr key={listing.listingId}>
           <td>
-            <Link to={`/pilotListings/${listing.listingId}`}>
+            <Link to={`/pilotListing/${listing.listingId}`}>
               {listing.listingId}
             </Link>
           </td>

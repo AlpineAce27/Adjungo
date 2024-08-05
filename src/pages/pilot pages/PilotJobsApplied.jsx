@@ -45,7 +45,7 @@ function PilotJobs() {
       return (
         <tr key={listing.listingId}>
           <td>
-          <Link to={`/pilotListings/${listing.listingId}`}>
+          <Link to={`/pilotListing/${listing.listingId}`}>
               {listing.listingId}
             </Link>
           </td>
@@ -70,7 +70,7 @@ function PilotJobs() {
     //render all the elements we created on the page
     return (
       <>
-        <h1>Welcome to your Listings</h1>
+        <h1>Listings You've applied for</h1>
         <p>
           This page should show all of the jobs that the pilot is currently
           assigned to
