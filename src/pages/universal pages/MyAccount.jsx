@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate, NavLink } from "react-router-dom"
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
@@ -40,10 +40,10 @@ function MyAccount() {
     else if(userType === "pilot"){
       avg = avg + Number(review.pilotRating)
     } 
-    console.log(avg)
+    //console.log(avg)
   })
   avg = avg / receivedReviews.length
-  console.log(avg)
+  //console.log(avg)
   return (
     <>
       <h1>My account details</h1>
@@ -56,7 +56,7 @@ function MyAccount() {
         <div>
           <h3>Adjungo User ID: {userId}</h3>
           <h3>Company: {accountDetails.company}</h3>
-          <h3>Rating: {avg.toFixed(2)}/5</h3>
+          <h3><NavLink to="/receivedReviews">Rating: {avg.toFixed(2)}/5</NavLink></h3>
           <br />
           <p>
             login: {accountDetails.login} password: {accountDetails.password}

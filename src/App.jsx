@@ -25,6 +25,7 @@ import PilotJobs from "./pages/pilot pages/PilotJobs.jsx"
 import PilotJobsApplied from "./pages/pilot pages/PilotJobsApplied.jsx"
 import PilotSingleListing from "./pages/pilot pages/PilotSingleListing.jsx"
 import PilotReviews from "./pages/pilot pages/PilotReviews.jsx"
+import ReceivedReviews from "./pages/client pages/ReceivedReviews.jsx"
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -36,6 +37,7 @@ const router = createBrowserRouter(
       <Route path="/login" element={<Login />} />
       <Route path="/about" element={<About />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/receivedReviews" element={<ReceivedReviews />} />
       {/* client routes */}
       <Route path="/clientHome" element={<ClientHome />}/>
       <Route path="/myListings" element={<MyListings />}/>
