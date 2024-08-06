@@ -40,7 +40,6 @@ const router = createBrowserRouter(
       <Route path="/myListings" element={<MyListings />}/>
       <Route path="/clientAccount" element={<ClientAccount />}/>
       <Route path="/clientApplications" element={<ClientApplications />}/>
-      {/* the loader automatically grabs the params object as an argument */}
       <Route path="/clientListing/:listingId" element={<ClientSingleListing/>} loader={getOneListing} />
       <Route path="/clientReviews" element={<ClientReviews />}/>
       <Route path="/newListing" element={<NewListing />}/>

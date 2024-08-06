@@ -134,12 +134,20 @@ export const acceptApplication = async (req, res) => {
   //console.log(listing.listingId, listing.assignedPilot, listing.clientId)
 
   if (req.session.userId === listing.clientId) {
-    //accept the application by changing the "assinged pilot"
+    //accept the application by changing the "assigned pilot"
     listing.set({ assignedPilot: application.applyingPilot })
     await listing.save()
     //delete the application
     await application.destroy()
-    res.send({ success: true })
+    const applications = await Application.findAll({
+      include: {
+        model: Listing,
+        where: {
+          clientId: req.session.userId,
+        },
+      },
+    })
+    res.send(applications)
   } else {
     res.status(401).json({
       error: "The Client ID on the listing does not match Current User ID",
@@ -155,7 +163,15 @@ export const denyApplication = async (req, res) => {
   if (req.session.userId === listing.clientId) {
     //delete the application
     await application.destroy()
-    res.send({ success: true })
+    const applications = await Application.findAll({
+      include: {
+        model: Listing,
+        where: {
+          clientId: req.session.userId,
+        },
+      },
+    })
+    res.send(applications)
   } else {
     res.status(401).json({
       error: "The Client ID on the listing does not match Current User ID",
