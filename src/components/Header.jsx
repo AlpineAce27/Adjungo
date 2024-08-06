@@ -21,7 +21,7 @@ function Header() {
         <NavLink to="/PilotJobs">Upcoming Jobs </NavLink>
         <NavLink to="/PilotJobsApplied">My Applications </NavLink>
         <NavLink to="/listings">All Listings </NavLink>
-        <NavLink to="/pilotAccount">My Account </NavLink>
+        <NavLink to="/myAccount">My Account </NavLink>
   </nav>}
     {/*Create a navbar for a user who is logged in as a client*/}
   {usertype === 'client' && <nav>
@@ -29,7 +29,7 @@ function Header() {
         <NavLink to="/listings">All Listings </NavLink>
         <NavLink to="/myListings">My Listings </NavLink>
         <NavLink to="/clientApplications">My Applications </NavLink>
-        <NavLink to="/clientAccount">My Account </NavLink>
+        <NavLink to="/myAccount">My Account </NavLink>
   </nav>}
   </>
   )

@@ -33,7 +33,7 @@ function Login() {
         })
         //now that the user is logged in and redux values are updated, redirect the user to their home/dashboard
         navigate("/clientHome")
-        console.log(`Client logged in, userId: ${response.data.userId}, redirected the user to client homepage`)
+        //console.log(`Client logged in, userId: ${response.data.userId}, redirected the user to client homepage`)
       })
       .catch((error) => {
         console.log(error)
@@ -103,7 +103,7 @@ function Login() {
           type="text"
           name="pilotLogin"
           placeholder="PilotUserName"
-          value="pilot1"
+          value={PilotUsername}
           onChange={(e) => setPilotUsername(e.target.value)} //this allows the textbox to update immediately as the user inputs text
         />
         <br />
@@ -113,7 +113,7 @@ function Login() {
           type="password"
           name="pilotPassword"
           placeholder="password123"
-          value="pilot1"
+          value={PilotPassword}
           onChange={(e) => setPilotPassword(e.target.value)} //this allows the textbox to update immediately as the user inputs text
         />
         <br />

@@ -40,13 +40,11 @@ function ClientApplications() {
           <td>
             <button onClick={()=>{
                 axios.put(`/api/acceptApplication/${application.applicationId}`).then((response)=> {setApplications(response.data)})
-                
             }}>Accept</button>
           </td>
           <td>
             <button onClick={()=>{
                 axios.delete(`/api/denyApplication/${application.applicationId}`).then((response)=> {setApplications(response.data)})
-                
             }}>Deny</button>
           </td>
         </tr>

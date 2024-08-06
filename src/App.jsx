@@ -3,6 +3,7 @@ import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider,} f
 import getOneListing from "./functions/getOneListing.js"
 //imort universal pages
 import Home from "./pages/universal pages/Home.jsx"
+import MyAccount from "./pages/universal pages/MyAccount.jsx"
 import About from "./pages/universal pages/About.jsx"
 import Login from "./pages/universal pages/Login.jsx"
 import Register from "./pages/universal pages/Register.jsx"
@@ -12,7 +13,6 @@ import Welcome from "./pages/universal pages/Welcome.jsx"
 //import client pages
 import ClientHome from "./pages/client pages/ClientHome.jsx"
 import MyListings from "./pages/client pages/MyListings.jsx"
-import ClientAccount from "./pages/client pages/ClientAccount.jsx"
 import ClientApplications from "./pages/client pages/ClientApplications.jsx"
 import ClientSingleListing from "./pages/client pages/ClientSingleListing.jsx"
 import ClientReviews from "./pages/client pages/ClientReviews.jsx"
@@ -31,6 +31,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<Home/>} errorElement={<ErrorPage/>}>
       {/* unauth routes */}
       <Route index element={<Welcome />} />
+      <Route path="/myAccount" element={<MyAccount />}/>
       <Route path="/listings" element={<Listings />} />
       <Route path="/login" element={<Login />} />
       <Route path="/about" element={<About />} />
@@ -38,14 +39,12 @@ const router = createBrowserRouter(
       {/* client routes */}
       <Route path="/clientHome" element={<ClientHome />}/>
       <Route path="/myListings" element={<MyListings />}/>
-      <Route path="/clientAccount" element={<ClientAccount />}/>
       <Route path="/clientApplications" element={<ClientApplications />}/>
       <Route path="/clientListing/:listingId" element={<ClientSingleListing/>} loader={getOneListing} />
       <Route path="/clientReviews" element={<ClientReviews />}/>
       <Route path="/newListing" element={<NewListing />}/>
       {/* pilot routes */}
       <Route path="/pilotHome" element={<PilotHome />}/>
-      <Route path="/pilotAccount" element={<PilotAccount />}/>
       <Route path="/pilotApplications" element={<PilotApplications />}/>
       <Route path="/pilotJobs" element={<PilotJobs />}/>
       <Route path="/pilotJobsApplied" element={<PilotJobsApplied />}/>

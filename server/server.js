@@ -8,7 +8,7 @@ import {
   getOneListing,
   login,
   logout,
-  getAccount,
+  getMyAccount,
   editAccount,
   createAccount,
   getAllReceivedReviews,
@@ -52,7 +52,7 @@ app.get("/api/listings", getAllListings)
 app.get("/api/listings/:listingId", getOneListing)
 app.post("/api/auth", login)
 app.post("/api/logout", logout)
-app.get("/api/account", getAccount)
+app.get("/api/myAccount", getMyAccount)
 app.put("/api/account", editAccount)
 app.post("/api/account/:AccountType", createAccount)
 app.get("/api/receivedReviews", getAllReceivedReviews)

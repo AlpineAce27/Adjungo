@@ -29,12 +29,11 @@ export const login = async (req, res) => {
   const { enteredLogin, enteredPassword, userType } = req.body
 
   if (userType === "client") {
-    console.log("client type hit")
     const user = await Client.findOne({ where: { login: enteredLogin } })
     if (user && user.password === enteredPassword) {
       req.session.userId = user.clientId
       req.session.userType = "client"
-      console.log("Login:", req.session)
+      //console.log("Login:", req.session)
       res.send({
         success: true,
         userId: user.clientId
@@ -67,7 +66,7 @@ export const logout = async (req, res) => {
 }
 
 //return account details based on the userID in the session
-export const getAccount = async (req, res) => {
+export const getMyAccount = async (req, res) => {
   if (!req.session.userId) {
     res.status(401).send({null: "No user logged in"})
   } else {
