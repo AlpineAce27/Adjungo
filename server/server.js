@@ -13,6 +13,7 @@ import {
   createAccount,
   getAllReceivedReviews,
   getOneReceivedReview,
+  getReviewsOnUser,
   getAllGivenReviews,
   createReview,
   getOneGivenReview,
@@ -57,6 +58,7 @@ app.put("/api/account", editAccount)
 app.post("/api/account/:AccountType", createAccount)
 app.get("/api/receivedReviews", getAllReceivedReviews)
 app.get("/api/receivedReviews/:reviewId", getOneReceivedReview)
+app.get("/api/reviewsOnUser/:userType/:userId", getReviewsOnUser)
 app.get("/api/givenReviews", getAllGivenReviews)
 app.post("/api/givenReview",createReview)
 app.get("/api/givenReviews/:reviewId", getOneGivenReview)

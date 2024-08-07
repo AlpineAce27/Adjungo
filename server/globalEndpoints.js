@@ -142,6 +142,26 @@ export const getOneReceivedReview = async (req, res) => {
   }
 }
 
+//get all reviews on a specific user
+export const getReviewsOnUser = async (req, res) => {
+  const { userType, userId } = req.params
+  if (userType === "client") {
+    const reviews = await ClientReview.findAll({
+      where: {
+        reviewedClient : userId
+      }
+    })
+    res.send(reviews)
+  } else if (userType === "pilot") {
+    const reviews = await PilotReview.findAll({
+      where: {
+        reviewedPilot : userId
+      }
+    })
+    res.send(reviews)
+  }
+}
+
 //send all reviews that were created by the current user
 export const getAllGivenReviews = async (req, res) => {
   if (req.session.userType === "client") {

@@ -98,22 +98,46 @@ export const getApplicationsbyClient = async (req, res) => {
       },
     },
   })
-  res.send(applications)
+ 
+  //console.log(applications)
+  //we would like to show the average rating of each pilot applying, so we add a "avgRating" property to each application object before sending it
+  const applicationsWithRatings = applications.map(async(application) => { 
+    //grab reviews of the pilot applying
+    const reviewsOnPilot = await PilotReview.findAll({
+      where: {
+        reviewedPilot : application.applyingPilot
+      }
+    })
+    //console.log(reviewsOnPilot)
+    //calculate the average rating that this user has
+    let total = 0
+    reviewsOnPilot.forEach((review) => {
+      total = total + Number(review.pilotRating)
+      //console.log(avg)
+    })
+    const rating = total / reviewsOnPilot.length
+    // application.pilotRating = rating
+    console.log("new application", rating)
+    return application
+  })
+  //console.log(applicationsWithRatings)
+  res.send(applicationsWithRatings)
 }
+
 //send all applications from a specific listing that the client has
 export const getApplicationsbyListing = async (req, res) => {
   const { listingId } = req.params
   const ownedByUser = await Listing.findOne({
-    where: {listingId: listingId, clientId: req.session.userId}
+    where: { listingId: listingId, clientId: req.session.userId },
   })
-console.log(ownedByUser)
-  if(ownedByUser){
+  console.log(ownedByUser)
+  if (ownedByUser) {
     const applications = await Application.findAll({
       include: {
         model: Listing,
         where: {
           listingId: listingId,
-          clientId: req.session.userId
+          clientId: req.session.userId,
         },
       },
     })
@@ -121,7 +145,6 @@ console.log(ownedByUser)
   } else {
     res.send("This listing is not owned by the current user")
   }
-  
 }
 
 //accept an application
