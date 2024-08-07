@@ -243,6 +243,23 @@ export const createReview = async (req, res) => {
   }
 }
 
+//get a single review
+export const getSingleReview = async (req, res) => {
+  const {authorUserType, reviewId} = req.params
+
+  if(authorUserType === "client"){
+    //search the pilot reviews table for a matching authorId and review Id
+    const review = await PilotReview.findByPk(reviewId)
+    res.send(review)
+  }
+  else if(authorUserType === "pilot"){
+    //search the client reviews table for a match authorId and review Id
+    const review = await ClientReview.findByPk(reviewId)
+    res.send(review)
+  }
+  
+}
+
 //send a single review created by the current user (by review Id)
 export const getOneGivenReview = async (req, res) => {
   const { reviewId } = req.params

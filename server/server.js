@@ -17,6 +17,7 @@ import {
   getReviewsOnUser,
   getAllGivenReviews,
   createReview,
+  getSingleReview,
   getOneGivenReview,
   editGivenReview,
   deleteGivenReview
@@ -63,6 +64,7 @@ app.get("/api/receivedReviews/:reviewId", getOneReceivedReview)
 app.get("/api/reviewsOnUser/:userType/:userId", getReviewsOnUser)
 app.get("/api/givenReviews", getAllGivenReviews)
 app.post("/api/givenReview",createReview)
+app.get("/api/review/:authorUserType/:reviewId", getSingleReview)
 app.get("/api/givenReviews/:reviewId", getOneGivenReview)
 app.put("/api/givenReviews/:reviewId", editGivenReview)
 app.delete("/api/givenReviews/:reviewId", deleteGivenReview)

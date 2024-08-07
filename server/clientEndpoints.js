@@ -158,7 +158,8 @@ export const getApplicationsbyListing = async (req, res) => {
 export const acceptApplication = async (req, res) => {
   const { applicationId } = req.params
   const application = await Application.findByPk(applicationId)
-  console.log(application)
+  //console.log(application)
+  console.log('session', req.session)
 
   const listing = await Listing.findByPk(application.applyingListing)
   //console.log(listing.listingId, listing.assignedPilot, listing.clientId)
@@ -169,6 +170,7 @@ export const acceptApplication = async (req, res) => {
     await listing.save()
     //delete the application
     await application.destroy()
+
     const applications = await Application.findAll({
       include: {
         model: Listing,
@@ -177,7 +179,27 @@ export const acceptApplication = async (req, res) => {
         },
       },
     })
-    res.send(applications)
+
+    const applicationsWithRatings = await Promise.all(applications.map(async (application) => {
+
+      const applicationCopy = { ...application.dataValues }
+
+      const reviewsOnPilot = await PilotReview.findAll({
+        where: {
+          reviewedPilot: application.applyingPilot
+        },
+        attributes: [
+          [Sequelize.fn('AVG', Sequelize.col('pilot_rating')), 'avgRating'],
+        ]
+      })
+
+      applicationCopy.reviews = reviewsOnPilot[0]
+
+      return applicationCopy
+    }))
+
+    res.send(applicationsWithRatings)
+
   } else {
     res.status(401).json({
       error: "The Client ID on the listing does not match Current User ID",
@@ -189,10 +211,16 @@ export const acceptApplication = async (req, res) => {
 export const denyApplication = async (req, res) => {
   const { applicationId } = req.params
   const application = await Application.findByPk(applicationId)
+  //console.log(application)
+  console.log('session', req.session)
+
   const listing = await Listing.findByPk(application.applyingListing)
+  //console.log(listing.listingId, listing.assignedPilot, listing.clientId)
+
   if (req.session.userId === listing.clientId) {
     //delete the application
     await application.destroy()
+
     const applications = await Application.findAll({
       include: {
         model: Listing,
@@ -201,7 +229,27 @@ export const denyApplication = async (req, res) => {
         },
       },
     })
-    res.send(applications)
+
+    const applicationsWithRatings = await Promise.all(applications.map(async (application) => {
+
+      const applicationCopy = { ...application.dataValues }
+
+      const reviewsOnPilot = await PilotReview.findAll({
+        where: {
+          reviewedPilot: application.applyingPilot
+        },
+        attributes: [
+          [Sequelize.fn('AVG', Sequelize.col('pilot_rating')), 'avgRating'],
+        ]
+      })
+
+      applicationCopy.reviews = reviewsOnPilot[0]
+
+      return applicationCopy
+    }))
+
+    res.send(applicationsWithRatings)
+
   } else {
     res.status(401).json({
       error: "The Client ID on the listing does not match Current User ID",

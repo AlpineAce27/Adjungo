@@ -4,11 +4,11 @@ import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 import getUsersRating from "../../functions/getUsersRating"
 
-function ReceivedReviews() {
+function GivenReviews() {
   //grabbing the usertype from redux store
   let userType = useSelector((state) => state.userType)
   //create a state value for an array of listings
-  const [receivedReviews, setReceivedReviews] = useState([])
+  const [givenReviews, setGivenReviews] = useState([])
   const [rating, setRating] = useState(0)
 
   async function getRatings() {
@@ -18,43 +18,43 @@ function ReceivedReviews() {
     setRating(ratingResponse)
   }
   
-  //if they are a client,
-  if (userType === "client") {
-    //if they are, grab listings where the client id matches the user
+  //if they are a logged in,
+  if (userType === "client" || userType === "pilot") {
+    //if they are, grab reviews made my the current user
     useEffect(() => {
-      axios.get("/api/receivedReviews").then((response) => {
-        setReceivedReviews(response.data)
+      axios.get("/api/givenReviews").then((response) => {
+        setGivenReviews(response.data)
       })
       getRatings()
     }, [])
 
     //create an array of listings mapped to the axios response
-    const reviewsList = receivedReviews.map((review) => {
+    const reviewsList = givenReviews.map((review) => {
       //change true/false/null to more readable strings
 
       //create a table row with each variable in the correct spot
       return (
         <>
           {userType === "client" && (
-            <tr key={review.clientReviewId}>
-              <td>{review.clientReviewId}</td>
-              <td>
-                <Link to={`/pilotAccount`}></Link>
-                {review.pilotReviewing}
-              </td>
-              <td>{review.reviewContent}</td>
-              <td>{review.clientRating}</td>
-            </tr>
-          )}
-          {userType === "pilot" && (
             <tr key={review.pilotReviewId}>
-              <td>{review.clientReviewId}</td>
+              <td>{review.pilotReviewId}</td>
               <td>
-                <Link to={`/clientAccount`}></Link>
-                {review.clientReviewing}
+              <NavLink to={`/userProfile/pilot/${review.reviewedPilot}`}>
+                {review.reviewedPilot}
+              </NavLink>
               </td>
               <td>{review.reviewContent}</td>
               <td>{review.pilotRating}</td>
+            </tr>
+          )}
+          {userType === "pilot" && (
+            <tr key={review.clientReviewId}>
+              <td>{review.clientReviewId}</td>
+              <NavLink to={`/userProfile/client/${review.reviewedClient}`}>
+                {review.reviewedClient}
+              </NavLink>
+              <td>{review.reviewContent}</td>
+              <td>{review.clientRating}</td>
             </tr>
           )}
         </>
@@ -64,17 +64,13 @@ function ReceivedReviews() {
     //render all the elements we created on the page
     return (
       <>
-        <h1>Welcome to your Listings</h1>
+        <h1>Reviews and Feedback</h1>
         <p>
-          This page should show all of the clients listings in table form where
-          they can easily sort by any column header, and click on any listing to
-          see more details on it. There should also be a "completed" tab where
-          the client can view all of their completed jobs. Each listing should
-          also show how many applications it has, with a link to the
-          applications page.
+          This page should show all of the reviews that other partners have given you, it also provides
+          a link to each of your partners profiles, where you could add a review for them
         </p>
 
-        <h3>Rating: {rating.toFixed(2)}/5</h3>
+        <h3>Current Reviews</h3>
         {/* <input type="checkbox" id="showCompleted" name="showCompleted" value="showCompleted"/>
     <label for="showCompleted">Show Completed Jobs:</label> */}
         <table>
@@ -95,10 +91,10 @@ function ReceivedReviews() {
     return (
       <>
         <h1>Oops!</h1>
-        <p>You must be logged in as a client to create a listing</p>
+        <p>You must be logged in to view ratings and reviews</p>
       </>
     )
   }
 }
 
-export default ReceivedReviews
+export default GivenReviews

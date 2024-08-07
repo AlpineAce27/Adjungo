@@ -12,6 +12,9 @@ import Listings from "./pages/universal pages/Listings.jsx"
 import ErrorPage from "./pages/universal pages/ErrorPage.jsx"
 import Welcome from "./pages/universal pages/Welcome.jsx"
 import OtherProfile from "./pages/universal pages/OtherProfile.jsx"
+import ReceivedReviews from "./pages/universal pages/ReceivedReviews.jsx"
+import GivenReviews from "./pages/universal pages/GivenReviews.jsx"
+import SingleReview from "./pages/universal pages/SingleReview.jsx"
 //import client pages
 import ClientHome from "./pages/client pages/ClientHome.jsx"
 import MyListings from "./pages/client pages/MyListings.jsx"
@@ -21,13 +24,12 @@ import ClientReviews from "./pages/client pages/ClientReviews.jsx"
 import NewListing from "./pages/client pages/NewListing.jsx"
 //import pilot pages
 import PilotHome from "./pages/pilot pages/PilotHome.jsx"
-import PilotAccount from "./pages/pilot pages/PilotAccount.jsx"
 import PilotApplications from "./pages/pilot pages/PilotApplications.jsx"
 import PilotJobs from "./pages/pilot pages/PilotJobs.jsx"
 import PilotJobsApplied from "./pages/pilot pages/PilotJobsApplied.jsx"
 import PilotSingleListing from "./pages/pilot pages/PilotSingleListing.jsx"
 import PilotReviews from "./pages/pilot pages/PilotReviews.jsx"
-import ReceivedReviews from "./pages/client pages/ReceivedReviews.jsx"
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -40,6 +42,8 @@ const router = createBrowserRouter(
       <Route path="/about" element={<About />} />
       <Route path="/register" element={<Register />} />
       <Route path="/receivedReviews" element={<ReceivedReviews />} />
+      <Route path="/givenReviews" element={<GivenReviews />} />
+      <Route path="/review/:authorUserType/:reviewId" element={<SingleReview/>} loader={getOneReview}/>
       <Route path="/userProfile/:userType/:userId" element={<OtherProfile />} loader={getAccountDetails} />
       {/* client routes */}
       <Route path="/clientHome" element={<ClientHome />}/>

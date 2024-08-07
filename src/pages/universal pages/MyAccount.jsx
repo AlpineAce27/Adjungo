@@ -57,6 +57,7 @@ function MyAccount() {
           <h3>Adjungo User ID: {userId}</h3>
           <h3>Company: {accountDetails.company}</h3>
           <h3><NavLink to="/receivedReviews">Rating: {avg.toFixed(2)}/5</NavLink></h3>
+          <h3><NavLink to="/givenReviews">Reviews I've Given other Users</NavLink></h3>
           <br />
           <p>
             login: {accountDetails.login} password: {accountDetails.password}
@@ -88,7 +89,8 @@ function MyAccount() {
           <h3>
             Name: {accountDetails.fname} {accountDetails.lname}{" "}
           </h3>
-          <h3>Rating: {avg.toFixed(2)}/5</h3>
+          <h3><NavLink to="/receivedReviews">Rating: {avg.toFixed(2)}/5</NavLink></h3>
+          <h3><NavLink to="/givenReviews">Reviews I've Given other Users</NavLink></h3>
           <br />
           <p>
             login: {accountDetails.login} password: {accountDetails.password}
