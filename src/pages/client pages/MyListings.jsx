@@ -1,7 +1,7 @@
 import { NavLink, Link } from "react-router-dom"
 import axios from "axios"
 import { useState, useEffect } from "react"
-import { useSelector } from "react-redux";
+import { useSelector } from "react-redux"
 
 function MyListings() {
   //grabbing the usertype from redux store
@@ -10,8 +10,7 @@ function MyListings() {
   const [listings, setListings] = useState([])
   //check if the user is a client
 
-
-  //if they are a client, 
+  //if they are a client,
   if (usertype === "client") {
     //if they are, grab listings where the client id matches the user
     useEffect(() => {
@@ -20,9 +19,8 @@ function MyListings() {
       })
     }, [])
 
-    //create an array of listings mapped to the axios response 
+    //create an array of listings mapped to the axios response
     const listingsItems = listings.map((listing) => {
-
       //change true/false/null to more readable strings
       //change "assigned pilot"
       if (listing.assignedPilot === null) {
@@ -51,14 +49,14 @@ function MyListings() {
               {listing.listingId}
             </Link>
           </td>
-          <td>
-            <Link to={`/clientAccount`}></Link>
-            {listing.clientId}
-          </td>
-          <td>
-            <Link to={`/pilotProfile/${listing.assignedPilot}`}></Link>
-            {listing.assignedPilot}
-          </td>
+          {listing.assignedPilot === "None" && <td>{listing.assignedPilot}</td>}
+          {listing.assignedPilot !== "None" && 
+            <td>
+              <NavLink to={`/userProfile/pilot/${listing.assignedPilot}`}>
+                {listing.assignedPilot}
+              </NavLink>
+            </td>
+          }
           <td>${listing.offer}</td>
           <td>{listing.flightDate}</td>
           <td>{hardwareProvided}</td>
@@ -87,7 +85,6 @@ function MyListings() {
           <thead>
             <tr>
               <th>Listing ID</th>
-              <th>Client ID</th>
               <th>Assigned Pilot</th>
               <th>Offer</th>
               <th>Flight Date</th>
@@ -103,10 +100,12 @@ function MyListings() {
       </>
     )
   } else {
-    return <>
-      <h1>Oops!</h1>
-      <p>You must be logged in as a client to create a listing</p>
-    </>
+    return (
+      <>
+        <h1>Oops!</h1>
+        <p>You must be logged in as a client to create a listing</p>
+      </>
+    )
   }
 }
 

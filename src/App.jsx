@@ -1,6 +1,7 @@
 import "./App.css"
 import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider,} from "react-router-dom"
 import getOneListing from "./functions/getOneListing.js"
+import getAccountDetails from "./functions/getAccountDetails.js"
 //imort universal pages
 import Home from "./pages/universal pages/Home.jsx"
 import MyAccount from "./pages/universal pages/MyAccount.jsx"
@@ -10,6 +11,7 @@ import Register from "./pages/universal pages/Register.jsx"
 import Listings from "./pages/universal pages/Listings.jsx"
 import ErrorPage from "./pages/universal pages/ErrorPage.jsx"
 import Welcome from "./pages/universal pages/Welcome.jsx"
+import OtherProfile from "./pages/universal pages/OtherProfile.jsx"
 //import client pages
 import ClientHome from "./pages/client pages/ClientHome.jsx"
 import MyListings from "./pages/client pages/MyListings.jsx"
@@ -30,7 +32,7 @@ import ReceivedReviews from "./pages/client pages/ReceivedReviews.jsx"
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Home/>} errorElement={<ErrorPage/>}>
-      {/* unauth routes */}
+      {/* universal routes */}
       <Route index element={<Welcome />} />
       <Route path="/myAccount" element={<MyAccount />}/>
       <Route path="/listings" element={<Listings />} />
@@ -38,6 +40,7 @@ const router = createBrowserRouter(
       <Route path="/about" element={<About />} />
       <Route path="/register" element={<Register />} />
       <Route path="/receivedReviews" element={<ReceivedReviews />} />
+      <Route path="/userProfile/:userType/:userId" element={<OtherProfile />} loader={getAccountDetails} />
       {/* client routes */}
       <Route path="/clientHome" element={<ClientHome />}/>
       <Route path="/myListings" element={<MyListings />}/>

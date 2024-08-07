@@ -22,11 +22,11 @@ function Listings() {
 
       //change assigned pilot
       let assignedPilot
-        if(listing.assignedPilot === null){
-            assignedPilot = "Unclaimed"
-        } else { 
-            assignedPilot = listing.assignedPilot
-        }
+      if (listing.assignedPilot === null) {
+        assignedPilot = "Unclaimed"
+      } else {
+        assignedPilot = listing.assignedPilot
+      }
       //change "hardware provided"
       let hardwareProvided
       if (listing.hardwareProvided === true) {
@@ -58,13 +58,18 @@ function Listings() {
             </Link>
           </td>
           <td>
-            <Link to={`/clientAccount`}></Link>
-            {listing.clientId}
+            <NavLink to={`/userProfile/client/${listing.clientId}`}>
+              {listing.clientId}
+            </NavLink>
           </td>
-          <td>
-            <Link to={`/pilotProfile/${listing.assignedPilot}`}></Link>
-            {assignedPilot}
-          </td>
+          {assignedPilot === "Unclaimed" && <td>{assignedPilot}</td>}
+          {assignedPilot !== "Unclaimed" && (
+            <td>
+              <NavLink to={`/userProfile/pilot/${assignedPilot}`}>
+                {assignedPilot}
+              </NavLink>
+            </td>
+          )}
           <td>${listing.offer}</td>
           <td>{listing.flightDate}</td>
           <td>{hardwareProvided}</td>
@@ -73,6 +78,7 @@ function Listings() {
           <td>{listing.flightRadius}</td>
           <td>{listing.completed}</td>
         </tr>
+        
       )
     })
   } else {
@@ -81,11 +87,11 @@ function Listings() {
       //change true/false/null to more readable strings
       //change "assigned pilot"
       let assignedPilot
-        if(listing.assignedPilot === null){
-            assignedPilot = "Unclaimed"
-        } else { 
-            assignedPilot = "Claimed"
-        }
+      if (listing.assignedPilot === null) {
+        assignedPilot = "Unclaimed"
+      } else {
+        assignedPilot = "Claimed"
+      }
       //change "hardware provided"
       let hardwareProvided
       if (listing.hardwareProvided === true) {

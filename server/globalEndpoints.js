@@ -80,6 +80,21 @@ export const getMyAccount = async (req, res) => {
   }
 }
 
+export const  getOtherAccount = async (req, res) => {
+  if (!req.session.userId) {
+    res.status(401).send({null: "Must be logged in to view other accounts"})
+  } else {
+    if (req.params.userType === "client") {
+      const user = await Client.findByPk(req.params.userId)
+      user.password = null
+      res.send(user)
+    } else if (req.params.userType === "pilot") {
+      const user = await Pilot.findByPk(req.params.userId)
+      user.password = null
+      res.send(user)
+    }
+  }
+}
 //change account details based on the userID in the session
 export const editAccount = async (req, res) => {
   if (!req.session.userId) {

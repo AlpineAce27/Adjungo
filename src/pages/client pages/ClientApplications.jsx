@@ -34,9 +34,11 @@ function ClientApplications() {
             </Link>
           </td>
           <td>
-            <Link to={`/pilotProfile/${application.applyingPilot}`}></Link>
-            {application.applyingPilot}
-          </td>
+              <NavLink to={`/userProfile/pilot/${application.applyingPilot}`}>
+                {application.applyingPilot}
+              </NavLink>
+            </td>
+          <td>{Number(application.reviews.avgRating).toFixed(2)}</td>
           <td>
             <button onClick={()=>{
                 axios.put(`/api/acceptApplication/${application.applicationId}`).then((response)=> {setApplications(response.data)})
@@ -68,6 +70,7 @@ function ClientApplications() {
               <th>Application ID</th>
               <th>Listing ID</th>
               <th>Pilot ID</th>
+              <th>Pilot Rating</th>
               <th>Accept</th>
               <th>Deny</th>
             </tr>

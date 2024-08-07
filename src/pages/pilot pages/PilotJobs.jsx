@@ -52,8 +52,9 @@ function PilotJobs() {
             </Link>
           </td>
           <td>
-            <Link to={`/clientAccount`}></Link>
-            {listing.clientId}
+            <NavLink to={`/userProfile/client/${listing.clientId}`}>
+              {listing.clientId}
+            </NavLink>
           </td>
           <td>
             <Link to={`/pilotProfile/${listing.assignedPilot}`}></Link>

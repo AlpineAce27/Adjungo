@@ -1,4 +1,5 @@
 import { Listing, Pilot, Application, PilotReview } from "./database/model.js"
+import { Sequelize } from "sequelize"
 
 //return all listings with a specific client id
 export const getListingsByClient = async (req, res) => {
@@ -90,6 +91,8 @@ export const deleteListing = async (req, res) => {
 }
 //send all applications the current client has
 export const getApplicationsbyClient = async (req, res) => {
+  
+  // grabs all applications for a specific user
   const applications = await Application.findAll({
     include: {
       model: Listing,
@@ -98,29 +101,33 @@ export const getApplicationsbyClient = async (req, res) => {
       },
     },
   })
- 
-  //console.log(applications)
-  //we would like to show the average rating of each pilot applying, so we add a "avgRating" property to each application object before sending it
-  const applicationsWithRatings = applications.map(async(application) => { 
-    //grab reviews of the pilot applying
+
+  // set up array with a butt-ton of info
+  // the data is wrapped in a Promise.all, because we are doing a repeated SQL query for each application in the array. We need to make sure we have all of that data before hitting the .send() method. If we don't put this in a Promise.all(), we'd be sending the unfulfilled Promise objects from our database
+  const applicationsWithRatings = await Promise.all(applications.map(async (application) => {
+
+    // creates a copy of the application object and does away with the Sequelize object data type
+    const applicationCopy = { ...application.dataValues }
+
+    // Finds all PilotReviews for the each pilot who applied
     const reviewsOnPilot = await PilotReview.findAll({
       where: {
-        reviewedPilot : application.applyingPilot
-      }
+        reviewedPilot: application.applyingPilot
+      },
+      // creates a column called 'avgRating' which is an aggregated average of the pilot_rating columns from the PilotReview
+      attributes: [
+        [Sequelize.fn('AVG', Sequelize.col('pilot_rating')), 'avgRating'],
+      ]
     })
-    //console.log(reviewsOnPilot)
-    //calculate the average rating that this user has
-    let total = 0
-    reviewsOnPilot.forEach((review) => {
-      total = total + Number(review.pilotRating)
-      //console.log(avg)
-    })
-    const rating = total / reviewsOnPilot.length
-    // application.pilotRating = rating
-    console.log("new application", rating)
-    return application
-  })
-  //console.log(applicationsWithRatings)
+
+    // Adds a new key-value pair to the applicationCopy that includes the average review rating
+    applicationCopy.reviews = reviewsOnPilot[0]
+
+    // returns applicationCopy to the applicationsWithRatings array
+    return applicationCopy
+  }))
+
+  // Sends the updated array of objects to the front end
   res.send(applicationsWithRatings)
 }
 
