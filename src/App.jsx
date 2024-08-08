@@ -2,6 +2,7 @@ import "./App.css"
 import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider,} from "react-router-dom"
 import getOneListing from "./functions/getOneListing.js"
 import getAccountDetails from "./functions/getAccountDetails.js"
+import getOneReview from "./functions/getOneReview.js"
 //imort universal pages
 import Home from "./pages/universal pages/Home.jsx"
 import MyAccount from "./pages/universal pages/MyAccount.jsx"
@@ -12,6 +13,7 @@ import Listings from "./pages/universal pages/Listings.jsx"
 import ErrorPage from "./pages/universal pages/ErrorPage.jsx"
 import Welcome from "./pages/universal pages/Welcome.jsx"
 import OtherProfile from "./pages/universal pages/OtherProfile.jsx"
+import MyCompletedJobs from "./pages/universal pages/MyCompletedJobs.jsx"
 import ReceivedReviews from "./pages/universal pages/ReceivedReviews.jsx"
 import GivenReviews from "./pages/universal pages/GivenReviews.jsx"
 import SingleReview from "./pages/universal pages/SingleReview.jsx"
@@ -45,6 +47,7 @@ const router = createBrowserRouter(
       <Route path="/givenReviews" element={<GivenReviews />} />
       <Route path="/review/:authorUserType/:reviewId" element={<SingleReview/>} loader={getOneReview}/>
       <Route path="/userProfile/:userType/:userId" element={<OtherProfile />} loader={getAccountDetails} />
+      <Route path="/myCompletedJobs" element={<MyCompletedJobs/>} />
       {/* client routes */}
       <Route path="/clientHome" element={<ClientHome />}/>
       <Route path="/myListings" element={<MyListings />}/>

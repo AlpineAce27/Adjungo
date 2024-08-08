@@ -53,7 +53,7 @@ export const getListingsByPilot = async (req, res) => {
     res.status(401).json({ error: "Unauthorized" })
   } else {
     const allListings = await Listing.findAll({
-      where: { assignedPilot: req.session.userId },
+      where: { assignedPilot: req.session.userId, completed: false },
     })
     res.send(allListings)
   }

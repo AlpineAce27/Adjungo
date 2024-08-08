@@ -8,7 +8,7 @@ export const getListingsByClient = async (req, res) => {
     res.status(401).json({ error: "Unauthorized" })
   } else {
     const allListings = await Listing.findAll({
-      where: { clientId: req.session.userId },
+      where: { clientId: req.session.userId, completed: false },
     })
     res.send(allListings)
   }
@@ -91,7 +91,6 @@ export const deleteListing = async (req, res) => {
 }
 //send all applications the current client has
 export const getApplicationsbyClient = async (req, res) => {
-  
   // grabs all applications for a specific user
   const applications = await Application.findAll({
     include: {
@@ -104,28 +103,29 @@ export const getApplicationsbyClient = async (req, res) => {
 
   // set up array with a butt-ton of info
   // the data is wrapped in a Promise.all, because we are doing a repeated SQL query for each application in the array. We need to make sure we have all of that data before hitting the .send() method. If we don't put this in a Promise.all(), we'd be sending the unfulfilled Promise objects from our database
-  const applicationsWithRatings = await Promise.all(applications.map(async (application) => {
+  const applicationsWithRatings = await Promise.all(
+    applications.map(async (application) => {
+      // creates a copy of the application object and does away with the Sequelize object data type
+      const applicationCopy = { ...application.dataValues }
 
-    // creates a copy of the application object and does away with the Sequelize object data type
-    const applicationCopy = { ...application.dataValues }
+      // Finds all PilotReviews for the each pilot who applied
+      const reviewsOnPilot = await PilotReview.findAll({
+        where: {
+          reviewedPilot: application.applyingPilot,
+        },
+        // creates a column called 'avgRating' which is an aggregated average of the pilot_rating columns from the PilotReview
+        attributes: [
+          [Sequelize.fn("AVG", Sequelize.col("pilot_rating")), "avgRating"],
+        ],
+      })
 
-    // Finds all PilotReviews for the each pilot who applied
-    const reviewsOnPilot = await PilotReview.findAll({
-      where: {
-        reviewedPilot: application.applyingPilot
-      },
-      // creates a column called 'avgRating' which is an aggregated average of the pilot_rating columns from the PilotReview
-      attributes: [
-        [Sequelize.fn('AVG', Sequelize.col('pilot_rating')), 'avgRating'],
-      ]
+      // Adds a new key-value pair to the applicationCopy that includes the average review rating
+      applicationCopy.reviews = reviewsOnPilot[0]
+
+      // returns applicationCopy to the applicationsWithRatings array
+      return applicationCopy
     })
-
-    // Adds a new key-value pair to the applicationCopy that includes the average review rating
-    applicationCopy.reviews = reviewsOnPilot[0]
-
-    // returns applicationCopy to the applicationsWithRatings array
-    return applicationCopy
-  }))
+  )
 
   // Sends the updated array of objects to the front end
   res.send(applicationsWithRatings)
@@ -159,7 +159,7 @@ export const acceptApplication = async (req, res) => {
   const { applicationId } = req.params
   const application = await Application.findByPk(applicationId)
   //console.log(application)
-  console.log('session', req.session)
+  console.log("session", req.session)
 
   const listing = await Listing.findByPk(application.applyingListing)
   //console.log(listing.listingId, listing.assignedPilot, listing.clientId)
@@ -180,26 +180,26 @@ export const acceptApplication = async (req, res) => {
       },
     })
 
-    const applicationsWithRatings = await Promise.all(applications.map(async (application) => {
+    const applicationsWithRatings = await Promise.all(
+      applications.map(async (application) => {
+        const applicationCopy = { ...application.dataValues }
 
-      const applicationCopy = { ...application.dataValues }
+        const reviewsOnPilot = await PilotReview.findAll({
+          where: {
+            reviewedPilot: application.applyingPilot,
+          },
+          attributes: [
+            [Sequelize.fn("AVG", Sequelize.col("pilot_rating")), "avgRating"],
+          ],
+        })
 
-      const reviewsOnPilot = await PilotReview.findAll({
-        where: {
-          reviewedPilot: application.applyingPilot
-        },
-        attributes: [
-          [Sequelize.fn('AVG', Sequelize.col('pilot_rating')), 'avgRating'],
-        ]
+        applicationCopy.reviews = reviewsOnPilot[0]
+
+        return applicationCopy
       })
-
-      applicationCopy.reviews = reviewsOnPilot[0]
-
-      return applicationCopy
-    }))
+    )
 
     res.send(applicationsWithRatings)
-
   } else {
     res.status(401).json({
       error: "The Client ID on the listing does not match Current User ID",
@@ -212,7 +212,7 @@ export const denyApplication = async (req, res) => {
   const { applicationId } = req.params
   const application = await Application.findByPk(applicationId)
   //console.log(application)
-  console.log('session', req.session)
+  console.log("session", req.session)
 
   const listing = await Listing.findByPk(application.applyingListing)
   //console.log(listing.listingId, listing.assignedPilot, listing.clientId)
@@ -230,26 +230,26 @@ export const denyApplication = async (req, res) => {
       },
     })
 
-    const applicationsWithRatings = await Promise.all(applications.map(async (application) => {
+    const applicationsWithRatings = await Promise.all(
+      applications.map(async (application) => {
+        const applicationCopy = { ...application.dataValues }
 
-      const applicationCopy = { ...application.dataValues }
+        const reviewsOnPilot = await PilotReview.findAll({
+          where: {
+            reviewedPilot: application.applyingPilot,
+          },
+          attributes: [
+            [Sequelize.fn("AVG", Sequelize.col("pilot_rating")), "avgRating"],
+          ],
+        })
 
-      const reviewsOnPilot = await PilotReview.findAll({
-        where: {
-          reviewedPilot: application.applyingPilot
-        },
-        attributes: [
-          [Sequelize.fn('AVG', Sequelize.col('pilot_rating')), 'avgRating'],
-        ]
+        applicationCopy.reviews = reviewsOnPilot[0]
+
+        return applicationCopy
       })
-
-      applicationCopy.reviews = reviewsOnPilot[0]
-
-      return applicationCopy
-    }))
+    )
 
     res.send(applicationsWithRatings)
-
   } else {
     res.status(401).json({
       error: "The Client ID on the listing does not match Current User ID",

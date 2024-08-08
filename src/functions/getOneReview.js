@@ -1,11 +1,13 @@
 import axios from "axios"
 
-//this is the function that the loader user to retreive an exact listing object via a listingId
+//this is the function that the loader user to retreive an exact review object via an author usertype and review Id
 async function getOneReview({params}) {
     const {authorUserType, reviewId} = params
-    //console.log("log before the axios request", axios)
-   const { review } = await axios.get(`/api/review/${authorUserType}/${reviewId}`)
-   //console.log("grabbed listing:", listingId)
+   let review
+   await axios.get(`/api/review/${authorUserType}/${reviewId}`).then((response) => {
+    review = response.data
+    review.authorUserType = authorUserType
+   })
    return review
  }
  

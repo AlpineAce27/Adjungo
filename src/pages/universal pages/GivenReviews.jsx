@@ -1,8 +1,8 @@
-import { NavLink, Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import axios from "axios"
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
-import getUsersRating from "../../functions/getUsersRating"
+
 
 function GivenReviews() {
   //grabbing the usertype from redux store
@@ -25,7 +25,6 @@ function GivenReviews() {
       axios.get("/api/givenReviews").then((response) => {
         setGivenReviews(response.data)
       })
-      getRatings()
     }, [])
 
     //create an array of listings mapped to the axios response
@@ -37,7 +36,10 @@ function GivenReviews() {
         <>
           {userType === "client" && (
             <tr key={review.pilotReviewId}>
-              <td>{review.pilotReviewId}</td>
+              <td> <NavLink to={`/review/client/${review.pilotReviewId}`}>
+                {review.pilotReviewId}
+              </NavLink></td>
+              
               <td>
               <NavLink to={`/userProfile/pilot/${review.reviewedPilot}`}>
                 {review.reviewedPilot}
@@ -49,7 +51,9 @@ function GivenReviews() {
           )}
           {userType === "pilot" && (
             <tr key={review.clientReviewId}>
-              <td>{review.clientReviewId}</td>
+              <td> <NavLink to={`/review/pilot/${review.clientReviewId}`}>
+                {review.clientReviewId}
+              </NavLink></td>
               <NavLink to={`/userProfile/client/${review.reviewedClient}`}>
                 {review.reviewedClient}
               </NavLink>

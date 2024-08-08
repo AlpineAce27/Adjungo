@@ -20,7 +20,8 @@ import {
   getSingleReview,
   getOneGivenReview,
   editGivenReview,
-  deleteGivenReview
+  deleteGivenReview,
+  getMyCompletedJobs
 } from "./globalEndpoints.js"
 import { 
   getListingsByClient,
@@ -68,6 +69,7 @@ app.get("/api/review/:authorUserType/:reviewId", getSingleReview)
 app.get("/api/givenReviews/:reviewId", getOneGivenReview)
 app.put("/api/givenReviews/:reviewId", editGivenReview)
 app.delete("/api/givenReviews/:reviewId", deleteGivenReview)
+app.get(`/api/myCompletedJobs`, getMyCompletedJobs)
 
 //Client-Only endpoints
 app.get('/api/mylistings', getListingsByClient)

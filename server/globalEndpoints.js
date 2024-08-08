@@ -246,7 +246,7 @@ export const createReview = async (req, res) => {
 //get a single review
 export const getSingleReview = async (req, res) => {
   const {authorUserType, reviewId} = req.params
-
+  console.log(authorUserType, reviewId)
   if(authorUserType === "client"){
     //search the pilot reviews table for a matching authorId and review Id
     const review = await PilotReview.findByPk(reviewId)
@@ -275,10 +275,12 @@ export const getOneGivenReview = async (req, res) => {
 export const editGivenReview = async (req, res) => {
   const { reviewId } = req.params
   const { changes } = req.body //req.body should come with an object called changes that contains all the properties and values to be changed
+  console.log("server hit, changes requested:", changes)
   if (req.session.userType === "client") {
     const review = await PilotReview.findByPk(reviewId)
     review.set(changes)
     review.save()
+    console.log("review saved:", review)
     res.send(review)
   } else if (req.session.userType === "pilot") {
     const review = await ClientReview.findByPk(reviewId)
@@ -299,4 +301,27 @@ export const deleteGivenReview = async (req, res) => {
     review.save()
     res.send(review)
   }
+}
+
+export const getMyCompletedJobs = async (req, res) => {
+  //find jobs that are labeled "complete" with the owner Id mathcing the current user Id
+ if(req.session.userType === "client"){
+  const completedListings = await Listing.findAll({
+    where: {
+      completed: true,
+      clientId: req.session.userId,
+    },
+  })
+  res.send(completedListings)
+ }
+ else if (req.session.userType === "pilot"){
+  //find jobs that are labeled "complete" where the assigned pilot matches the current user Id
+  const completedListings = await Listing.findAll({
+    where: {
+      completed: true,
+      assignedPilot: req.session.userId,
+    },
+  })
+  res.send(completedListings)
+ }
 }

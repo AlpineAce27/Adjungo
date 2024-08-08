@@ -79,6 +79,7 @@ function MyListings() {
           also show how many applications it has, with a link to the
           applications page.
         </p>
+        <NavLink to="/myCompletedJobs">View Completed Jobs</NavLink>
         {/* <input type="checkbox" id="showCompleted" name="showCompleted" value="showCompleted"/>
       <label for="showCompleted">Show Completed Jobs:</label> */}
         <table>

@@ -1,6 +1,5 @@
 import axios from "axios"
-import { useLoaderData } from "react-router-dom"
-import { useNavigate } from "react-router-dom"
+import { useLoaderData, useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { useSelector } from "react-redux"
 
@@ -137,7 +136,7 @@ function ClientSingleListing() {
           and "cancel"
         </p>
         <form onSubmit={handleListingEdit}>
-          <label htmlFor="clientId">Client ID: {userid}</label>
+          <label htmlFor="clientId">Client ID: {userId}</label>
           <br />
           <label htmlFor="offer">Offer: </label>
           <input
