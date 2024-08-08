@@ -10,8 +10,9 @@ function MyCompletedJobs() {
   //create a state value for an array of listings
   const [completedListings, setcompletedListings] = useState([])
   const [givenReviews, setGivenReviews] = useState([])
+  const [alreadyReviewed, setAlreadyReviewed] = useState(false)
   const navigate = useNavigate()
-  let alreadyReviewed = false
+  //let alreadyReviewed = false
   //if they are a client,
   if (usertype === "client") {
     //if they are, grab completed jobs where the owner is matches the client ID, as well as any reviews on the assigned pilot
@@ -28,9 +29,12 @@ function MyCompletedJobs() {
     //create an array of listings mapped to the axios response
     const completedListingsItems = completedListings.map((listing) => {
       //check to see if this client has already reviewed the assigned pilot on this job
-      alreadyReviewed = givenReviews.some(
+      let asdf = givenReviews.some(
         (review) => review.reviewedPilot === listing.assignedPilot
       )
+      if(asdf){
+        setAlreadyReviewed(true)
+      }
     //   console.log(
     //     userId,
     //     "has already reviewed",
@@ -38,7 +42,7 @@ function MyCompletedJobs() {
     //     ":",
     //     alreadyReviewed
     //   )
-      const thisReview = givenReviews.filter((review) => {review.pilotReviewd === listing.assignedPilot})
+      const thisReview = givenReviews.filter((review) => review.pilotReviewd === listing.assignedPilot)
       //create a table row with each variable in the correct spot
       return (
         <tr key={listing.listingId}>
