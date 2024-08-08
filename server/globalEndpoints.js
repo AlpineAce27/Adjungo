@@ -206,13 +206,14 @@ export const createReview = async (req, res) => {
           clientId: req.session.userId,
         },
       })
-      if (reviewAllowed == true) {
+      console.log(reviewAllowed)
+      if (reviewAllowed) {
         newReview.reviewedPilot = IdBeingReviewed
         newReview.clientReviewing = req.session.userId
         newReview.reviewContent = reviewContent
         newReview.pilotRating = reviewRating
-        console.log(newReview)
         PilotReview.create(newReview)
+        console.log("new review created:", newReview)
         res.send(newReview)
       } else {
         res.send("Clients cannot review pilots that they have not worked with")
@@ -225,12 +226,13 @@ export const createReview = async (req, res) => {
           assignedPilot: req.session.userId,
         },
       })
-      if (reviewAllowed == true){
+      if (reviewAllowed){
       newReview.reviewedClient = IdBeingReviewed
       newReview.pilotReviewing = req.session.userId
       newReview.reviewContent = reviewContent
       newReview.clientRating = reviewRating
       ClientReview.create(newReview)
+      console.log("new review created:", newReview)
       res.send(newReview)
       }else {
         res.send("Pilots cannot review clients that they have not worked with")
@@ -297,9 +299,8 @@ export const deleteGivenReview = async (req, res) => {
     res.send(`review ${reviewId} has been deleted`)
   } else if (req.session.userType === "pilot") {
     const review = await ClientReview.findByPk(reviewId)
-    review.set(changes)
-    review.save()
-    res.send(review)
+    review.destroy()
+    res.send(`review ${reviewId} has been deleted`)
   }
 }
 

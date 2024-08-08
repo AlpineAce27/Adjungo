@@ -81,6 +81,7 @@ function PilotJobs() {
           see more details on it. There should also be a "completed" tab where
           the pilot can view all of their completed jobs.
         </p>
+        <NavLink to="/myCompletedJobs">View My Completed Jobs</NavLink>
         {/* <input type="checkbox" id="showCompleted" name="showCompleted" value="showCompleted"/>
       <label for="showCompleted">Show Completed Jobs:</label> */}
         <table>

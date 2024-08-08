@@ -3,6 +3,7 @@ import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider,} f
 import getOneListing from "./functions/getOneListing.js"
 import getAccountDetails from "./functions/getAccountDetails.js"
 import getOneReview from "./functions/getOneReview.js"
+import paramsPassthrough from "./functions/paramsPassthrough.js"
 //imort universal pages
 import Home from "./pages/universal pages/Home.jsx"
 import MyAccount from "./pages/universal pages/MyAccount.jsx"
@@ -17,6 +18,7 @@ import MyCompletedJobs from "./pages/universal pages/MyCompletedJobs.jsx"
 import ReceivedReviews from "./pages/universal pages/ReceivedReviews.jsx"
 import GivenReviews from "./pages/universal pages/GivenReviews.jsx"
 import SingleReview from "./pages/universal pages/SingleReview.jsx"
+import CreateReview from "./pages/universal pages/CreateReview.jsx"
 //import client pages
 import ClientHome from "./pages/client pages/ClientHome.jsx"
 import MyListings from "./pages/client pages/MyListings.jsx"
@@ -48,6 +50,7 @@ const router = createBrowserRouter(
       <Route path="/review/:authorUserType/:reviewId" element={<SingleReview/>} loader={getOneReview}/>
       <Route path="/userProfile/:userType/:userId" element={<OtherProfile />} loader={getAccountDetails} />
       <Route path="/myCompletedJobs" element={<MyCompletedJobs/>} />
+      <Route path="/createReview/:userBeingReviewed" element={<CreateReview/>} loader={paramsPassthrough}/>
       {/* client routes */}
       <Route path="/clientHome" element={<ClientHome />}/>
       <Route path="/myListings" element={<MyListings />}/>
