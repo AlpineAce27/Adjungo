@@ -16,6 +16,7 @@ function MyCompletedJobs() {
   if (usertype === "client") {
     //if they are, grab completed jobs where the owner is matches the client ID, as well as any reviews on the assigned pilot
     useEffect(() => {
+        console.log("useeffect hit")
       axios.get("/api/myCompletedJobs").then((response) => {
         setcompletedListings(response.data)
       })
@@ -30,13 +31,13 @@ function MyCompletedJobs() {
       alreadyReviewed = givenReviews.some(
         (review) => review.reviewedPilot === listing.assignedPilot
       )
-      console.log(
-        userId,
-        "has already reviewed",
-        listing.assignedPilot,
-        ":",
-        alreadyReviewed
-      )
+    //   console.log(
+    //     userId,
+    //     "has already reviewed",
+    //     listing.assignedPilot,
+    //     ":",
+    //     alreadyReviewed
+    //   )
       const thisReview = givenReviews.filter((review) => {review.pilotReviewd === listing.assignedPilot})
       //create a table row with each variable in the correct spot
       return (

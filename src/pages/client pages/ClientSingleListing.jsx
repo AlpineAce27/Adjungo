@@ -13,7 +13,7 @@ function ClientSingleListing() {
 
   //create a function to change the value of editing
   function handleEditButton(e) {
-    e.preventDefault()
+    //e.preventDefault()
     setEditing(!editing)
   }
 
