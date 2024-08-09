@@ -2,6 +2,7 @@ import { NavLink, Link } from "react-router-dom"
 import axios from "axios"
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
+import { BiListPlus } from "react-icons/bi";
 
 function MyListings() {
   //grabbing the usertype from redux store
@@ -97,7 +98,7 @@ function MyListings() {
           </thead>
           <tbody>{listingsItems}</tbody>
         </table>
-        <NavLink to="/NewListing">Create a New Listing</NavLink>
+        <NavLink to="/NewListing"> <BiListPlus /> Create a New Listing</NavLink>
       </>
     )
   } else {

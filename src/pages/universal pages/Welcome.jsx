@@ -1,4 +1,4 @@
-import GreenButton from "../../components/GreenButton"
+
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
@@ -19,15 +19,15 @@ function Welcome() {
           message. a button/link to the logout page should be provided near to
           beginning,
         </p>
-        <GreenButton
-          text="Log out"
-          onClickFunction={() => {
-                axios.post("/api/logout")
-              dispatch({ type: "LOGOUT" })
-              navigate("/")
-            }
-          }
-        />
+        <button
+          onClick={() => {
+            axios.post("/api/logout")
+            dispatch({ type: "LOGOUT" })
+            navigate("/")
+          }}
+        >
+          Log Out
+        </button>
       </>
     )
   } else {
@@ -40,24 +40,26 @@ function Welcome() {
           should be provided near to beginning,
         </p>
 
-        <GreenButton
-          text="Log In"
-          onClickFunction={() => {
+        <button
+          onClick={() => {
             navigate("/login")
           }}
-        />
-
+        >
+          Log In
+        </button>
+          <img src="src\assets\photos\mitch-nielsen-pWtNPCpvVA8-unsplash.jpg" alt="" />
         <p>
           and after scrolling through details a link to the account creation
           page should be provided toward the end of the page.
         </p>
 
-        <GreenButton
-          text="Create an Account"
-          onClickFunction={() => {
+        <button
+          onClick={() => {
             navigate("/register")
           }}
-        />
+        >
+          Create an Account
+        </button>
       </>
     )
   }

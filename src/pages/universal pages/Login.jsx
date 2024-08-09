@@ -2,7 +2,6 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import axios from "axios"
-import GreenButton from "../../components/GreenButton"
 
 //create the function
 function Login() {
@@ -93,7 +92,7 @@ function Login() {
         <br />
         <br />
         {/*when this button is clicked, we run the handler function we made above*/}
-        <GreenButton text="Client Log In" onClickFunction={handleClientLogin} />
+        <button onClick={handleClientLogin}>Client Log In</button>
         <br />
         <br />
         <br />
@@ -119,7 +118,7 @@ function Login() {
         <br />
         <br />
         {/*when this button is clicked, we run the handler function we made above*/}
-        <GreenButton text="Pilot Log In" onClickFunction={handlePilotLogin} />
+        <button onClick={handlePilotLogin}>Pilot Log In</button>
       </div>
       <br />
       <br />
