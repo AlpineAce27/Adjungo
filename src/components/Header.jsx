@@ -161,7 +161,7 @@ function Header() {
             onClick={() => {
               navigate("/myAccount")
             }}
-            className="flex w-[160px] items-center hover: cursor-pointer"
+            className="flex w-[190px] items-center hover: cursor-pointer pr-10"
           >
             <MdAccountCircle size={25} style={{ color: "#08BFA1" }} />
             <section className="pl-2 font-rubik font-medium text-[20px] text-ADJO_Keppel">
@@ -243,7 +243,7 @@ function Header() {
             onClick={() => {
               navigate("/myAccount")
             }}
-            className="flex w-[160px] items-center hover: cursor-pointer"
+            className="flex w-[190px] items-center hover: cursor-pointer pr-10"
           >
             <MdAccountCircle size={25} style={{ color: "#08BFA1" }} />
             <section className="pl-2 font-rubik font-medium text-[20px] text-ADJO_Keppel">
