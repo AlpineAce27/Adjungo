@@ -23,31 +23,43 @@ function ClientApplications() {
     //create an array of listings mapped to the axios response
     const applicationsItems = applications.map((application) => {
       //create a table row with each variable in the correct spot
+      let rating = Number(application.reviews.avgRating).toFixed(2)
       return (
-        <tr key={application.applicationId}>
+        <tr key={application.applicationId} className="pt-2 pb-2 border-b-2 border-opacity-10 border-b-AJGO_DarkSlateGray">
              <td>
              {application.applicationId}
           </td>
           <td>
-            <Link to={`/clientListing/${application.applyingListing}`}>
-              {application.applyingListing}
-            </Link>
+          <button onClick={()=>{navigate(`/clientListing/${application.applyingListing}`)}} className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium"> {application.applyingListing}</button>
           </td>
           <td>
-              <NavLink to={`/userProfile/pilot/${application.applyingPilot}`}>
-                {application.applyingPilot}
-              </NavLink>
+          <button onClick={()=>{navigate(`/userProfile/pilot/${application.applyingPilot}`)}} className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium"> {application.applyingPilot}</button>
             </td>
-          <td>{Number(application.reviews.avgRating).toFixed(2)}</td>
+          {rating < 2 &&
+          <td className="text-[#dc2626] font-medium">{rating}</td>
+          }
+          {rating >= 2 && rating < 3 &&
+          <td className="text-[#ea580c] font-medium">{rating}</td>
+          }
+          {rating >= 3 && rating < 4 &&
+          <td className="text-[#fbbf24] font-medium">{rating}</td>
+          }
+          {rating >= 4 && rating < 5 &&
+          <td className="text-[#84cc16] font-medium">{rating}</td>
+          }
           <td>
             <button onClick={()=>{
                 axios.put(`/api/acceptApplication/${application.applicationId}`).then((response)=> {setApplications(response.data)})
-            }}>Accept</button>
+            }}
+            className="bg-ADJO_Keppel opacity-70 rounded-full w-20 text-black font-medium"
+            >Accept</button>
           </td>
           <td>
             <button onClick={()=>{
                 axios.delete(`/api/denyApplication/${application.applicationId}`).then((response)=> {setApplications(response.data)})
-            }}>Deny</button>
+            }}
+            className="border border-[#b91c1c] opacity-70 rounded-full w-20 text-[#b91c1c]"
+            >Deny</button>
           </td>
         </tr>
       )
@@ -64,9 +76,11 @@ function ClientApplications() {
           of these header labels would be clickable and result in the
           applications being filtered by that field.
         </p>
-        <table>
+        <section className="flex justify-center">
+          <div className="flex justify-center bg-ADJO_Celeste bg-opacity-30 w-full ps-10 pt-5 pb-5">
+        <table className="table-auto border-collapse font-rubik">
           <thead>
-            <tr>
+            <tr className="border-b-4 border-opacity-30 border-b-AJGO_DarkSlateGray">
               <th>Application ID</th>
               <th>Listing ID</th>
               <th>Pilot ID</th>
@@ -77,6 +91,8 @@ function ClientApplications() {
           </thead>
           <tbody>{applicationsItems}</tbody>
         </table>
+          </div>
+        </section>
         <NavLink to="/myListings">See all My Listings</NavLink>
       </>
     )

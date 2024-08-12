@@ -5,3 +5,16 @@
 button:hover {
   cursor: pointer; 
 }
+
+footer {
+  bottom : 0;
+  left: 0;
+  width: 100vw;
+}
+
+td, th{
+  text-align: center;
+  padding: 2px;
+  padding-left: 5px;
+  padding-right: 5px;
+}

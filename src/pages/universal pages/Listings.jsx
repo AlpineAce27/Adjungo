@@ -1,9 +1,10 @@
-import { NavLink, Link } from "react-router-dom"
+import { NavLink, Link, Navigate, useNavigate } from "react-router-dom"
 import axios from "axios"
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 
 function Listings() {
+  const navigate = useNavigate()
   //grabbing the usertype from redux store
   let userType = useSelector((state) => state.userType)
   //create a state value for an array of listings
@@ -41,33 +42,20 @@ function Listings() {
       } else {
         softwareProvided = "No"
       }
-      //change "completed"
-      let completed
-      if (listing.completed === true) {
-        completed = "Yes"
-      } else {
-        completed = "No"
-      }
 
       //create a table row with each variable in the correct spot
       return (
-        <tr key={listing.listingId}>
+        <tr key={listing.listingId} className="pt-2 pb-2 border-b-2 border-opacity-10 border-b-AJGO_DarkSlateGray">
           <td>
-            <Link to={`/${userType}Listing/${listing.listingId}`}>
-              {listing.listingId}
-            </Link>
+          <button onClick={()=>{navigate(`/${userType}Listing/${listing.listingId}`)}} className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium"> {listing.listingId}</button>
           </td>
           <td>
-            <NavLink to={`/userProfile/client/${listing.clientId}`}>
-              {listing.clientId}
-            </NavLink>
+          <button onClick={()=>{navigate(`/userProfile/client/${listing.clientId}`)}} className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium"> {listing.clientId}</button>
           </td>
           {assignedPilot === "Unclaimed" && <td>{assignedPilot}</td>}
           {assignedPilot !== "Unclaimed" && (
             <td>
-              <NavLink to={`/userProfile/pilot/${assignedPilot}`}>
-                {assignedPilot}
-              </NavLink>
+              <button onClick={()=>{navigate(`/userProfile/pilot/${assignedPilot}`)}} className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium">  {assignedPilot}</button>
             </td>
           )}
           <td>${listing.offer}</td>
@@ -78,7 +66,6 @@ function Listings() {
           <td>{listing.flightRadius}</td>
           <td>{listing.completed}</td>
         </tr>
-        
       )
     })
   } else {
@@ -116,7 +103,10 @@ function Listings() {
 
       //create a table row with each variable in the correct spot
       return (
-        <tr key={listing.listingId}>
+        <tr
+          key={listing.listingId}
+          className="pt-2 pb-2 border-b-2 border-opacity-10 border-b-AJGO_DarkSlateGray"
+        >
           <td>{listing.listingId}</td>
           <td>{listing.clientId}</td>
           <td>{assignedPilot}</td>
@@ -134,30 +124,44 @@ function Listings() {
   //render all the elements we created on the page
   return (
     <>
-      <h1>Welcome the Adjugo Listings</h1>
-      <p>
-        This page should show all listings on the site! they can easily sort by
-        any column header, and click on any listing to see more details on it.
+    <section className="flex-col justify-center items-center">
+      <div className="flex justify-center">
+      <h1 className="pt-10 pb-10 font-rubik font-medium text-[40px] text-AJGO_DarkSlateGray justify-center">Welcome the Adjugo Listings</h1>
+      </div>
+      <div className="flex-col items-center pl-20 pr-20 justify-center">
+      <p className="font-rubik text-l pb-5 justify-center">
+        This page shows all the listings on the entire Adjungo site! If you want to see more details on a 
+        specific listing, then you can log in and explore more in depth! You can easily sort by
+        any column header by clicking on it.
       </p>
+      </div>
+     
+      
+    
+    </section>
+      
       {/* <input type="checkbox" id="showCompleted" name="showCompleted" value="showCompleted"/>
         <label for="showCompleted">Show Completed Jobs:</label> */}
-      <table>
-        <thead>
-          <tr>
-            <th>Listing ID</th>
-            <th>Client ID</th>
-            <th>Assigned Pilot</th>
-            <th>Offer</th>
-            <th>Flight Date</th>
-            <th>Hardware Provided</th>
-            <th>Software Provided</th>
-            <th>Flight Location</th>
-            <th>Flight Radius</th>
-            <th>Completed</th>
-          </tr>
-        </thead>
-        <tbody>{listingsItems}</tbody>
-      </table>
+      <section className="flex justify-center pb-10">
+        <div className="flex justify-center bg-ADJO_Celeste bg-opacity-30 rounded-xl w-3/4 ps-10 pt-5 pb-5">
+          <table className="table-auto border-collapse font-rubik pb-20">
+            <thead>
+              <tr className="border-b-4 border-opacity-30 border-b-AJGO_DarkSlateGray">
+                <th>Listing ID</th>
+                <th>Client ID</th>
+                <th>Assigned Pilot</th>
+                <th>Offer</th>
+                <th>Flight Date</th>
+                <th>Hardware Provided</th>
+                <th>Software Provided</th>
+                <th>Flight Location</th>
+                <th>Flight Radius</th>
+              </tr>
+            </thead>
+            <tbody>{listingsItems}</tbody>
+          </table>
+        </div>
+      </section>
     </>
   )
 }

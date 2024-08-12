@@ -1,10 +1,11 @@
-import { NavLink, Link } from "react-router-dom"
+import { NavLink, Link, useNavigate } from "react-router-dom"
 import axios from "axios"
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
-import { BiListPlus } from "react-icons/bi";
+import { BiListPlus } from "react-icons/bi"
 
 function MyListings() {
+  const navigate = useNavigate()
   //grabbing the usertype from redux store
   let usertype = useSelector((state) => state.userType)
   //create a state value for an array of listings
@@ -44,20 +45,35 @@ function MyListings() {
 
       //create a table row with each variable in the correct spot
       return (
-        <tr key={listing.listingId}>
+        <tr
+          key={listing.listingId}
+          className="pt-2 pb-2 border-b-2 border-opacity-10 border-b-AJGO_DarkSlateGray"
+        >
           <td>
-            <Link to={`/clientListing/${listing.listingId}`}>
+            <button
+              onClick={() => {
+                navigate(`/clientListing/${listing.listingId}`)
+              }}
+              className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium"
+            >
+              {" "}
               {listing.listingId}
-            </Link>
+            </button>
           </td>
           {listing.assignedPilot === "None" && <td>{listing.assignedPilot}</td>}
-          {listing.assignedPilot !== "None" && 
+          {listing.assignedPilot !== "None" && (
             <td>
-              <NavLink to={`/userProfile/pilot/${listing.assignedPilot}`}>
+              <button
+                onClick={() => {
+                  navigate(`/userProfile/pilot/${listing.assignedPilot}`)
+                }}
+                className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium"
+              >
+                {" "}
                 {listing.assignedPilot}
-              </NavLink>
+              </button>
             </td>
-          }
+          )}
           <td>${listing.offer}</td>
           <td>{listing.flightDate}</td>
           <td>{hardwareProvided}</td>
@@ -83,22 +99,39 @@ function MyListings() {
         <NavLink to="/myCompletedJobs">View Completed Jobs</NavLink>
         {/* <input type="checkbox" id="showCompleted" name="showCompleted" value="showCompleted"/>
       <label for="showCompleted">Show Completed Jobs:</label> */}
-        <table>
-          <thead>
-            <tr>
-              <th>Listing ID</th>
-              <th>Assigned Pilot</th>
-              <th>Offer</th>
-              <th>Flight Date</th>
-              <th>Hardware Provided</th>
-              <th>Software Provided</th>
-              <th>Flight Location</th>
-              <th>Flight Radius</th>
-            </tr>
-          </thead>
-          <tbody>{listingsItems}</tbody>
-        </table>
-        <NavLink to="/NewListing"> <BiListPlus /> Create a New Listing</NavLink>
+        <section className="flex justify-center">
+          <div className="flex justify-center bg-ADJO_Celeste bg-opacity-30 rounded-xl w-3/4 ps-10 pt-5 pb-5">
+            <table className="table-auto border-collapse font-rubik">
+              <thead>
+                <tr className="border-b-4 border-opacity-30 border-b-AJGO_DarkSlateGray">
+                  <th>Listing ID</th>
+                  <th>Assigned Pilot</th>
+                  <th>Offer</th>
+                  <th>Flight Date</th>
+                  <th>Hardware Provided</th>
+                  <th>Software Provided</th>
+                  <th>Flight Location</th>
+                  <th>Flight Radius</th>
+                </tr>
+              </thead>
+              <tbody>{listingsItems}</tbody>
+            </table>
+          </div>
+        </section>
+        <div className="flex justify-center">
+          <section
+            onClick={() => {
+              navigate("/NewListing")
+            }}
+            className="flex w-[25
+            0px] items-center hover: cursor-pointer"
+          >
+            <BiListPlus size={25} style={{ color: "#08BFA1" }} />
+            <section className="pl-2 font-rubik font-medium text-[20px] text-ADJO_Keppel">
+              Create a New Listing
+            </section>
+          </section>
+        </div>
       </>
     )
   } else {

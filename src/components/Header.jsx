@@ -19,82 +19,87 @@ function Header() {
     <>
       {/*Create a navbar for a user who is not logged in*/}
       {usertype !== "client" && usertype !== "pilot" && (
-        <nav className="flex justify-between items-center h-[8vh] bg-ADJO_Celeste">
+        <nav className="flex justify-between items-center h-[8vh] bg-ADJO_Celeste pr-10">
           {/*Div for the logo*/}
-          <div onClick={() => {
+          <div
+            onClick={() => {
               navigate("/")
-            }} className="w-[15vw] pl-10 ">
+            }}
+            className="w-[15vw] pl-10 "
+          >
             <img
               class="object-scale-down"
               src="src\assets\LogoTransparentBG.png"
               alt="Adjungo Logo"
             />
           </div>
-          {/*Empty Div for spacing*/}
-          <div></div>
 
-          {/*Section for the Home button*/}
-          <section
-            onClick={() => {
-              navigate("/")
-            }}
-            className="flex w-[120px] items-center hover: cursor-pointer"
-          >
-            <BiHomeAlt2 size={25} style={{ color: "#08BFA1" }} />
-            <section className="pl-2 font-rubik font-medium text-[20px] text-ADJO_Keppel">
-              Home
+          <div className="flex">
+            {/*Section for the Home button*/}
+            <section
+              onClick={() => {
+                navigate("/")
+              }}
+              className="flex w-[120px] items-center hover: cursor-pointer"
+            >
+              <BiHomeAlt2 size={25} style={{ color: "#08BFA1" }} />
+              <section className="pl-2 font-rubik font-medium text-[20px] text-ADJO_Keppel">
+                Home
+              </section>
             </section>
-          </section>
 
-          {/*Section for the Listings button*/}
-          <section
-            onClick={() => {
-              navigate("/listings")
-            }}
-            className="flex w-[120px] items-center hover: cursor-pointer"
-          >
-            <BiListUl size={25} style={{ color: "#08BFA1" }} />
-            <section className="pl-2 font-rubik font-medium text-[20px] text-ADJO_Keppel">
-              Listings
+            {/*Section for the Listings button*/}
+            <section
+              onClick={() => {
+                navigate("/listings")
+              }}
+              className="flex w-[120px] items-center hover: cursor-pointer"
+            >
+              <BiListUl size={25} style={{ color: "#08BFA1" }} />
+              <section className="pl-2 font-rubik font-medium text-[20px] text-ADJO_Keppel">
+                Listings
+              </section>
             </section>
-          </section>
 
-          {/*Section for the Login button*/}
-          <section
-            onClick={() => {
-              navigate("/login")
-            }}
-            className="flex w-[120px] items-center hover: cursor-pointer"
-          >
-            <BiLogIn size={25} style={{ color: "#08BFA1" }} />
-            <section className="pl-2 font-rubik font-medium text-[20px] text-ADJO_Keppel">
-              Login
+            {/*Section for the About button*/}
+            <section
+              onClick={() => {
+                navigate("/about")
+              }}
+              className="flex w-[120px] items-center hover: cursor-pointer"
+            >
+              <MdQuestionMark size={25} style={{ color: "#08BFA1" }} />
+              <section className="pl-2 font-rubik font-medium text-[20px] text-ADJO_Keppel">
+                About
+              </section>
             </section>
-          </section>
 
-          {/*Section for the About button*/}
-          <section
-            onClick={() => {
-              navigate("/about")
-            }}
-            className="flex w-[120px] items-center hover: cursor-pointer"
-          >
-            <MdQuestionMark size={25} style={{ color: "#08BFA1" }} />
-            <section className="pl-2 font-rubik font-medium text-[20px] text-ADJO_Keppel">
-              About
+            {/*Section for the Login button*/}
+            <section
+              onClick={() => {
+                navigate("/login")
+              }}
+              className="flex w-[120px] items-center hover: cursor-pointer"
+            >
+              <BiLogIn size={25} style={{ color: "#08BFA1" }} />
+              <section className="pl-2 font-rubik font-medium text-[20px] text-ADJO_Keppel">
+                Login
+              </section>
             </section>
-          </section>
-          <div></div>
+          </div>
         </nav>
       )}
 
       {/*Create a navbar for a user who is logged in as a pilot*/}
       {usertype === "pilot" && (
-        <nav className="flex justify-between items-center h-[8vh] bg-ADJO_Celeste" >
+        <nav className="flex justify-between items-center h-[8vh] bg-ADJO_Celeste">
           {/*Div for the logo*/}
-          <div className="w-[15vw] pl-10 " onClick={() => {
-          navigate("/")
-        }}>
+          <div
+            className="w-[15vw] pl-10 "
+            onClick={() => {
+              navigate("/")
+            }}
+          >
             <img
               class="object-scale-down"
               src="src\assets\LogoTransparentBG.png"
@@ -174,9 +179,12 @@ function Header() {
       {usertype === "client" && (
         <nav className="flex justify-between items-center h-[8vh] bg-ADJO_Celeste">
           {/*Div for the logo*/}
-          <div className="w-[15vw] pl-10 " onClick={() => {
+          <div
+            className="w-[15vw] pl-10 "
+            onClick={() => {
               navigate("/")
-            }}>
+            }}
+          >
             <img
               class="object-scale-down"
               src="src\assets\LogoTransparentBG.png"

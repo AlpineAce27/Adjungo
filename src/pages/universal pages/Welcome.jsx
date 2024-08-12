@@ -36,19 +36,19 @@ function Welcome() {
     return (
       <main>
         <section className="flex bg-AJGO_White">
-          <div className="flex-col justify-between, w-1/2">
+          <div className="flex flex-col justify-around items-center w-1/2" >
             <div className="flex justify-center">
-              <h1 className="pt-10 pb-10 font-rubik font-medium text-[50px] text-AJGO_DarkSlateGray justify-center">
+              <h1 className=" font-rubik font-medium text-[50px] text-AJGO_DarkSlateGray justify-center">
                 Welcome to Adjungo!
               </h1>
             </div >
-            <div className="flex-col items-center pl-20 pr-20 justify-center" >
+            <div className="flex flex-col items-center pl-20 pr-20 justify-center h-[50%]" >
               <p className="font-rubik text-xl pb-5">
                 Whether your a solo-pilot with a fresh new 107 card, or a
                 multi-national corporation, Adjungo is here to fastrack your
                 partnership with a qualified pilot, or interested client
               </p>
-              <p className="font-rubik text-xl pb-10">
+              <p className="font-rubik text-xl">
                 Check out our listings page to get an idea of what kinds of Jobs
                 the Adjungo community is doing! Or if you want to know more
                 about Adjungo itself, checkout the about page. If you're already
