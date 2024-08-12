@@ -7,7 +7,7 @@ import { Outlet } from "react-router-dom"
 function Home() {
 
   return (
-    <div id="homePage">
+    <div id="homePage" className="flex-col justify-between">
       <Header />
       <Outlet />
       <Footer />

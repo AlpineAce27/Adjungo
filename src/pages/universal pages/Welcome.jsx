@@ -35,41 +35,62 @@ function Welcome() {
   } else {
     return (
       <main>
-        <section className="flex-col items-center bg-AJGO_White">
-          <h1 className="pt-20 pb-10 font-rubik font-medium text-[50px] text-AJGO_DarkSlateGray">
-            Welcome to Adjungo!
-          </h1>
+        <section className="flex bg-AJGO_White">
+          <div className="flex-col justify-between, w-1/2">
+            <div className="flex justify-center">
+              <h1 className="pt-10 pb-10 font-rubik font-medium text-[50px] text-AJGO_DarkSlateGray justify-center">
+                Welcome to Adjungo!
+              </h1>
+            </div >
+            <div className="flex-col items-center pl-20 pr-20 justify-center" >
+              <p className="font-rubik text-xl pb-5">
+                Whether your a solo-pilot with a fresh new 107 card, or a
+                multi-national corporation, Adjungo is here to fastrack your
+                partnership with a qualified pilot, or interested client
+              </p>
+              <p className="font-rubik text-xl pb-10">
+                Check out our listings page to get an idea of what kinds of Jobs
+                the Adjungo community is doing! Or if you want to know more
+                about Adjungo itself, checkout the about page. If you're already
+                an Adjungo member, go ahead and log in!
+              </p>
+            </div>
+            <div className="flex justify-center">
+              <button
+                className="bg-ADJO_Keppel px-8 py-1 text-xl text- uppercase font-rubik rounded-lg"
+                onClick={() => {
+                  navigate("/login")
+                }}
+              >
+                Log In
+              </button>
+            </div>
+          </div>
+          <div className="w-1/2">
+            <img
+              src="src\assets\photos\mitch-nielsen-pWtNPCpvVA8-unsplash.jpg"
+              alt=""
+            />
+          </div>
+        </section>
+        <section className="flex-col bg-AJGO_Platnum pt-10 pb-10">
+          <div className="flex justify-center">
+            <p className="font-rubik text-xl ps-5 pb-5">
+              New to Adjungo and want to boost your drone operations? Create an
+              account for free and get started!
+            </p>
+          </div>
+                <div className="flex justify-center">
           <button
-            className="bg-ADJO_Keppel px-10 py-2 text-xl text- uppercase"
+            className="bg-ADJO_Keppel px-8 py-1 text-xl text- uppercase font-rubik rounded-lg"
             onClick={() => {
-              navigate("/login")
+              navigate("/register")
             }}
           >
-            Log In
+            Create an Account
           </button>
-          <p className="font-rubik text-xl">
-            Whether your a solo-pilot with a fresh new 107 card, or a
-            multi-national corporation, Adjungo is here to get you paired with the
-            best pilots and clients.
-          </p>
+                </div>
         </section>
-
-        <img
-          src="src\assets\photos\mitch-nielsen-pWtNPCpvVA8-unsplash.jpg"
-          alt=""
-        />
-        <p>
-          and after scrolling through details a link to the account creation
-          page should be provided toward the end of the page.
-        </p>
-
-        <button
-          onClick={() => {
-            navigate("/register")
-          }}
-        >
-          Create an Account
-        </button>
       </main>
     )
   }
