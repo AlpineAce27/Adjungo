@@ -28,7 +28,6 @@ import ClientReviews from "./pages/client pages/ClientReviews.jsx"
 import NewListing from "./pages/client pages/NewListing.jsx"
 //import pilot pages
 import PilotHome from "./pages/pilot pages/PilotHome.jsx"
-import PilotApplications from "./pages/pilot pages/PilotApplications.jsx"
 import PilotJobs from "./pages/pilot pages/PilotJobs.jsx"
 import PilotJobsApplied from "./pages/pilot pages/PilotJobsApplied.jsx"
 import PilotSingleListing from "./pages/pilot pages/PilotSingleListing.jsx"
@@ -60,7 +59,6 @@ const router = createBrowserRouter(
       <Route path="/newListing" element={<NewListing />}/>
       {/* pilot routes */}
       <Route path="/pilotHome" element={<PilotHome />}/>
-      <Route path="/pilotApplications" element={<PilotApplications />}/>
       <Route path="/pilotJobs" element={<PilotJobs />}/>
       <Route path="/pilotJobsApplied" element={<PilotJobsApplied />}/>
       <Route path="/pilotListing/:listingId" element={<PilotSingleListing />} loader={getOneListing}/>

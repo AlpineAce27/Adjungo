@@ -141,7 +141,7 @@ function Header() {
               }}
               className="flex w-[160px] items-center hover: cursor-pointer"
             >
-              <PiUserList size={25} style={{ color: "#08BFA1" }} />
+              <PiUserList size={30} style={{ color: "#08BFA1" }} />
               <section className="pl-2 font-rubik font-medium text-[20px] text-ADJO_Keppel">
                 My Jobs
               </section>
@@ -156,7 +156,7 @@ function Header() {
             >
               <MdOutlineAssignment size={25} style={{ color: "#08BFA1" }} />
               <section className="pl-2 font-rubik font-medium text-[20px] text-ADJO_Keppel">
-                Applied Jobs
+                Applications
               </section>
             </section>
 
@@ -165,11 +165,11 @@ function Header() {
               onClick={() => {
                 navigate("/myAccount")
               }}
-              className="flex w-[190px] items-center hover: cursor-pointer pr-10"
+              className="flex w-[150px] items-center hover: cursor-pointer pr-5"
             >
               <MdAccountCircle size={25} style={{ color: "#08BFA1" }} />
               <section className="pl-2 font-rubik font-medium text-[20px] text-ADJO_Keppel">
-                My Account
+                Account
               </section>
             </section>
           </div>
@@ -224,11 +224,11 @@ function Header() {
             onClick={() => {
               navigate("/myListings")
             }}
-            className="flex w-[180px] items-center hover: cursor-pointer"
+            className="flex w-[160px] items-center hover: cursor-pointer"
           >
-            <PiUserList size={25} style={{ color: "#08BFA1" }} />
+            <PiUserList size={30} style={{ color: "#08BFA1" }} />
             <section className="pl-2 font-rubik font-medium text-[20px] text-ADJO_Keppel">
-              My Listings
+              My Jobs
             </section>
           </section>
 
@@ -241,7 +241,7 @@ function Header() {
           >
             <MdOutlineAssignmentInd size={25} style={{ color: "#08BFA1" }} />
             <section className="pl-2 font-rubik font-medium text-[20px] text-ADJO_Keppel">
-              My Applications
+              Applications
             </section>
           </section>
 
@@ -250,11 +250,11 @@ function Header() {
             onClick={() => {
               navigate("/myAccount")
             }}
-            className="flex w-[190px] items-center hover: cursor-pointer pr-10"
+            className="flex w-[150px] items-center hover: cursor-pointer pr-5"
           >
             <MdAccountCircle size={25} style={{ color: "#08BFA1" }} />
             <section className="pl-2 font-rubik font-medium text-[20px] text-ADJO_Keppel">
-              My Account
+              Account
             </section>
           </section>
           </div>

@@ -45,17 +45,44 @@ function Listings() {
 
       //create a table row with each variable in the correct spot
       return (
-        <tr key={listing.listingId} className="pt-2 pb-2 border-b-2 border-opacity-10 border-b-AJGO_DarkSlateGray">
+        <tr
+          key={listing.listingId}
+          className="pt-2 pb-2 border-b-2 border-opacity-10 border-b-AJGO_DarkSlateGray"
+        >
           <td>
-          <button onClick={()=>{navigate(`/${userType}Listing/${listing.listingId}`)}} className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium"> {listing.listingId}</button>
+            <button
+              onClick={() => {
+                navigate(`/${userType}Listing/${listing.listingId}`)
+              }}
+              className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium"
+            >
+              {" "}
+              {listing.listingId}
+            </button>
           </td>
           <td>
-          <button onClick={()=>{navigate(`/userProfile/client/${listing.clientId}`)}} className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium"> {listing.clientId}</button>
+            <button
+              onClick={() => {
+                navigate(`/userProfile/client/${listing.clientId}`)
+              }}
+              className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium"
+            >
+              {" "}
+              {listing.clientId}
+            </button>
           </td>
           {assignedPilot === "Unclaimed" && <td>{assignedPilot}</td>}
           {assignedPilot !== "Unclaimed" && (
             <td>
-              <button onClick={()=>{navigate(`/userProfile/pilot/${assignedPilot}`)}} className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium">  {assignedPilot}</button>
+              <button
+                onClick={() => {
+                  navigate(`/userProfile/pilot/${assignedPilot}`)
+                }}
+                className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium"
+              >
+                {" "}
+                {assignedPilot}
+              </button>
             </td>
           )}
           <td>${listing.offer}</td>
@@ -124,43 +151,42 @@ function Listings() {
   //render all the elements we created on the page
   return (
     <>
-    <div className="flex-col items-center">
-    <section className="flex-col justify-center items-center">
-      <div className="flex justify-center">
-      <h1 className="pt-10 pb-10 font-rubik font-medium text-[40px] text-AJGO_DarkSlateGray justify-center">Welcome the Adjugo Listings</h1>
-      </div>
-      <div className="flex-col items-center ps-20 justify-center">
-      <p className="font-rubik text-l pb-5">
-        This page shows all the listings on the entire Adjungo site! If you want to see more details on a 
-        specific listing, then you can log in and explore more in depth! You can easily sort by
-        any column header by clicking on it.
-      </p>
-      </div>
-    </section>
-      
-      {/* <input type="checkbox" id="showCompleted" name="showCompleted" value="showCompleted"/>
+      <div className="flex-col items-center">
+        <section className="flex flex-col justify-center items-center">
+          <h1 className="pt-10 pb-10 font-rubik font-medium text-[40px] text-AJGO_DarkSlateGray justify-center">
+            Welcome the Adjugo Listings
+          </h1>
+          <p className="font-rubik text-l pb-5 w-3/4 text-center">
+            This page shows all the listings on the entire Adjungo site! If you
+            want to see more details on a specific listing, then you can log in
+            and explore more in depth! You can easily sort by any column header
+            by clicking on it.
+          </p>
+        </section>
+
+        {/* <input type="checkbox" id="showCompleted" name="showCompleted" value="showCompleted"/>
         <label for="showCompleted">Show Completed Jobs:</label> */}
-      <section className="flex justify-center pb-10">
-        <div className="flex justify-center bg-ADJO_Celeste bg-opacity-30 rounded-xl w-3/4 ps-10 pt-5 pb-5">
-          <table className="table-auto border-collapse font-rubik pb-20">
-            <thead>
-              <tr className="border-b-4 border-opacity-30 border-b-AJGO_DarkSlateGray">
-                <th>Listing ID</th>
-                <th>Client ID</th>
-                <th>Assigned Pilot</th>
-                <th>Offer</th>
-                <th>Flight Date</th>
-                <th>Hardware Provided</th>
-                <th>Software Provided</th>
-                <th>Flight Location</th>
-                <th>Flight Radius</th>
-              </tr>
-            </thead>
-            <tbody>{listingsItems}</tbody>
-          </table>
-        </div>
-      </section>
-    </div>
+        <section className="flex justify-center pb-10">
+          <div className="flex justify-center bg-ADJO_Celeste bg-opacity-30 rounded-xl w-11/12 pr-10 pl-10 pt-5 pb-5">
+            <table className="table-auto border-collapse font-rubik pb-20">
+              <thead>
+                <tr className="border-b-4 border-opacity-30 border-b-AJGO_DarkSlateGray">
+                  <th className="w-[100px]">Listing ID</th>
+                  <th className="w-[100px]">Client ID</th>
+                  <th className="w-[100px]">Assigned Pilot</th>
+                  <th className="w-[100px]">Offer</th>
+                  <th className="w-[130px]">Flight Date</th>
+                  <th>Hardware Provided</th>
+                  <th>Software Provided</th>
+                  <th className="w-[500px]">Flight Location</th>
+                  <th>Flight Radius</th>
+                </tr>
+              </thead>
+              <tbody>{listingsItems}</tbody>
+            </table>
+          </div>
+        </section>
+      </div>
     </>
   )
 }

@@ -25,6 +25,7 @@ function Register() {
   const handleAccountCreation = (e) => {
     e.preventDefault()
     let newAccount = {}
+    console.log("handler function hit")
     if(accountType === "client"){
         newAccount = {
             company: company,
@@ -71,12 +72,7 @@ function Register() {
       />
       <label for="accountType">Pilot Account</label>
       <p>
-        This page have two buttons at the top that say client and pilot,
-        depending on what type of account you want to create you are. You should
-        be able to click on the button and the form below will change to show
-        the corresponding form for that user type. If all fields are filled out
-        correctly, you should be able to click a "create" button at the bottom
-        of the page, after which you should be redirected to the login page.
+        Welcome to the account creation page
       </p>
       {accountType === "client" && (
         <>
@@ -115,17 +111,15 @@ function Register() {
             <input
               type="radio"
               name="individual"
-              value={individual}
+              checked={individual}
               onChange={() => setIndividual(true)}
-              required
             />
             <label htmlFor="individual">Yes</label>
             <input
               type="radio"
               name="individual"
-              value={individual}
+              checked={!individual}
               onChange={() => setIndividual(false)}
-              required
             />
             <label htmlFor="individual">No</label>
             <br />
@@ -165,7 +159,7 @@ function Register() {
               required
             />
             <br />
-            <input type="submit" value="Create my Account" />
+            <input type="button" value="Create my Account" className="bg-ADJO_Keppel" onClick={()=> handleAccountCreation}/>
           </form>
         </>
       )}
@@ -245,7 +239,7 @@ function Register() {
               required
             />
             <br />
-            <input type="submit" value = "Create my Account" />
+            <input type="button" value="Create my Account" className="bg-ADJO_Keppel" onClick={()=> handleAccountCreation}/>
           </form>
         </>
       )}
