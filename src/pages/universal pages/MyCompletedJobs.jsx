@@ -68,22 +68,21 @@ function MyCompletedJobs() {
           <td>{listing.flightAddress}</td>
           <td>{listing.flightRadius}</td>
           {pilotArray.includes(listing.assignedPilot) && (
-            <td>
-              <button className="h-8 w-8 rounded-full bg-ADJO_Keppel"
-                onClick={() =>
-                  navigate(`/review/client/${thisReview[0].pilotReviewId}`)}>
-                <BiCommentEdit size={20} style={{ color: "#000000" }}/>
-              </button>
-            </td>
+            <td className="flex justify-center align-middle">
+            <button className="flex h-8 w-8 rounded-full bg-ADJO_Keppel justify-center align-middle"
+              onClick={() =>
+                navigate(`/review/client/${thisReview[0].pilotReviewId}`)}>
+             <BiCommentEdit size={20} style={{ color: "#000000", alignSelf: 'center'}}/>
+            </button>
+          </td>
           )}
           {!pilotArray.includes(listing.assignedPilot) && (
-            <td>
-              <button className="h-8 w-8 rounded-full bg-[#fa8989] text-center"
-                onClick={() =>
-                  navigate(`/createReview/${listing.assignedPilot}`)}>
-                <BiCommentAdd  size={20} style={{ color: "#BDF3E7" }}/>
-              </button>
-            </td>
+            <td className="flex justify-center align-middle">
+            <button className="flex h-8 w-8 rounded-full bg-[#fa8989] justify-center align-middle"
+              onClick={() => navigate(`/createReview/${listing.assignedPilot}`)}>
+              <BiCommentAdd size={20} style={{ color: "#BDF3E7", alignSelf: 'center', }}/>
+            </button>
+          </td>
           )}
         </tr>
       )
@@ -168,22 +167,22 @@ function MyCompletedJobs() {
           <td>{listing.flightAddress}</td>
           <td>{listing.flightRadius}</td>
           {clientArray.includes(listing.clientId) && (
-            <td>
-              <button className="h-8 w-8 rounded-full bg-ADJO_Keppel"
+            <td className="flex justify-center align-middle">
+              <button className="flex h-8 w-8 rounded-full bg-ADJO_Keppel justify-center align-middle"
                 onClick={() =>
                   navigate(`/review/pilot/${thisReview[0].clientReviewId}`)
                 }
               >
-               <BiCommentEdit size={20} style={{ color: "#000000" }}/>
+               <BiCommentEdit size={20} style={{ color: "#000000", alignSelf: 'center'}}/>
               </button>
             </td>
           )}
           {!clientArray.includes(listing.clientId) && (
-            <td>
-              <button className="h-8 w-8 rounded-full bg-[#fa8989] "
+            <td className="flex justify-center align-middle">
+              <button className="flex h-8 w-8 rounded-full bg-[#fa8989] justify-center align-middle"
                 onClick={() => navigate(`/createReview/${listing.clientId}`)}
               >
-                <BiCommentAdd size={20} style={{ color: "#BDF3E7" }}/>
+                <BiCommentAdd size={20} style={{ color: "#BDF3E7", alignSelf: 'center', }}/>
               </button>
             </td>
           )}
