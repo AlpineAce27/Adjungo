@@ -124,20 +124,18 @@ function Listings() {
   //render all the elements we created on the page
   return (
     <>
+    <div className="flex-col items-center">
     <section className="flex-col justify-center items-center">
       <div className="flex justify-center">
       <h1 className="pt-10 pb-10 font-rubik font-medium text-[40px] text-AJGO_DarkSlateGray justify-center">Welcome the Adjugo Listings</h1>
       </div>
-      <div className="flex-col items-center pl-20 pr-20 justify-center">
-      <p className="font-rubik text-l pb-5 justify-center">
+      <div className="flex-col items-center ps-20 justify-center">
+      <p className="font-rubik text-l pb-5">
         This page shows all the listings on the entire Adjungo site! If you want to see more details on a 
         specific listing, then you can log in and explore more in depth! You can easily sort by
         any column header by clicking on it.
       </p>
       </div>
-     
-      
-    
     </section>
       
       {/* <input type="checkbox" id="showCompleted" name="showCompleted" value="showCompleted"/>
@@ -162,6 +160,7 @@ function Listings() {
           </table>
         </div>
       </section>
+    </div>
     </>
   )
 }
