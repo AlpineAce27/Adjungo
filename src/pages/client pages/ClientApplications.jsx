@@ -23,8 +23,11 @@ function ClientApplications() {
 
     //create an array of listings mapped to the axios response
     const applicationsItems = applications.map((application) => {
-      //create a table row with each variable in the correct spot
-      let rating = Number(application.reviews.avgRating).toFixed(2)
+     
+      const user = await axios.get(`/api/otherAccount/pilot/${application.applyingPilot}`)
+      console.log(user)
+
+       //create a table row with each variable in the correct spot
       return (
         <tr
           key={application.applicationId}
@@ -53,17 +56,17 @@ function ClientApplications() {
               {application.applyingPilot}
             </button>
           </td>
-          {rating < 2 && (
-            <td className="text-[#dc2626] font-medium">{rating}</td>
+          {user.rating < 2 && (
+            <td className="text-[#dc2626] font-medium">{user.rating}</td>
           )}
-          {rating >= 2 && rating < 3 && (
-            <td className="text-[#ea580c] font-medium">{rating}</td>
+          {user.rating >= 2 && user.rating < 3 && (
+            <td className="text-[#ea580c] font-medium">{user.rating}</td>
           )}
-          {rating >= 3 && rating < 4 && (
-            <td className="text-[#fbbf24] font-medium">{rating}</td>
+          {user.rating >= 3 && user.rating < 4 && (
+            <td className="text-[#fbbf24] font-medium">{user.rating}</td>
           )}
-          {rating >= 4 && rating < 5 && (
-            <td className="text-[#84cc16] font-medium">{rating}</td>
+          {user.rating >= 4 && user.rating < 5 && (
+            <td className="text-[#84cc16] font-medium">{user.rating}</td>
           )}
           <td>
             <button

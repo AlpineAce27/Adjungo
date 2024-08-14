@@ -113,7 +113,6 @@ export const  getOtherAccount = async (req, res) => {
       
     } else if (req.params.userType === "pilot") {
       const user = await Pilot.findByPk(req.params.userId)
-      console.log(user)
       const userCopy = { ...user.dataValues }
       delete userCopy.password
 
@@ -127,6 +126,7 @@ export const  getOtherAccount = async (req, res) => {
         ],
       })
       userCopy.rating = (+reviewsOnPilot[0].dataValues.avgRating).toFixed(2)
+      //console.log(userCopy)
       res.send(userCopy)
     }
   }
