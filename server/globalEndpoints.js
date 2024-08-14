@@ -113,6 +113,7 @@ export const  getOtherAccount = async (req, res) => {
       
     } else if (req.params.userType === "pilot") {
       const user = await Pilot.findByPk(req.params.userId)
+      console.log(user)
       const userCopy = { ...user.dataValues }
       delete userCopy.password
 

@@ -152,7 +152,7 @@ function Header() {
               onClick={() => {
                 navigate("/PilotJobsApplied")
               }}
-              className="flex w-[190px] items-center hover: cursor-pointer"
+              className="flex w-[200px] items-center hover: cursor-pointer"
             >
               <MdOutlineAssignment size={25} style={{ color: "#08BFA1" }} />
               <section className="pl-2 font-rubik font-medium text-[20px] text-ADJO_Keppel">
@@ -237,7 +237,7 @@ function Header() {
             onClick={() => {
               navigate("/clientApplications")
             }}
-            className="flex w-[220px] items-center hover: cursor-pointer"
+            className="flex w-[200px] items-center hover: cursor-pointer"
           >
             <MdOutlineAssignmentInd size={25} style={{ color: "#08BFA1" }} />
             <section className="pl-2 font-rubik font-medium text-[20px] text-ADJO_Keppel">

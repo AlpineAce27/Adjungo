@@ -77,7 +77,7 @@
     },
     {
       "clientId": 4,
-      "assignedPilot": 5,
+      "assignedPilot": 4,
       "offer": 25.32,
       "flightDate": "2024-04-22",
       "multiday": true,
