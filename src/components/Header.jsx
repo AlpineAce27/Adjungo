@@ -28,7 +28,7 @@ function Header() {
             className="w-[15vw] pl-10 "
           >
             <img
-              class="object-scale-down"
+              className="object-scale-down"
               src="src\assets\LogoTransparentBG.png"
               alt="Adjungo Logo"
             />

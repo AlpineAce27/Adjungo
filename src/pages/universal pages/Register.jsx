@@ -56,29 +56,29 @@ function Register() {
   }
   return (
     <>
-      <h1>Account Creation</h1>
+      <h1>Account Creation</h1>e
       <input
-        onChange={() => setAccountType("client")}
+        onChange={setAccountType("client")}
         type="radio"
         id="accountType"
         name="accountType"
       />
-      <label for="accountType">Client Account</label>
+      <label htmlFor="accountType">Client Account</label>
       <input
-        onChange={() => setAccountType("pilot")}
+        onChange={setAccountType("pilot")}
         type="radio"
         id="accountType"
         name="accountType"
       />
-      <label for="accountType">Pilot Account</label>
+      <label htmlFor="accountType">Pilot Account</label>
       <p>
         Welcome to the account creation page
       </p>
       {accountType === "client" && (
         <>
           <h1>Creating a client Account</h1>
-          <form onSubmit={handleAccountCreation}>
-            <label htmlFor="company">Company Name:</label>
+          <form>
+            <label htmlhtmlFor="company">Company Name:</label>
             <input
               type="text"
               name="company"
@@ -87,7 +87,7 @@ function Register() {
               required
             />
             <br />
-            <label htmlFor="website">Company Website:</label>
+            <label htmlhtmlFor="website">Company Website:</label>
             <input
               type="text"
               name="website"
@@ -96,7 +96,7 @@ function Register() {
               required
             />
             <br />
-            <label htmlFor="companyBio">Company Bio:</label>
+            <label htmlhtmlFor="companyBio">Company Bio:</label>
             <input
               type="text"
               name="companyBio"
@@ -105,25 +105,25 @@ function Register() {
               required
             />
             <br />
-            <label htmlFor="individual">
+            <label htmlhtmlFor="individual">
               Is this Company owned and operated by a single individual?
             </label>
             <input
               type="radio"
               name="individual"
               checked={individual}
-              onChange={() => setIndividual(true)}
+              onChange={setIndividual(true)}
             />
-            <label htmlFor="individual">Yes</label>
+            <label htmlhtmlFor="individual">Yes</label>
             <input
               type="radio"
               name="individual"
               checked={!individual}
-              onChange={() => setIndividual(false)}
+              onChange={setIndividual(false)}
             />
-            <label htmlFor="individual">No</label>
+            <label htmlhtmlFor="individual">No</label>
             <br />
-            <label htmlFor="email">Email:</label>
+            <label htmlhtmlFor="email">Email:</label>
             <input
               type="text"
               name="email"
@@ -132,7 +132,7 @@ function Register() {
               required
             />
             <br />
-            <label htmlFor="phone">Email:</label>
+            <label htmlhtmlFor="phone">Email:</label>
             <input
               type="text"
               name="phone"
@@ -141,7 +141,7 @@ function Register() {
               required
             />
             <br />
-            <label htmlFor="login">Username:</label>
+            <label htmlhtmlFor="login">Username:</label>
             <input
               type="text"
               name="login"
@@ -150,7 +150,7 @@ function Register() {
               required
             />
             <br />
-            <label htmlFor="password">Password:</label>
+            <label htmlhtmlFor="password">Password:</label>
             <input
               type="text"
               name="password"
@@ -159,15 +159,15 @@ function Register() {
               required
             />
             <br />
-            <input type="button" value="Create my Account" className="bg-ADJO_Keppel" onClick={()=> handleAccountCreation}/>
+            <input type="button" value="Create my Account" className="bg-ADJO_Keppel" onClick={() => handleAccountCreation()}/>
           </form>
         </>
       )}
       {accountType === "pilot" && (
         <>
           <h1>Creating a pilot Account</h1>
-          <form onSubmit={handleAccountCreation}>
-          <label htmlFor="fname">Pilot's First Name:</label>
+          <form>
+          <label htmlhtmlFor="fname">Pilot's First Name:</label>
             <input
               type="text"
               name="fname"
@@ -176,7 +176,7 @@ function Register() {
               required
             />
             <br />
-            <label htmlFor="lname">Pilot's Last Name:</label>
+            <label htmlhtmlFor="lname">Pilot's Last Name:</label>
             <input
               type="text"
               name="lname"
@@ -185,7 +185,7 @@ function Register() {
               required
             />
             <br />
-            <label htmlFor="pilotBio">Pilot Bio:</label>
+            <label htmlhtmlFor="pilotBio">Pilot Bio:</label>
             <input
               type="text"
               name="pilotBio"
@@ -194,7 +194,7 @@ function Register() {
               required
             />
             <br />
-            <label htmlFor="part107">Part 107 Registration #:</label>
+            <label htmlhtmlFor="part107">Part 107 Registration #:</label>
             <input
               type="text"
               name="part107"
@@ -203,7 +203,7 @@ function Register() {
               required
             />
             <br />
-            <label htmlFor="email">Email:</label>
+            <label htmlhtmlFor="email">Email:</label>
             <input
               type="text"
               name="email"
@@ -212,7 +212,7 @@ function Register() {
               required
             />
             <br />
-            <label htmlFor="phone">Phone:</label>
+            <label htmlhtmlFor="phone">Phone:</label>
             <input
               type="text"
               name="phone"
@@ -221,7 +221,7 @@ function Register() {
               required
             />
             <br />
-            <label htmlFor="login">Username:</label>
+            <label htmlhtmlFor="login">Username:</label>
             <input
               type="text"
               name="login"
@@ -230,7 +230,7 @@ function Register() {
               required
             />
             <br />
-            <label htmlFor="password">Password:</label>
+            <label htmlhtmlFor="password">Password:</label>
             <input
               type="text"
               name="password"
@@ -239,7 +239,7 @@ function Register() {
               required
             />
             <br />
-            <input type="button" value="Create my Account" className="bg-ADJO_Keppel" onClick={()=> handleAccountCreation}/>
+            <input type="button" value="Create my Account" className="bg-ADJO_Keppel" onClick={() => handleAccountCreation()}/>
           </form>
         </>
       )}

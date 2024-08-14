@@ -120,11 +120,11 @@ export const editAccount = async (req, res) => {
 export const createAccount = async (req, res) => {
   //req.body should come with an object called newAccount that contains all the properties and values to be made
   const { AccountType } = req.params //userType should come as either "Client" or "Pilot"
-  const { newAccount } = req.body
-  if (AccountType === "Client") {
+  const newAccount = req.body
+  if (AccountType === "client") {
     Client.create(newAccount)
     res.send(`New user created! ${AccountType}: ${newAccount.contactEmail}`)
-  } else if (AccountType === "Pilot") {
+  } else if (AccountType === "pilot") {
     Pilot.create(newAccount)
     res.send(`New user created! ${AccountType}: ${newAccount.contactEmail}`)
   }

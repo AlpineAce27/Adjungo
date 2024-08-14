@@ -69,7 +69,7 @@ function Welcome() {
           <div className="w-1/2">
             <img
               src="src\assets\photos\mitch-nielsen-pWtNPCpvVA8-unsplash.jpg"
-              alt=""
+              alt="A photo by Mitch Nielsen showing a hovering drone"
             />
           </div>
         </section>
