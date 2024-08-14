@@ -6,6 +6,8 @@ import {
   PilotReview,
 } from "./database/model.js"
 
+import { Sequelize } from "sequelize"
+
 //return all listings
 export const getAllListings = async (req, res) => {
   const allListings = await Listing.findAll({ where: { completed: false } })
@@ -84,14 +86,47 @@ export const  getOtherAccount = async (req, res) => {
   if (!req.session.userId) {
     res.status(401).send({null: "Must be logged in to view other accounts"})
   } else {
+    
     if (req.params.userType === "client") {
+      //find a client with the current userID
       const user = await Client.findByPk(req.params.userId)
-      user.password = null
-      res.send(user)
+      //make a copy
+      const userCopy = { ...user.dataValues }
+      //hide the password
+      delete userCopy.password
+      //get the reviews on this user
+      const reviewsOnClient = await ClientReview.findAll({
+        where: {
+          reviewedClient: req.params.userId
+        },
+        // creates a column called 'avgRating' which is an aggregated average of the client_rating columns from the Client_Review
+        attributes: [
+          [Sequelize.fn("AVG", Sequelize.col("client_rating")), "avgRating"],
+        ],
+      })
+      console.log(reviewsOnClient)
+      //add rating as a key/property on the user copy
+      userCopy.rating = (+reviewsOnClient[0].dataValues.avgRating).toFixed(2)
+      //console.log(userCopy)
+      //send the user copy
+      res.send(userCopy)
+      
     } else if (req.params.userType === "pilot") {
       const user = await Pilot.findByPk(req.params.userId)
-      user.password = null
-      res.send(user)
+      const userCopy = { ...user.dataValues }
+      delete userCopy.password
+
+      const reviewsOnPilot = await PilotReview.findAll({
+        where: {
+          reviewedPilot: req.params.userId
+        },
+        // creates a column called 'avgRating' which is an aggregated average of the client_rating columns from the Pilot_Review
+        attributes: [
+          [Sequelize.fn("AVG", Sequelize.col("pilot_rating")), "avgRating"],
+        ],
+      })
+      userCopy.rating = (+reviewsOnPilot[0].dataValues.avgRating).toFixed(2)
+      res.send(userCopy)
     }
   }
 }

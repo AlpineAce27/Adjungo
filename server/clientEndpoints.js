@@ -120,7 +120,7 @@ export const getApplicationsbyClient = async (req, res) => {
       })
 
       // Adds a new key-value pair to the applicationCopy that includes the average review rating
-      applicationCopy.reviews = reviewsOnPilot[0]
+      applicationCopy.reviews = (+reviewsOnPilot[0].dataValues.avgRating).toFixed(2)
 
       // returns applicationCopy to the applicationsWithRatings array
       return applicationCopy
