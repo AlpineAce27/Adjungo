@@ -46,7 +46,7 @@ function MyCompletedJobs() {
       )
       //create a table row with each variable in the correct spot
       return (
-        <tr key={listing.listingId}>
+        <tr key={listing.listingId} className="pt-2 pb-2 border-b-2 border-opacity-10 border-b-AJGO_DarkSlateGray">
           <td>
             <Link to={`/pilotListing/${listing.listingId}`}>
               {listing.listingId}
@@ -91,8 +91,9 @@ function MyCompletedJobs() {
     //render all the elements we created on the page
     return (
       <>
-        <h1>My Completed Jobs</h1>
-        <p>
+      <div className="flex flex-col items-center">
+        <h1 className="pt-10 pb-10 font-rubik font-medium text-[40px] text-AJGO_DarkSlateGray justify-center">My Completed Jobs</h1>
+        <p className="font-rubik text-l pb-5 w-3/4 text-center">
           This page should show all of the jobs that the user has completed.
           Each row should have a button at the end to allow them to update their
           review on that job's partner, or create a review for that jobs partner
@@ -100,9 +101,10 @@ function MyCompletedJobs() {
         </p>
         {/* <input type="checkbox" id="showCompleted" name="showCompleted" value="showCompleted"/>
       <label for="showCompleted">Show Completed Jobs:</label> */}
-        <table>
+      <div className="flex justify-center bg-ADJO_Celeste bg-opacity-30 rounded-xl w-11/12 pr-10 pl-10 pt-5 pb-5">
+        <table className="table-auto border-collapse font-rubik pb-20">
           <thead>
-            <tr>
+            <tr className="border-b-4 border-opacity-30 border-b-AJGO_DarkSlateGray">
               <th>Listing ID</th>
               <th>Client ID</th>
               <th>Assigned Pilot</th>
@@ -117,6 +119,8 @@ function MyCompletedJobs() {
           </thead>
           <tbody>{completedListingsItems}</tbody>
         </table>
+      </div>
+      </div>
       </>
     )
   } else if (userType === "pilot") {
@@ -145,7 +149,7 @@ function MyCompletedJobs() {
       )
       //create a table row with each variable in the correct spot
       return (
-        <tr key={listing.listingId}>
+        <tr key={listing.listingId} className="pt-2 pb-2 border-b-2 border-opacity-10 border-b-AJGO_DarkSlateGray">
           <td>
             <Link to={`/pilotListing/${listing.listingId}`}>
               {listing.listingId}

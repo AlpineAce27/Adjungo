@@ -5,28 +5,29 @@ import { useState } from "react"
 
 function Register() {
   const navigate = useNavigate()
-  const [accountType, setAccountType] = useState()
+  const [accountType, setAccountType] = useState('')
 
   //Universal properties
-  const [login, setLogin] = useState()
-  const [password, setPassword] = useState()
-  const [contactEmail, setContactEmail] = useState()
-  const [contactPhone, setContactPhone] = useState()
-  const [bio, setBio] = useState()
+  const [login, setLogin] = useState('')
+  const [password, setPassword] = useState('')
+  const [contactEmail, setContactEmail] = useState('')
+  const [contactPhone, setContactPhone] = useState('')
+  const [bio, setBio] = useState('')
   //client properties
-  const [company, setCompany] = useState()
-  const [website, setWebsite] = useState()
-  const [individual, setIndividual] = useState()
+  const [company, setCompany] = useState('')
+  const [website, setWebsite] = useState('')
+  const [individual, setIndividual] = useState('')
   //pilot properties
-  const [fname, setFname] = useState()
-  const [lname, setLname] = useState()
-  const [part107, setPart107] = useState()
+  const [fname, setFname] = useState('')
+  const [lname, setLname] = useState('')
+  const [part107, setPart107] = useState('')
 
   const handleAccountCreation = (e) => {
     e.preventDefault()
     let newAccount = {}
     console.log("handler function hit")
     if(accountType === "client"){
+      console.log('if hit')
         newAccount = {
             company: company,
             login: login,
@@ -39,6 +40,7 @@ function Register() {
         }
     }
     else if (accountType === "pilot"){
+      console.log('else if hit')
         newAccount = {
             fname: fname,
             lname: lname,
@@ -50,35 +52,42 @@ function Register() {
             part107Cert: part107,
         }
     }
+
     axios
-      .post(`/api/account/${accountType}`, {newAccount})
-      .then(() => {navigate("/login")})
+      .post(`/api/account/${accountType}`, newAccount)
+      .then((res) => {
+        console.log('post success hit')
+        navigate("/login")
+      })
+      .catch((err) => {
+        console.log('post error', err)
+      })
   }
   return (
     <>
-      <h1>Account Creation</h1>e
+      <h1>Account Creation</h1>
       <input
-        onChange={setAccountType("client")}
+        onChange={() => setAccountType("client")}
         type="radio"
         id="accountType"
         name="accountType"
       />
-      <label htmlFor="accountType">Client Account</label>
+      <label >Client Account</label>
       <input
-        onChange={setAccountType("pilot")}
+        onChange={() => setAccountType("pilot")}
         type="radio"
         id="accountType"
         name="accountType"
       />
-      <label htmlFor="accountType">Pilot Account</label>
+      <label >Pilot Account</label>
       <p>
         Welcome to the account creation page
       </p>
       {accountType === "client" && (
         <>
           <h1>Creating a client Account</h1>
-          <form>
-            <label htmlhtmlFor="company">Company Name:</label>
+          <form onSubmit={handleAccountCreation}>
+            <label htmlFor="company">Company Name:</label>
             <input
               type="text"
               name="company"
@@ -87,7 +96,7 @@ function Register() {
               required
             />
             <br />
-            <label htmlhtmlFor="website">Company Website:</label>
+            <label htmlFor="website">Company Website:</label>
             <input
               type="text"
               name="website"
@@ -96,7 +105,7 @@ function Register() {
               required
             />
             <br />
-            <label htmlhtmlFor="companyBio">Company Bio:</label>
+            <label htmlFor="companyBio">Company Bio:</label>
             <input
               type="text"
               name="companyBio"
@@ -105,25 +114,25 @@ function Register() {
               required
             />
             <br />
-            <label htmlhtmlFor="individual">
+            <label htmlFor="individual">
               Is this Company owned and operated by a single individual?
             </label>
             <input
               type="radio"
               name="individual"
               checked={individual}
-              onChange={setIndividual(true)}
+              onChange={() => setIndividual(true)}
             />
-            <label htmlhtmlFor="individual">Yes</label>
+            <label htmlFor="individual">Yes</label>
             <input
               type="radio"
               name="individual"
               checked={!individual}
-              onChange={setIndividual(false)}
+              onChange={() => setIndividual(false)}
             />
-            <label htmlhtmlFor="individual">No</label>
+            <label htmlFor="individual">No</label>
             <br />
-            <label htmlhtmlFor="email">Email:</label>
+            <label htmlFor="email">Email:</label>
             <input
               type="text"
               name="email"
@@ -132,7 +141,7 @@ function Register() {
               required
             />
             <br />
-            <label htmlhtmlFor="phone">Email:</label>
+            <label htmlFor="phone">Email:</label>
             <input
               type="text"
               name="phone"
@@ -141,7 +150,7 @@ function Register() {
               required
             />
             <br />
-            <label htmlhtmlFor="login">Username:</label>
+            <label htmlFor="login">Username:</label>
             <input
               type="text"
               name="login"
@@ -150,7 +159,7 @@ function Register() {
               required
             />
             <br />
-            <label htmlhtmlFor="password">Password:</label>
+            <label htmlFor="password">Password:</label>
             <input
               type="text"
               name="password"
@@ -159,15 +168,15 @@ function Register() {
               required
             />
             <br />
-            <input type="button" value="Create my Account" className="bg-ADJO_Keppel" onClick={() => handleAccountCreation()}/>
+            <input type="button" value="Create my Account" className="bg-ADJO_Keppel" onClick={handleAccountCreation}/>
           </form>
         </>
       )}
       {accountType === "pilot" && (
         <>
           <h1>Creating a pilot Account</h1>
-          <form>
-          <label htmlhtmlFor="fname">Pilot's First Name:</label>
+          <form onSubmit={handleAccountCreation}>
+          <label htmlFor="fname">Pilot's First Name:</label>
             <input
               type="text"
               name="fname"
@@ -176,7 +185,7 @@ function Register() {
               required
             />
             <br />
-            <label htmlhtmlFor="lname">Pilot's Last Name:</label>
+            <label htmlFor="lname">Pilot's Last Name:</label>
             <input
               type="text"
               name="lname"
@@ -185,7 +194,7 @@ function Register() {
               required
             />
             <br />
-            <label htmlhtmlFor="pilotBio">Pilot Bio:</label>
+            <label htmlFor="pilotBio">Pilot Bio:</label>
             <input
               type="text"
               name="pilotBio"
@@ -194,7 +203,7 @@ function Register() {
               required
             />
             <br />
-            <label htmlhtmlFor="part107">Part 107 Registration #:</label>
+            <label htmlFor="part107">Part 107 Registration #:</label>
             <input
               type="text"
               name="part107"
@@ -203,7 +212,7 @@ function Register() {
               required
             />
             <br />
-            <label htmlhtmlFor="email">Email:</label>
+            <label htmlFor="email">Email:</label>
             <input
               type="text"
               name="email"
@@ -212,7 +221,7 @@ function Register() {
               required
             />
             <br />
-            <label htmlhtmlFor="phone">Phone:</label>
+            <label htmlFor="phone">Phone:</label>
             <input
               type="text"
               name="phone"
@@ -221,7 +230,7 @@ function Register() {
               required
             />
             <br />
-            <label htmlhtmlFor="login">Username:</label>
+            <label htmlFor="login">Username:</label>
             <input
               type="text"
               name="login"
@@ -230,7 +239,7 @@ function Register() {
               required
             />
             <br />
-            <label htmlhtmlFor="password">Password:</label>
+            <label htmlFor="password">Password:</label>
             <input
               type="text"
               name="password"
@@ -239,7 +248,7 @@ function Register() {
               required
             />
             <br />
-            <input type="button" value="Create my Account" className="bg-ADJO_Keppel" onClick={() => handleAccountCreation()}/>
+            <input type="button" value="Create my Account" className="bg-ADJO_Keppel" onClick={handleAccountCreation}/>
           </form>
         </>
       )}
