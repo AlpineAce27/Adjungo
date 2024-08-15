@@ -27,7 +27,7 @@ function PilotSingleListing() {
     appliedForThisJob = applications.some(
       (application) => application.applyingListing === listing.listingId
     )
-    if(appliedForThisJob === true){
+    if (appliedForThisJob === true) {
       currListingApplication = applications.filter(application => application.applyingListing === listing.listingId)
       currListingApplication = currListingApplication[0]
       //console.log(currListingApplication)
@@ -38,7 +38,7 @@ function PilotSingleListing() {
     //if the current user has an application for this job, then this is in "applied"
     if (appliedForThisJob === true) {
       SetListingState("applied")
-      
+
     }
     //if the current user is the assigned pilot for this job, then it is in "assigned"
     else if (listing.assignedPilot === userId) {
@@ -50,35 +50,45 @@ function PilotSingleListing() {
   console.log("listing state", listingState)
   //Render this if they are not in edit mode
   return (
-    <>
-      <h1>Listing #{listing.listingId}</h1>
-      <div>
-        <p>
-          This page should show a single listing with all of it's details. From
-          a pilots perspective this listing can fall into 1 of the 3 categories:
+    <div className="flex flex-col items-center">
+
+      <div className="flex flex-col items-center pt-10 pb-10">
+        <h1 className=" font-rubik font-medium text-[50px] text-AJGO_DarkSlateGray justify-center">Listing #{listing.listingId}</h1>
+        <p className="font-rubik text-xl">
+          This show's all of detials for listing {listing.listingId}. Depending on your relationship with this listing, you can apply, retract or resign.
         </p>
-        <p>New: They havent had any interaction with it so far</p>
-        <p>
-          Applied For: They have applied for this job but haven't been
-          accepted/rejected yet
-        </p>
-        <p>Assigned To: They are the pilot assiged to this job</p>
-        depending on which relationship the pilot has with the listing,
-        different options should be shown. If it's new, there should be an
-        "apply" button. If they have already applied, there should be a "retract
-        application" button. If they are assigned to this job, there should be a
-        "resign from job" button.
       </div>
-      <div>
-        <h3>Listing Id: {listing.listingId}</h3>
-        <h3>Owner Id: {listing.clientId}</h3>
-        <br />
-        <p>Date: {listing.date}</p>
-        <p>Flight Address: {listing.flightAddress}</p>
+
+      <div className="flex pt-10 pb-10 justify-between font-rubik font-medium text-[25px] text-AJGO_DarkSlateGray">
+
+        <div className="pr-10 pl-10">
+          <h3 >Listing Id: {listing.listingId}</h3>
+          <h3>Owner Id: <button
+            onClick={() => {
+              navigate(`/userProfile/client/${listing.clientId}`)
+            }}
+            className="border-2 border-ADJO_Keppel opacity-70 rounded-full h-8 w-20 text-ADJO_Keppel text-lg font-medium"
+          >
+            {" "}
+            {listing.clientId}
+          </button></h3>
+        </div>
+
+        <div>
+          <p>Flight Date: {listing.flightDate}</p>
+          <p>Flight Address: {listing.flightAddress}</p>
+        </div>
+
+      </div >
+
+      <div className="flex pt-10 pb-10 font-rubik font-medium">
         <p>Description: {listing.description}</p>
-        <table>
+      </div>
+
+      <div className="flex justify-center bg-ADJO_Celeste bg-opacity-30 rounded-xl w-11/12 pr-10 pl-10 pt-5 pb-5">
+        <table className="table-auto border-collapse font-rubik pb-20">
           <thead>
-            <tr>
+            <tr className="border-b-4 border-opacity-30 border-b-AJGO_DarkSlateGray">
               <th>Offering</th>
               <th>Multi-Day Operation</th>
               <th>Providing Hardware</th>
@@ -101,25 +111,34 @@ function PilotSingleListing() {
           </tbody>
         </table>
       </div>
-      {listingState === "new" && (
-        <button onClick={() => {
-          axios.post(`/api/application/${listing.listingId}`)
-          navigate("/PilotJobsApplied")
-        }}>Apply For this Job</button>
-      )}
-      {listingState === "applied" && (
-        <button onClick={() => {
-          axios.delete(`/api/application/${currListingApplication.applicationId}`)
-          navigate("/PilotJobsApplied")
-        }}>Retract my Application</button>
-      )}
-      {listingState === "assigned" && (
-        <button onClick={() => {
-          axios.put(`/api/myJobs/${listing.listingId}`)
-          navigate("/PilotJobs")
-        }}>Resign from this job</button>
-      )}
-    </>
+
+      <div className="pt-10 pb-10">
+        {listingState === "new" && (
+          <button
+            className="bg-ADJO_Keppel px-8 py-1 text-xl text- uppercase font-rubik rounded-lg"
+            onClick={() => {
+              axios.post(`/api/application/${listing.listingId}`)
+              navigate("/PilotJobsApplied")
+            }}>Apply For this Job</button>
+        )}
+        {listingState === "applied" && (
+          <button
+            className="bg-ADJO_Keppel px-8 py-1 text-xl text- uppercase font-rubik rounded-lg"
+            onClick={() => {
+              axios.delete(`/api/application/${currListingApplication.applicationId}`)
+              navigate("/PilotJobsApplied")
+            }}>Retract my Application</button>
+        )}
+        {listingState === "assigned" && (
+          <button
+            className="bg-ADJO_Keppel px-8 py-1 text-xl text- uppercase font-rubik rounded-lg"
+            onClick={() => {
+              axios.put(`/api/myJobs/${listing.listingId}`)
+              navigate("/PilotJobs")
+            }}>Resign from this job</button>
+        )}
+      </div>
+    </div>
   )
 }
 
