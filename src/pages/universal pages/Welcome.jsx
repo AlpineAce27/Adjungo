@@ -12,7 +12,7 @@ function Welcome() {
     return (
       <main>
         <section>
-          <h1>Welcome to Adjungo!</h1>
+          <h1 className=" font-rubik font-medium text-[50px] text-AJGO_DarkSlateGray justify-center">Welcome to Adjungo!</h1>
           <p>
             This is the landing page for Adjungo for a user who is already
             logged it. It should show some pictures, a clean layout, and a
