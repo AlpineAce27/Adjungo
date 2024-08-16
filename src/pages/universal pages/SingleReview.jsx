@@ -76,62 +76,89 @@ function SingleReview() {
 
   if (editing === false) {
     return (
-      <>
-        <h1>Single Review Page</h1>
-        <p>
-          This page can show a review given to you, a review you made, or a
-          review made by another user for another user
-        </p>
-        {userType === "client" && review.clientReviewing === userId && (
-          <>
-            <p>
-              I, client #{userId}, created this review for pilot #
-              {review.reviewedPilot}
+      <div className="flex flex-col items-center w-full">
+        {review.clientReviewId &&
+          <h1 className=" font-rubik font-medium text-[50px] text-AJGO_DarkSlateGray justify-center">Client Review #{review.clientReviewId}</h1>
+        }
+        {review.pilotReviewId &&
+          <h1 className=" font-rubik font-medium text-[50px] text-AJGO_DarkSlateGray justify-center">Pilot Review #{review.pilotReviewId}</h1>
+        }
+
+        {(userType === "client" && review.clientReviewing === userId) && (
+          <div className="flex flex-col items-center w-full">
+            <p className="font-rubik text-xl">
+              You created this review for pilot #{review.reviewedPilot}
             </p>
+            <br />
             {editing === false && (
-              <>
-                <h3>Provided Rating: {review.pilotRating}</h3>
-                <p>Content: {review.reviewContent}</p>
-                <button onClick={handleEditButton}>Change My Review</button>
-                <button onClick={handleDeleteButton}>Delete my Review</button>
-              </>
+              <div className="flex flex-col items-start pl-10 pr-10">
+                <h3 className=" font-rubik font-medium text-[25px] text-AJGO_DarkSlateGray justify-center">Rating: {review.pilotRating}</h3>
+                <br />
+                <div >
+                  <h3 className=" font-rubik font-medium text-[25px] text-AJGO_DarkSlateGray justify-center">Content:</h3>
+                  <p className="font-rubik text-xl">{review.reviewContent}</p>
+                </div>
+                <br />
+                <div className="flex justify-center items-center">
+                  <button
+                    className="border-2 border-x-ADJO_Keppel px-8 py-1 text-xl text- uppercase font-rubik rounded-lg text-ADJO_Keppel"
+                    onClick={handleEditButton}>Change My Review</button>
+                  <button
+                    className="border-2 border-[#dd7d7d] px-8 py-1 text-xl text- uppercase font-rubik rounded-lg text-[#dd7d7d]"
+                    onClick={handleDeleteButton}>Delete my Review</button>
+                </div>
+              </div>
             )}
-          </>
+          </div>
         )}
-        {userType === "pilot" && review.pilotReviewing === userId && (
-          <>
-            <p>
-              I, pilot #{userId}, created this review fro client #
-              {review.reviewedClient}
+        {(userType === "pilot" && review.pilotReviewing === userId) && (
+          <div className="flex flex-col items-center w-full">
+            <p className="font-rubik text-xl">
+              You created this review for client #{review.reviewedClient}
             </p>
-            <h3>Provided Rating: {review.clientRating}</h3>
-            <p>Content: {review.reviewContent}</p>
-            <button onClick={handleEditButton}>Edit Listing</button>
-            <button onClick={handleDeleteButton}>Delete my Review</button>
-          </>
+            <br />
+            {editing === false && (
+              <div className="flex flex-col items-start pl-10 pr-10">
+                <h3 className=" font-rubik font-medium text-[25px] text-AJGO_DarkSlateGray justify-center">Rating: {review.clientRating}</h3>
+                <br />
+                <div >
+                  <h3 className=" font-rubik font-medium text-[25px] text-AJGO_DarkSlateGray justify-center">Content:</h3>
+                  <p className="font-rubik text-xl">{review.reviewContent}</p>
+                </div>
+                <br />
+                <div className="flex justify-center items-center">
+                  <button
+                    className="border-2 border-x-ADJO_Keppel px-8 py-1 text-xl text- uppercase font-rubik rounded-lg text-ADJO_Keppel"
+                    onClick={handleEditButton}>Change My Review</button>
+                  <button
+                    className="border-2 border-[#dd7d7d] px-8 py-1 text-xl text- uppercase font-rubik rounded-lg text-[#dd7d7d]"
+                    onClick={handleDeleteButton}>Delete my Review</button>
+                </div>
+              </div>
+            )}
+          </div>
         )}
-        {(userType === "client" || userType === "pilot") &&
-          (review.clientReviewing !== userId ||
-            review.pilotReviewing !== userId) && (
-            <>
-              <p>
-                I, {userType} #{userId}, did not create this review, so I am
-                only viewing it
-              </p>
-              {review.authorUserType === "client" && (
-                <p>
-                  This review was created by client {review.clientReviewing} for
-                  pilot {review.reviewedPilot}
-                </p>
-              )}
-              {review.authorUserType === "pilot" && (
-                <p>
-                  This review was created by pilot {review.pilotReviewing} for
-                  client {review.reviewedClient}
-                </p>
-              )}
-            </>
-          )}
+        {(review.clientReviewing !== userId && review.pilotReviewing !== userId) && (
+          <div className="flex flex-col items-center w-full">
+            <br />
+            {editing === false && (
+              <div className="flex flex-col items-start pl-10 pr-10">
+                {review.clientRating &&
+                  <h3 className=" font-rubik font-medium text-[25px] text-AJGO_DarkSlateGray justify-center">Rating: {review.clientRating}</h3>
+                }
+                {review.PilotRating &&
+                  <h3 className=" font-rubik font-medium text-[25px] text-AJGO_DarkSlateGray justify-center">Rating: {review.pilotRating}</h3>
+                }
+                <br />
+                <div >
+                  <h3 className=" font-rubik font-medium text-[25px] text-AJGO_DarkSlateGray justify-center">Content:</h3>
+                  <p className="font-rubik text-xl">{review.reviewContent}</p>
+                </div>
+                <br />
+              </div>
+            )}
+          </div>
+        )}
         {userType !== "client" && userType !== "pilot" && (
           <>
             <h3>Oops!</h3>
@@ -140,7 +167,7 @@ function SingleReview() {
             </p>
           </>
         )}
-      </>
+      </div>
     )
   } else if (editing === true) {
     return (
