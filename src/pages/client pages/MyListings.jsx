@@ -89,7 +89,7 @@ function MyListings() {
       <>
         <div className="flex flex-col items-center">
           <section className="flex flex-col items-center">
-            <h1 className="pt-10 pb-10 font-rubik font-medium text-[40px] text-AJGO_DarkSlateGray justify-center">Welcome to your Listings</h1>
+            <h1 className="pt-10 pb-10 font-rubik font-medium text-[40px] text-AJGO_DarkSlateGray justify-center">Your Listings</h1>
             <p className="font-rubik text-l pb-5 w-3/4 text-center">
               This page should show all of the clients listings in table form
               where they can easily sort by any column header, and click on any

@@ -87,12 +87,12 @@ function PilotJobs() {
       <>
         <div className="flex flex-col items-center">
           <section className="flex flex-col items-center">
-            <h1 className="pt-10 pb-10 font-rubik font-medium text-[40px] text-AJGO_DarkSlateGray justify-center">You're Upcoming Jobs</h1>
+            <h1 className="pt-10 pb-10 font-rubik font-medium text-[40px] text-AJGO_DarkSlateGray justify-center">Upcoming Jobs</h1>
             <p className="font-rubik text-l pb-5 w-3/4 text-center">
               This page shows all of the jobs where you're application has been accepted. (Right on!)
               Make sure to mark these dates on your calendar, and take note of the flight address.
             </p>
-            <p>If you need to resign for any reason, just head into the listing by clicking on the Listing ID, there you will be able to resign. Please make sure
+            <p className="font-rubik text-l pb-5 w-3/4 text-center">If you need to resign for any reason, just head into the listing by clicking on the Listing ID, there you will be able to resign. Please make sure
               you give adequate time and communicate with clients when resigning, as they need to find a substitute pilot after you resign. Clients will be able to review  
             </p>
             

@@ -98,7 +98,7 @@ function PilotJobs() {
         <div className="flex flex-col items-center">
           <div className="flex flex-col items-center">
             <h1 className="pt-10 pb-10 font-rubik font-medium text-[40px] text-AJGO_DarkSlateGray justify-center">
-              Your Applications
+              Applications
             </h1>
             <p className="font-rubik text-l pb-5 w-3/4 text-center">
               This page shows all of the jobs you are currently applying for.

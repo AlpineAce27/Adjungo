@@ -65,11 +65,11 @@ function SingleReview() {
     e.preventDefault()
     if (userType === "client") {
       axios.delete(`/api/givenReviews/${review.pilotReviewId}`).then(() => {
-        navigate("/givenReviews")
+        navigate("/myCompletedJobs")
       })
     } else if (userType === "pilot") {
       axios.delete(`/api/givenReviews/${review.clientReviewId}`).then(() => {
-        navigate("/givenReviews")
+        navigate("/myCompletedJobs")
       })
     }
   }
@@ -171,32 +171,51 @@ function SingleReview() {
     )
   } else if (editing === true) {
     return (
-      <>
-        <h1>Edit Review</h1>
-        <form onSubmit={handleReviewEdit}>
-          <label htmlFor="rating">Rating:</label>
-          <input
-            type="number"
-            name="rating"
-            step={0.1}
-            min={0}
-            max={5}
-            value={rating}
-            onChange={(e) => setRating(e.target.value)}
-          />
+      <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center pt-10 pb-10">
+          <h1 className=" font-rubik font-medium text-[50px] text-AJGO_DarkSlateGray justify-center">Edit Review</h1>
+          <p className="font-rubik text-xl">Make your changes below, and save them when your ready</p>
+        </div>
+
+        <form className="font-rubik text-xl bg-ADJO_Celeste p-5 rounded-lg w-3/5">
+          <div className="pb-1 pt-1">
+            <label htmlFor="rating">Rating:</label>
+            <input
+              className="pl-2 pt-1 pb-1 w-14 rounded-lg ring-2 ring-inset ring-[#9ca3af] focus-within:ring-4 focus-within:ring-inset focus-within:ring-ADJO_Keppel"
+              type="number"
+              name="rating"
+              step={0.1}
+              min={0}
+              max={5}
+              value={rating}
+              onChange={(e) => setRating(e.target.value)}
+            />
+          </div >
           <br />
-          <label htmlFor="content">Content:</label>
-          <input
-            type="text"
-            name="number"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
+          <div >
+            <label htmlFor="content">Content:</label>
+            <br />
+            <textarea
+              className="p-3 w-full h-72 rounded-lg ring-2 ring-inset ring-[#9ca3af] focus-within:ring-4 focus-within:ring-inset focus-within:ring-ADJO_Keppel"
+              type="text"
+              name="number"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            ></textarea>
+
+          </div>
           <br />
-          <input type="submit" value="Save Changes"></input>
+
         </form>
-        <button onClick={handleEditButton}>Discard Changes</button>
-      </>
+        <div className="flex w-3/5 justify-around pt-10 pb-10">
+          <button
+            className="bg-ADJO_Keppel px-8 py-1 text-xl text- uppercase font-rubik rounded-lg"
+            onClick={handleEditButton}>Cancel</button>
+          <button
+            className="bg-ADJO_Keppel px-8 py-1 text-xl text- uppercase font-rubik rounded-lg"
+            onClick={handleReviewEdit}>Save Changes</button>
+        </div>
+      </div>
     )
   }
 }

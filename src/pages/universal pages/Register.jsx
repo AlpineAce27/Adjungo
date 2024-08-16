@@ -26,31 +26,31 @@ function Register() {
     e.preventDefault()
     let newAccount = {}
     console.log("handler function hit")
-    if(accountType === "client"){
+    if (accountType === "client") {
       console.log('if hit')
-        newAccount = {
-            company: company,
-            login: login,
-            password: password,
-            website: website,
-            contactEmail: contactEmail,
-            contactPhone: contactPhone,
-            companyBio: bio,
-            individual: individual,
-        }
+      newAccount = {
+        company: company,
+        login: login,
+        password: password,
+        website: website,
+        contactEmail: contactEmail,
+        contactPhone: contactPhone,
+        companyBio: bio,
+        individual: individual,
+      }
     }
-    else if (accountType === "pilot"){
+    else if (accountType === "pilot") {
       console.log('else if hit')
-        newAccount = {
-            fname: fname,
-            lname: lname,
-            login: login,
-            password: password,
-            contactEmail: contactEmail,
-            contactPhone: contactPhone,
-            bio: bio,
-            part107Cert: part107,
-        }
+      newAccount = {
+        fname: fname,
+        lname: lname,
+        login: login,
+        password: password,
+        contactEmail: contactEmail,
+        contactPhone: contactPhone,
+        bio: bio,
+        part107Cert: part107,
+      }
     }
 
     axios
@@ -64,195 +64,251 @@ function Register() {
       })
   }
   return (
-    <>
-      <h1>Account Creation</h1>
-      <input
-        onChange={() => setAccountType("client")}
-        type="radio"
-        id="accountType"
-        name="accountType"
-      />
-      <label >Client Account</label>
-      <input
-        onChange={() => setAccountType("pilot")}
-        type="radio"
-        id="accountType"
-        name="accountType"
-      />
-      <label >Pilot Account</label>
-      <p>
-        Welcome to the account creation page
-      </p>
-      {accountType === "client" && (
-        <>
-          <h1>Creating a client Account</h1>
-          <form onSubmit={handleAccountCreation}>
-            <label htmlFor="company">Company Name:</label>
-            <input
-              type="text"
-              name="company"
-              value={company}
-              onChange={(e) => setCompany(e.target.value)}
-              required
-            />
-            <br />
-            <label htmlFor="website">Company Website:</label>
-            <input
-              type="text"
-              name="website"
-              value={website}
-              onChange={(e) => setWebsite(e.target.value)}
-              required
-            />
-            <br />
-            <label htmlFor="companyBio">Company Bio:</label>
-            <input
-              type="text"
-              name="companyBio"
-              value={bio}
-              onChange={(e) => setBio(e.target.value)}
-              required
-            />
-            <br />
-            <label htmlFor="individual">
-              Is this Company owned and operated by a single individual?
-            </label>
-            <input
-              type="radio"
-              name="individual"
-              checked={individual}
-              onChange={() => setIndividual(true)}
-            />
-            <label htmlFor="individual">Yes</label>
-            <input
-              type="radio"
-              name="individual"
-              checked={!individual}
-              onChange={() => setIndividual(false)}
-            />
-            <label htmlFor="individual">No</label>
-            <br />
-            <label htmlFor="email">Email:</label>
-            <input
-              type="text"
-              name="email"
-              value={contactEmail}
-              onChange={(e) => setContactEmail(e.target.value)}
-              required
-            />
-            <br />
-            <label htmlFor="phone">Email:</label>
-            <input
-              type="text"
-              name="phone"
-              value={contactPhone}
-              onChange={(e) => setContactPhone(e.target.value)}
-              required
-            />
-            <br />
-            <label htmlFor="login">Username:</label>
-            <input
-              type="text"
-              name="login"
-              value={login}
-              onChange={(e) => setLogin(e.target.value)}
-              required
-            />
-            <br />
-            <label htmlFor="password">Password:</label>
-            <input
-              type="text"
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <br />
-            <input type="button" value="Create my Account" className="bg-ADJO_Keppel" onClick={handleAccountCreation}/>
-          </form>
-        </>
-      )}
-      {accountType === "pilot" && (
-        <>
-          <h1>Creating a pilot Account</h1>
-          <form onSubmit={handleAccountCreation}>
-          <label htmlFor="fname">Pilot's First Name:</label>
-            <input
-              type="text"
-              name="fname"
-              value={fname}
-              onChange={(e) => setFname(e.target.value)}
-              required
-            />
-            <br />
-            <label htmlFor="lname">Pilot's Last Name:</label>
-            <input
-              type="text"
-              name="lname"
-              value={lname}
-              onChange={(e) => setLname(e.target.value)}
-              required
-            />
-            <br />
-            <label htmlFor="pilotBio">Pilot Bio:</label>
-            <input
-              type="text"
-              name="pilotBio"
-              value={bio}
-              onChange={(e) => setBio(e.target.value)}
-              required
-            />
-            <br />
-            <label htmlFor="part107">Part 107 Registration #:</label>
-            <input
-              type="text"
-              name="part107"
-              value={part107}
-              onChange={(e) => setPart107(e.target.value)}
-              required
-            />
-            <br />
-            <label htmlFor="email">Email:</label>
-            <input
-              type="text"
-              name="email"
-              value={contactEmail}
-              onChange={(e) => setContactEmail(e.target.value)}
-              required
-            />
-            <br />
-            <label htmlFor="phone">Phone:</label>
-            <input
-              type="text"
-              name="phone"
-              value={contactPhone}
-              onChange={(e) => setContactPhone(e.target.value)}
-              required
-            />
-            <br />
-            <label htmlFor="login">Username:</label>
-            <input
-              type="text"
-              name="login"
-              value={login}
-              onChange={(e) => setLogin(e.target.value)}
-              required
-            />
-            <br />
-            <label htmlFor="password">Password:</label>
-            <input
-              type="text"
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <br />
-            <input type="button" value="Create my Account" className="bg-ADJO_Keppel" onClick={handleAccountCreation}/>
-          </form>
-        </>
-      )}
-    </>
+    <div className="flex flex-col items-center">
+
+
+      <div className="flex flex-col items-center justify-center w-1/2">
+        <div className="flex flex-col items-center w-full">
+          <h1 className=" font-rubik font-medium text-[50px] text-AJGO_DarkSlateGray justify-center">Account Creation</h1>
+          <p className="font-rubik text-xl">
+            Please select which account type you'd like to create
+          </p>
+          <br />
+          <div className="bg-AJGO_Platnum flex w-full justify-around font-rubik text-xl">
+            <div className="flex items-center">
+              <input
+                className="h-4 w-4"
+                onChange={() => setAccountType("client")}
+                type="radio"
+                id="accountType"
+                name="accountType"
+              />
+              <label className="pl-3" >Client Account</label>
+            </div>
+            <div className="flex items-center">
+              <input
+                className="h-4 w-4"
+                onChange={() => setAccountType("pilot")}
+                type="radio"
+                id="accountType"
+                name="accountType"
+              />
+              <label className="pl-3" >Pilot Account</label>
+            </div>
+          </div>
+        </div>
+
+
+
+        {accountType === "client" && (
+          <div className=" bg-ADJO_Celeste flex flex-col items-start w-full">
+            <form className="p-5 font-rubik text-l w-full">
+              <div className="pt-1 pb-1">
+                <label htmlFor="company">Company Name:</label>
+                <input
+                  className="pl-2 pt-1 pb-1 w-80 rounded-lg ring-2 ring-inset ring-[#9ca3af] focus-within:ring-4 focus-within:ring-inset focus-within:ring-ADJO_Keppel"
+                  type="text"
+                  name="company"
+                  value={company}
+                  onChange={(e) => setCompany(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="pt-1 pb-1">
+                <label htmlFor="website">Company Website:</label>
+                <input
+                  className="pl-2 pt-1 pb-1 w-80 rounded-lg ring-2 ring-inset ring-[#9ca3af] focus-within:ring-4 focus-within:ring-inset focus-within:ring-ADJO_Keppel"
+                  type="text"
+                  name="website"
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                  required
+                />
+                <div className="pt-1 pb-1">
+                  <label htmlFor="email">Email:</label>
+                  <input
+                    className="pl-2 pt-1 pb-1 w-80 rounded-lg ring-2 ring-inset ring-[#9ca3af] focus-within:ring-4 focus-within:ring-inset focus-within:ring-ADJO_Keppel"
+                    type="text"
+                    name="email"
+                    value={contactEmail}
+                    onChange={(e) => setContactEmail(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="pt-1 pb-1">
+                  <label htmlFor="phone">Phone:</label>
+                  <input
+                    className="pl-2 pt-1 pb-1 w-80 rounded-lg ring-2 ring-inset ring-[#9ca3af] focus-within:ring-4 focus-within:ring-inset focus-within:ring-ADJO_Keppel"
+                    type="text"
+                    name="phone"
+                    value={contactPhone}
+                    onChange={(e) => setContactPhone(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="pt-1 pb-1">
+                  <label htmlFor="login">Username:</label>
+                  <input
+                    className="pl-2 pt-1 pb-1 w-80 rounded-lg ring-2 ring-inset ring-[#9ca3af] focus-within:ring-4 focus-within:ring-inset focus-within:ring-ADJO_Keppel"
+                    type="text"
+                    name="login"
+                    value={login}
+                    onChange={(e) => setLogin(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="pt-1 pb-1">
+                  <label htmlFor="password">Password:</label>
+                  <input
+                    className="pl-2 pt-1 pb-1 w-80 rounded-lg ring-2 ring-inset ring-[#9ca3af] focus-within:ring-4 focus-within:ring-inset focus-within:ring-ADJO_Keppel"
+                    type="text"
+                    name="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="pt-1 pb-1 flex flex-col">
+                <label htmlFor="companyBio">Company Bio:</label>
+                <textarea
+                  className="pl-2 pt-1 pb-1 w-full h-40 rounded-lg ring-2 ring-inset ring-[#9ca3af] focus-within:ring-4 focus-within:ring-inset focus-within:ring-ADJO_Keppel"
+                  type="text"
+                  name="companyBio"
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                  required
+                >
+                </textarea>
+              </div>
+              <div className="pt-1 pb-1">
+                <label className="pr-3" htmlFor="individual">
+                  Is this Company owned and operated by a single individual?
+                </label>
+                <input
+                  className="h-4 w-4"
+                  type="radio"
+                  name="individual"
+                  checked={individual}
+                  onChange={() => setIndividual(true)}
+                />
+                <label className="pr-5 pl-2" htmlFor="individual">Yes</label>
+                <input
+                  className="h-4 w-4"
+                  type="radio"
+                  name="individual"
+                  checked={!individual}
+                  onChange={() => setIndividual(false)}
+                />
+                <label className="pl-2" htmlFor="individual">No</label>
+              </div>
+            </form>
+          </div>
+        )}
+        {accountType === "pilot" && (
+          <div className=" bg-ADJO_Celeste flex flex-col items-start w-full">
+
+            <form  className="p-5 font-rubik text-l w-full">
+              <div  className="pt-1 pb-1">
+                <label htmlFor="fname">Pilot's First Name:</label>
+                <input
+                  className="pl-2 pt-1 pb-1 w-80 rounded-lg ring-2 ring-inset ring-[#9ca3af] focus-within:ring-4 focus-within:ring-inset focus-within:ring-ADJO_Keppel"
+                  type="text"
+                  name="fname"
+                  value={fname}
+                  onChange={(e) => setFname(e.target.value)}
+                  required
+                />
+              </div>
+              <div  className="pt-1 pb-1">
+                <label htmlFor="lname">Pilot's Last Name:</label>
+                <input
+                  className="pl-2 pt-1 pb-1 w-80 rounded-lg ring-2 ring-inset ring-[#9ca3af] focus-within:ring-4 focus-within:ring-inset focus-within:ring-ADJO_Keppel"
+                  type="text"
+                  name="lname"
+                  value={lname}
+                  onChange={(e) => setLname(e.target.value)}
+                  required
+                />
+              </div>
+              <div  className="pt-1 pb-1">
+                <label htmlFor="part107">Part 107 Registration #:</label>
+                <input
+                  className="pl-2 pt-1 pb-1 w-80 rounded-lg ring-2 ring-inset ring-[#9ca3af] focus-within:ring-4 focus-within:ring-inset focus-within:ring-ADJO_Keppel"
+                  type="text"
+                  name="part107"
+                  value={part107}
+                  onChange={(e) => setPart107(e.target.value)}
+                  required
+                />
+              </div>
+              <div  className="pt-1 pb-1">
+                <label htmlFor="email">Email:</label>
+                <input
+                  className="pl-2 pt-1 pb-1 w-80 rounded-lg ring-2 ring-inset ring-[#9ca3af] focus-within:ring-4 focus-within:ring-inset focus-within:ring-ADJO_Keppel"
+                  type="text"
+                  name="email"
+                  value={contactEmail}
+                  onChange={(e) => setContactEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div  className="pt-1 pb-1">
+                <label htmlFor="phone">Phone:</label>
+                <input
+                  className="pl-2 pt-1 pb-1 w-80 rounded-lg ring-2 ring-inset ring-[#9ca3af] focus-within:ring-4 focus-within:ring-inset focus-within:ring-ADJO_Keppel"
+                  type="text"
+                  name="phone"
+                  value={contactPhone}
+                  onChange={(e) => setContactPhone(e.target.value)}
+                  required
+                />
+              </div>
+              <div  className="pt-1 pb-1">
+                <label htmlFor="login">Username:</label>
+                <input
+                  className="pl-2 pt-1 pb-1 w-80 rounded-lg ring-2 ring-inset ring-[#9ca3af] focus-within:ring-4 focus-within:ring-inset focus-within:ring-ADJO_Keppel"
+                  type="text"
+                  name="login"
+                  value={login}
+                  onChange={(e) => setLogin(e.target.value)}
+                  required
+                />
+              </div>
+              <div  className="pt-1 pb-1">
+                <label htmlFor="password">Password:</label>
+                <input
+                  className="pl-2 pt-1 pb-1 w-80 rounded-lg ring-2 ring-inset ring-[#9ca3af] focus-within:ring-4 focus-within:ring-inset focus-within:ring-ADJO_Keppel"
+                  type="text"
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <div  className="pt-1 pb-1">
+                <label htmlFor="pilotBio">Pilot Bio:</label>
+                <textarea
+                  className="pl-2 pt-1 pb-1 w-full h-40 rounded-lg ring-2 ring-inset ring-[#9ca3af] focus-within:ring-4 focus-within:ring-inset focus-within:ring-ADJO_Keppel"
+                  type="text"
+                  name="pilotBio"
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                  required
+                >
+                </textarea>
+              </div>
+            </form>
+          </div>
+        )}
+        <br />
+        <button
+          className="bg-ADJO_Keppel px-8 py-1 text-xl text- uppercase font-rubik rounded-lg"
+          onClick={handleAccountCreation}>
+          Create My Account
+        </button>
+      </div>
+    </div>
   )
 }
 
