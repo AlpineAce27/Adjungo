@@ -150,7 +150,7 @@ function Header() {
             {/*Section for the Applied button*/}
             <section
               onClick={() => {
-                navigate("/PilotJobsApplied")
+                navigate("/applications")
               }}
               className="flex w-[200px] items-center hover: cursor-pointer"
             >
@@ -235,7 +235,7 @@ function Header() {
           {/*Section for the ClientApplications button*/}
           <section
             onClick={() => {
-              navigate("/clientApplications")
+              navigate("/applications")
             }}
             className="flex w-[200px] items-center hover: cursor-pointer"
           >

@@ -26,12 +26,12 @@ import CreateReview from "./pages/universal pages/CreateReview.jsx"
 import MyJobs from "./pages/universal pages/MyJobs.jsx"
 import Homepage from "./pages/universal pages/Homepage.jsx"
 import SingleListing from "./pages/universal pages/SingleListing.jsx"
+
 //import client pages
-import ClientApplications from "./pages/client pages/ClientApplications.jsx"
 import ClientReviews from "./pages/client pages/ClientReviews.jsx"
 import NewListing from "./pages/client pages/NewListing.jsx"
 //import pilot pages
-import PilotJobsApplied from "./pages/pilot pages/PilotJobsApplied.jsx"
+import Applications from "./pages/universal pages/Applications.jsx"
 import PilotReviews from "./pages/pilot pages/PilotReviews.jsx"
 
 const router = createBrowserRouter(
@@ -45,6 +45,8 @@ const router = createBrowserRouter(
       <Route path="/about" element={<About />} />
       <Route path="/register" element={<Register />} />
       <Route path="/homepage" element={<Homepage />} />
+      <Route path="/applications" element={<Applications/>}/>
+
       <Route path="/receivedReviews" element={<ReceivedReviews />} />
       <Route path="/givenReviews" element={<GivenReviews />} />
       <Route
@@ -64,6 +66,7 @@ const router = createBrowserRouter(
         loader={paramsPassthrough}
       />
       <Route path="/myJobs" element={<MyJobs />} />
+
       <Route
         path="/singleListing/:listingId"
         element={<SingleListing />}
@@ -75,7 +78,6 @@ const router = createBrowserRouter(
       <Route path="/clientReviews" element={<ClientReviews />} />
       <Route path="/newListing" element={<NewListing />} />
       {/* pilot routes */}
-      <Route path="/pilotJobsApplied" element={<PilotJobsApplied />} />
       <Route path="/pilotReviews" element={<PilotReviews />} />
     </Route>
   )
