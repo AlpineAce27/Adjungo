@@ -25,16 +25,13 @@ import SingleReview from "./pages/universal pages/SingleReview.jsx"
 import CreateReview from "./pages/universal pages/CreateReview.jsx"
 import MyJobs from "./pages/universal pages/MyJobs.jsx"
 import Homepage from "./pages/universal pages/Homepage.jsx"
+import SingleListing from "./pages/universal pages/SingleListing.jsx"
 //import client pages
-import ClientHome from "./components/ClientHome.jsx"
 import ClientApplications from "./pages/client pages/ClientApplications.jsx"
-import ClientSingleListing from "./pages/client pages/ClientSingleListing.jsx"
 import ClientReviews from "./pages/client pages/ClientReviews.jsx"
 import NewListing from "./pages/client pages/NewListing.jsx"
 //import pilot pages
-import PilotHome from "./components/PilotHome.jsx"
 import PilotJobsApplied from "./pages/pilot pages/PilotJobsApplied.jsx"
-import PilotSingleListing from "./pages/pilot pages/PilotSingleListing.jsx"
 import PilotReviews from "./pages/pilot pages/PilotReviews.jsx"
 
 const router = createBrowserRouter(
@@ -67,22 +64,18 @@ const router = createBrowserRouter(
         loader={paramsPassthrough}
       />
       <Route path="/myJobs" element={<MyJobs />} />
-      {/* client routes */}
-      <Route path="/clientApplications" element={<ClientApplications />} />
       <Route
-        path="/clientListing/:listingId"
-        element={<ClientSingleListing />}
+        path="/singleListing/:listingId"
+        element={<SingleListing />}
         loader={getOneListing}
       />
+
+      {/* client routes */}
+      <Route path="/clientApplications" element={<ClientApplications />} />
       <Route path="/clientReviews" element={<ClientReviews />} />
       <Route path="/newListing" element={<NewListing />} />
       {/* pilot routes */}
       <Route path="/pilotJobsApplied" element={<PilotJobsApplied />} />
-      <Route
-        path="/pilotListing/:listingId"
-        element={<PilotSingleListing />}
-        loader={getOneListing}
-      />
       <Route path="/pilotReviews" element={<PilotReviews />} />
     </Route>
   )

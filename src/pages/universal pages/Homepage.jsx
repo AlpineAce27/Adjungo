@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from "react-redux"
-import ClientHome from '../../components/ClientHome'
-import PilotHome from '../../components/PilotHome'
+import ClientHome from '../../components/clientComponents/ClientHome'
+import PilotHome from '../../components/pilotComponents/PilotHome'
 
 
 const Homepage = () => {
