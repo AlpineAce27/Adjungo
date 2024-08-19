@@ -111,7 +111,7 @@ function Header() {
             {/*Section for the Home button*/}
             <section
               onClick={() => {
-                navigate("/pilotHome")
+                navigate("/homepage")
               }}
               className="flex w-[150px] items-center hover: cursor-pointer"
             >
@@ -191,12 +191,12 @@ function Header() {
               alt="Adjungo Logo"
             />
           </div>
-          
+
           <div className="flex">
           {/*Section for the Home button*/}
           <section
             onClick={() => {
-              navigate("/clientHome")
+              navigate("/homepage")
             }}
             className="flex w-[140px] items-center hover: cursor-pointer"
           >

@@ -24,14 +24,15 @@ import GivenReviews from "./pages/universal pages/GivenReviews.jsx"
 import SingleReview from "./pages/universal pages/SingleReview.jsx"
 import CreateReview from "./pages/universal pages/CreateReview.jsx"
 import MyJobs from "./pages/universal pages/MyJobs.jsx"
+import Homepage from "./pages/universal pages/Homepage.jsx"
 //import client pages
-import ClientHome from "./pages/client pages/ClientHome.jsx"
+import ClientHome from "./components/ClientHome.jsx"
 import ClientApplications from "./pages/client pages/ClientApplications.jsx"
 import ClientSingleListing from "./pages/client pages/ClientSingleListing.jsx"
 import ClientReviews from "./pages/client pages/ClientReviews.jsx"
 import NewListing from "./pages/client pages/NewListing.jsx"
 //import pilot pages
-import PilotHome from "./pages/pilot pages/PilotHome.jsx"
+import PilotHome from "./components/PilotHome.jsx"
 import PilotJobsApplied from "./pages/pilot pages/PilotJobsApplied.jsx"
 import PilotSingleListing from "./pages/pilot pages/PilotSingleListing.jsx"
 import PilotReviews from "./pages/pilot pages/PilotReviews.jsx"
@@ -46,6 +47,7 @@ const router = createBrowserRouter(
       <Route path="/login" element={<Login />} />
       <Route path="/about" element={<About />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/homepage" element={<Homepage />} />
       <Route path="/receivedReviews" element={<ReceivedReviews />} />
       <Route path="/givenReviews" element={<GivenReviews />} />
       <Route
@@ -66,7 +68,6 @@ const router = createBrowserRouter(
       />
       <Route path="/myJobs" element={<MyJobs />} />
       {/* client routes */}
-      <Route path="/clientHome" element={<ClientHome />} />
       <Route path="/clientApplications" element={<ClientApplications />} />
       <Route
         path="/clientListing/:listingId"
@@ -76,7 +77,6 @@ const router = createBrowserRouter(
       <Route path="/clientReviews" element={<ClientReviews />} />
       <Route path="/newListing" element={<NewListing />} />
       {/* pilot routes */}
-      <Route path="/pilotHome" element={<PilotHome />} />
       <Route path="/pilotJobsApplied" element={<PilotJobsApplied />} />
       <Route
         path="/pilotListing/:listingId"

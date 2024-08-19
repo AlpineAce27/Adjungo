@@ -32,7 +32,7 @@ function Login() {
           payload: { userType: "client", userId: response.data.userId },
         })
         //now that the user is logged in and redux values are updated, redirect the user to their home/dashboard
-        navigate("/clientHome")
+        navigate("/homepage")
         //console.log(`Client logged in, userId: ${response.data.userId}, redirected the user to client homepage`)
       })
       .catch((error) => {
@@ -57,7 +57,7 @@ function Login() {
           payload: { userType: "pilot", userId: response.data.userId },
         })
         //now that the user is logged in and redux values are updated, redirect the user to their home/dashboard
-        navigate("/pilotHome")
+        navigate("/homepage")
         //console.log("Pilot logged in, redirected the user to pilot homepage")
       })
       .catch((error) => {
@@ -97,7 +97,7 @@ function Login() {
               />
               <br />
               {/*when this button is clicked, we run the handler function we made above*/}
-              <button 
+              <button
               className="bg-ADJO_Keppel px-8 py-1 text-xl text- uppercase font-rubik rounded-lg"
               onClick={handleClientLogin}>Client Log In</button>
             </section>
@@ -106,7 +106,7 @@ function Login() {
           <div className="flex w-1/3 justify-start">
             <section className="flex flex-col w-4/5 items-center  bg-ADJO_Celeste rounded-xl pr-10 pl-10 pt-5 pb-8">
               <label htmlFor="login" className=" text-l text- uppercase font-rubik">Pilot Login: </label>
-              <input 
+              <input
                 type="text"
                 name="pilotLogin"
                 placeholder="PilotUserName"
