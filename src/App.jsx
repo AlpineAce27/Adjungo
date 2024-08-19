@@ -74,7 +74,6 @@ const router = createBrowserRouter(
       />
 
       {/* client routes */}
-      <Route path="/clientApplications" element={<ClientApplications />} />
       <Route path="/clientReviews" element={<ClientReviews />} />
       <Route path="/newListing" element={<NewListing />} />
       {/* pilot routes */}

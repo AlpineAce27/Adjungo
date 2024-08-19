@@ -61,7 +61,7 @@ const Applications = () => {
           <td>
             <button
               onClick={() => {
-                navigate(`/pilotListing/${item.listingId}`)
+                navigate(`/singleListing/${item.listingId}`)
               }}
               className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium"
             >
@@ -110,7 +110,7 @@ const Applications = () => {
           <td>
             <button
               onClick={() => {
-                navigate(`/clientListing/${item.applyingListing}`)
+                navigate(`/singleListing/${item.applyingListing}`)
               }}
               className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium"
             >
