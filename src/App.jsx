@@ -19,6 +19,7 @@ import ReceivedReviews from "./pages/universal pages/ReceivedReviews.jsx"
 import GivenReviews from "./pages/universal pages/GivenReviews.jsx"
 import SingleReview from "./pages/universal pages/SingleReview.jsx"
 import CreateReview from "./pages/universal pages/CreateReview.jsx"
+import MyJobs from "./pages/universal pages/MyJobs.jsx"
 //import client pages
 import ClientHome from "./pages/client pages/ClientHome.jsx"
 import MyListings from "./pages/client pages/MyListings.jsx"
@@ -50,6 +51,7 @@ const router = createBrowserRouter(
       <Route path="/userProfile/:userType/:userId" element={<OtherProfile />} loader={getAccountDetails} />
       <Route path="/myCompletedJobs" element={<MyCompletedJobs/>} />
       <Route path="/createReview/:userBeingReviewed" element={<CreateReview/>} loader={paramsPassthrough}/>
+      <Route path="/myJobs" element={<MyJobs/>}/>
       {/* client routes */}
       <Route path="/clientHome" element={<ClientHome />}/>
       <Route path="/myListings" element={<MyListings />}/>
