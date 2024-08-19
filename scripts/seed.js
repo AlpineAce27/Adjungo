@@ -2,6 +2,7 @@ import { Client, Pilot, Listing, Application, PilotReview, ClientReview, db  } f
 import clientData from "./data/clients.json" assert { type: "json" }
 import pilotData from "./data/pilots.json" assert { type: "json" }
 import listingData from "./data/listings.json" assert { type: "json" }
+import generatedListingData from "./data/listingsGeneration.js"
 import applicationData from "./data/applications.json" assert { type: "json" }
 import pilotReviewData from "./data/pilotReviews.json" assert { type: "json"}
 import clientReviewData from "./data/clientReviews.json" assert { type: "json"}
@@ -46,7 +47,7 @@ const pilotsInDB = await Promise.all(
 //console.log(pilotsInDB);
 
 const listingsInDB = await Promise.all(
-  listingData.map((listing) => {
+  generatedListingData.map((listing) => {
     const newListing = Listing.create({
       clientId: listing.clientId,
       assignedPilot: listing.assignedPilot,
@@ -55,7 +56,14 @@ const listingsInDB = await Promise.all(
       multiday: listing.multiday,
       hardwareProvided: listing.hardwareProvided,
       softwareProvided: listing.softwareProvided,
+      internetProvided: listing.internetProvided,
+      powerProvided: listing.powerProvided,
       description: listing.description,
+      highFlying: listing.highFlying,
+      blosFlying: listing.blosFlying,
+      payloadDropping: listing.payloadDropping,
+      hazmatFlying: listing.hazmatFlying,
+      heavyFlying: listing.heavyFlying,
       nightFlying: listing.nightFlying,
       crowdFlying: listing.crowdFlying,
       flightAddress: listing.flightAddress,

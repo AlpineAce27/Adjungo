@@ -139,7 +139,7 @@ Listing.init(
       allowNull: false,
     },
     flightDate: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.DATE,
       allowNull: false,
     },
     multiday: {
@@ -154,8 +154,36 @@ Listing.init(
       type: DataTypes.BOOLEAN,
       allowNull: true,
     },
+    internetProvided: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    },
+    powerProvided: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    },
     description: {
       type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    highFlying: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
+    blosFlying: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
+    payloadDropping: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
+    hazmatFlying: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
+    heavyFlying: {
+      type: DataTypes.BOOLEAN,
       allowNull: false,
     },
     nightFlying: {

@@ -38,5 +38,15 @@
     "contactPhone": "1-800-555-4444",
     "companyBio": ".",
     "individual": "true"
+  },
+  {
+    "company": "Big Oil",
+    "login": "client5",
+    "password": "client5",
+    "website": "www.bigoilconglomrate.com",
+    "contactEmail": "regionUT@bigoilcon.com",
+    "contactPhone": "1-800-555-4444",
+    "companyBio": ".",
+    "individual": "true"
   }
 ]

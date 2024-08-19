@@ -38,5 +38,15 @@
       "contactPhone": "1-800-555-5111",
       "bio": "My name is Isaac, I have a wealth of drone exprience includeing a drone degree, 2000 flight hours, and 1000 maintenanc hours.",
       "part107Cert": 3473204
+    },
+    {
+      "fname": "Isaac",
+      "lname": "Fredrickson",
+      "login": "pilot5",
+      "password": "pilot5",
+      "contactEmail": "IFredrickson@yahoo.com",
+      "contactPhone": "1-800-555-5111",
+      "bio": "My name is Isaac, I have a wealth of drone exprience includeing a drone degree, 2000 flight hours, and 1000 maintenanc hours.",
+      "part107Cert": 3473234
     }
   ]
