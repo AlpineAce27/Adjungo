@@ -67,6 +67,15 @@ export const logout = async (req, res) => {
   }
 }
 
+//session check
+export const sessionCheck = async (req, res) => {
+  if (req.session.userId) {
+    res.send({ userId: req.session.userId, userType: req.session.userType })
+  } else {
+    res.send("No user logged in")
+}
+}
+
 //return account details based on the userID in the session
 export const getMyAccount = async (req, res) => {
   if (!req.session.userId) {
@@ -86,7 +95,7 @@ export const  getOtherAccount = async (req, res) => {
   if (!req.session.userId) {
     res.status(401).send({null: "Must be logged in to view other accounts"})
   } else {
-    
+
     if (req.params.userType === "client") {
       //find a client with the current userID
       const user = await Client.findByPk(req.params.userId)
@@ -110,7 +119,7 @@ export const  getOtherAccount = async (req, res) => {
       //console.log(userCopy)
       //send the user copy
       res.send(userCopy)
-      
+
     } else if (req.params.userType === "pilot") {
       const user = await Pilot.findByPk(req.params.userId)
       const userCopy = { ...user.dataValues }
@@ -295,7 +304,7 @@ export const getSingleReview = async (req, res) => {
     const review = await ClientReview.findByPk(reviewId)
     res.send(review)
   }
-  
+
 }
 
 //send a single review created by the current user (by review Id)
