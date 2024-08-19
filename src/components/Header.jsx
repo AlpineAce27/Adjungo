@@ -137,7 +137,7 @@ function Header() {
             {/*Section for the My Jobs button*/}
             <section
               onClick={() => {
-                navigate("/PilotJobs")
+                navigate("/myJobs")
               }}
               className="flex w-[160px] items-center hover: cursor-pointer"
             >
@@ -222,7 +222,7 @@ function Header() {
           {/*Section for the My Listings button*/}
           <section
             onClick={() => {
-              navigate("/myListings")
+              navigate("/myJobs")
             }}
             className="flex w-[160px] items-center hover: cursor-pointer"
           >
