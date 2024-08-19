@@ -8,6 +8,7 @@ import {
   getOneListing,
   login,
   logout,
+  sessionCheck,
   getMyAccount,
   getOtherAccount,
   editAccount,
@@ -23,7 +24,7 @@ import {
   deleteGivenReview,
   getMyCompletedJobs
 } from "./globalEndpoints.js"
-import { 
+import {
   getListingsByClient,
   getOneListingByClient,
   createListing,
@@ -56,6 +57,7 @@ app.get("/api/listings", getAllListings)
 app.get("/api/listings/:listingId", getOneListing)
 app.post("/api/auth", login)
 app.post("/api/logout", logout)
+app.get("/api/sessionCheck", sessionCheck)
 app.get("/api/myAccount", getMyAccount)
 app.get("/api/otherAccount/:userType/:userId", getOtherAccount)
 app.put("/api/account", editAccount)
@@ -84,7 +86,7 @@ app.delete('/api/denyApplication/:applicationId', denyApplication)
 
 //Pilot-Only endpoints
 app.get("/api/pendingApplications", getApplicationsbyPilot)
-app.post("/api/application/:jobId", createApplication) 
+app.post("/api/application/:jobId", createApplication)
 app.get("/api/myJobs", getListingsByPilot)
 app.get("/api/appliedForJobs", getJobsAppliedFor)
 app.put("/api/myJobs/:jobId", resignFromJob)
