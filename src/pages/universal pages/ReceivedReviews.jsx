@@ -1,9 +1,10 @@
-import { NavLink, Link } from "react-router-dom"
+import { NavLink, Link, useNavigate } from "react-router-dom"
 import axios from "axios"
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 
 function ReceivedReviews() {
+  const navigate = useNavigate()
   //grabbing the usertype from redux store
   let userType = useSelector((state) => state.userType)
   //create a state value for an array of listings
@@ -16,7 +17,7 @@ function ReceivedReviews() {
     console.log(ratingResponse)
     setRating(ratingResponse)
   }
-  
+
   //if they are a client,
   if (userType === "client" || userType === "pilot") {
     //if they are, grab listings where the client id matches the user
@@ -34,27 +35,57 @@ function ReceivedReviews() {
       return (
         <>
           {userType === "client" && (
-            <tr key={review.clientReviewId}>
+            <tr
+              className="pt-2 pb-2 border-b-2 border-opacity-10 border-b-AJGO_DarkSlateGray"
+              key={review.clientReviewId}>
               <td>
-              <NavLink to={`/review/pilot/${review.clientReviewId}`}>
-                {review.clientReviewId}
-              </NavLink>
+                <button
+                  onClick={() => {
+                    navigate(`/review/pilot/${review.clientReviewId}`)
+                  }}
+                  className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium"
+                >{" "}
+                  {review.clientReviewId}
+                </button>
               </td>
               <td>
-              <NavLink to={`/userProfile/pilot/${review.pilotReviewing}`}>
-                {review.pilotReviewing}
-              </NavLink>
+                <button
+                  onClick={() => {
+                    navigate(`/userProfile/pilot/${review.pilotReviewing}`)
+                  }}
+                  className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium"
+                >{" "}
+                  {review.pilotReviewing}
+                </button>
               </td>
               <td>{review.reviewContent}</td>
               <td>{review.clientRating}</td>
             </tr>
           )}
           {userType === "pilot" && (
-            <tr key={review.pilotReviewId}>
-              <td>{review.pilotReviewId}</td>
-              <NavLink to={`/userProfile/client/${review.clientReviewing}`}>
-                {review.clientReviewing}
-              </NavLink>
+            <tr
+              className="pt-2 pb-2 border-b-2 border-opacity-10 border-b-AJGO_DarkSlateGray"
+              key={review.pilotReviewId}>
+              <td>
+              <button
+                  onClick={() => {
+                    navigate(`/review/client/${review.pilotReviewId}`)
+                  }}
+                  className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium"
+                >{" "}
+                  {review.pilotReviewId}
+                </button>
+              </td>
+              <td>
+                <button
+                  onClick={() => {
+                    navigate(`/userProfile/client/${review.clientReviewing}`)
+                  }}
+                  className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium"
+                >{" "}
+                  {review.clientReviewing}
+                </button>
+              </td>
               <td>{review.reviewContent}</td>
               <td>{review.pilotRating}</td>
             </tr>
@@ -65,29 +96,30 @@ function ReceivedReviews() {
 
     //render all the elements we created on the page
     return (
-      <>
-        <h1>Reviews and Feedback for Me</h1>
-        <p>
-          This page should show all of the reviews that other partners have given you, it also provides
-          a link to each of your partners profiles, where you could add a review for them
-        </p>
-
-        <h3>Rating: {rating.toFixed(2)}/5</h3>
-        {/* <input type="checkbox" id="showCompleted" name="showCompleted" value="showCompleted"/>
-    <label for="showCompleted">Show Completed Jobs:</label> */}
-        <table>
-          <thead>
-            <tr>
-              <th>Review ID</th>
-              {userType === "client" && <th>Pilot ID</th>}
-              {userType === "pilot" && <td>Client ID</td>}
-              <th>Content</th>
-              <th>Rating</th>
-            </tr>
-          </thead>
-          <tbody>{reviewsList}</tbody>
-        </table>
-      </>
+      <div className="flex flex-col items-center">
+        <section className="flex flex-col items-center w-5/6">
+          <h1 className="pt-10 pb-10 font-rubik font-medium text-[40px] text-AJGO_DarkSlateGray justify-center">Reviews and Feedback for Me</h1>
+          <p className="font-rubik text-xl text-center">
+            This page should show all of the reviews that other partners have given you, it also provides
+            a link to each of your partners profiles, where you could add a review for them
+          </p>
+        </section>
+        <h3 className="pt-10 pb-10 font-rubik font-medium text-[25px] text-AJGO_DarkSlateGray justify-center">Rating: {rating.toFixed(2)}/5</h3>
+        <div className="flex justify-center bg-ADJO_Celeste bg-opacity-30 rounded-xl w-3/4 ps-10 pt-5 pb-5">
+          <table className="table-auto border-collapse font-rubik">
+            <thead>
+              <tr className="font-rubik font-bold">
+                <th>Review ID</th>
+                {userType === "client" && <th>Pilot ID</th>}
+                {userType === "pilot" && <td>Client ID</td>}
+                <th>Content</th>
+                <th>Rating</th>
+              </tr>
+            </thead>
+            <tbody>{reviewsList}</tbody>
+          </table>
+        </div>
+      </div>
     )
   } else {
     return (

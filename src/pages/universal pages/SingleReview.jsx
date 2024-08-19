@@ -150,7 +150,7 @@ function SingleReview() {
                   <h3 className=" font-rubik font-medium text-[25px] text-AJGO_DarkSlateGray justify-center">Rating: {review.pilotRating}</h3>
                 }
                 <br />
-                <div >
+                <div>
                   <h3 className=" font-rubik font-medium text-[25px] text-AJGO_DarkSlateGray justify-center">Content:</h3>
                   <p className="font-rubik text-xl">{review.reviewContent}</p>
                 </div>
