@@ -52,7 +52,7 @@ function Listings() {
           <td>
             <button
               onClick={() => {
-                navigate(`/${userType}Listing/${listing.listingId}`)
+                navigate(`/singleListing/${listing.listingId}`)
               }}
               className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium"
             >
