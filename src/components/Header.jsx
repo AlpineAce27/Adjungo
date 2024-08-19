@@ -9,12 +9,36 @@ import {
   MdQuestionMark,
 } from "react-icons/md"
 import { PiUserList } from "react-icons/pi"
+import axios from 'axios'
+import { useDispatch } from "react-redux"
+import { useEffect } from "react"
 
 function Header() {
   //grab the usertype property from redux
   let usertype = useSelector((state) => state.userType)
   let navigate = useNavigate()
   //console.log(usertype)
+
+  const dispatch = useDispatch()
+
+  const sessionCheck = () => {
+    axios.get('/api/sessionCheck')
+      .then((res) => {
+        console.log('session check success', res.data)
+        dispatch({
+          type: "LOGIN",
+          payload: res.data
+        })
+      })
+      .catch((err) => {
+        console.log('session check error', err)
+      })
+  }
+
+  useEffect(() => {
+    sessionCheck()
+  }, [])
+
   return (
     <>
       {/*Create a navbar for a user who is not logged in*/}
@@ -137,7 +161,7 @@ function Header() {
             {/*Section for the My Jobs button*/}
             <section
               onClick={() => {
-                navigate("/myJobs")
+                navigate(`/myJobs/pilot`)
               }}
               className="flex w-[160px] items-center hover: cursor-pointer"
             >
@@ -150,7 +174,7 @@ function Header() {
             {/*Section for the Applied button*/}
             <section
               onClick={() => {
-                navigate("/applications")
+                navigate("/applications/pilot")
               }}
               className="flex w-[200px] items-center hover: cursor-pointer"
             >
@@ -222,7 +246,7 @@ function Header() {
           {/*Section for the My Listings button*/}
           <section
             onClick={() => {
-              navigate("/myJobs")
+              navigate("/myJobs/client")
             }}
             className="flex w-[160px] items-center hover: cursor-pointer"
           >
@@ -235,7 +259,7 @@ function Header() {
           {/*Section for the ClientApplications button*/}
           <section
             onClick={() => {
-              navigate("/applications")
+              navigate("/applications/client")
             }}
             className="flex w-[200px] items-center hover: cursor-pointer"
           >

@@ -1,32 +1,19 @@
-import { useNavigate } from "react-router-dom"
+import { NavLink, Link, useNavigate } from "react-router-dom"
 import axios from "axios"
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 import { BiListPlus, BiCheckCircle } from "react-icons/bi"
+import { useLoaderData } from "react-router-dom"
 
 const MyJobs = () => {
   const navigate = useNavigate()
 
+  const loaderData = useLoaderData()
+
   //grab the current userType from the redux store
   let userType = useSelector((state) => state.userType)
   //create a state value for an array of jobs
-  const [jobs, setJobs] = useState([])
-
-  //if the current user is a client, grab their listings
-  if (userType === "client") {
-    useEffect(() => {
-      axios.get("/api/myListings").then((response) => {
-        setJobs(response.data)
-      })
-    }, [])
-    //if the current user is a pilot, grab their jobs
-  } else if (userType === "pilot") {
-    useEffect(() => {
-      axios.get("/api/myJobs").then((response) => {
-        setJobs(response.data)
-      })
-    }, [])
-  }
+  const [jobs, setJobs] = useState(loaderData)
 
   //create an array of listings mapped to the axios response
   const listingsItems = jobs.map((listing) => {
@@ -59,7 +46,7 @@ const MyJobs = () => {
         <td>
           <button
             onClick={() => {
-              navigate(`/singleListing/${listing.listingId}`)
+              navigate(`/clientListing/${listing.listingId}`)
             }}
             className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium"
           >

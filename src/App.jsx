@@ -8,6 +8,8 @@ import getOneListing from "./functions/getOneListing.js"
 import getAccountDetails from "./functions/getAccountDetails.js"
 import getOneReview from "./functions/getOneReview.js"
 import paramsPassthrough from "./functions/paramsPassthrough.js"
+import getListings from "./functions/getListings.js"
+import getAppsLoader from "./functions/getApplications.js"
 //imort universal pages
 import Home from "./pages/universal pages/Home.jsx"
 import MyAccount from "./pages/universal pages/MyAccount.jsx"
@@ -45,7 +47,12 @@ const router = createBrowserRouter(
       <Route path="/about" element={<About />} />
       <Route path="/register" element={<Register />} />
       <Route path="/homepage" element={<Homepage />} />
-      <Route path="/applications" element={<Applications/>}/>
+
+      <Route
+        path="/applications/:userType"
+        element={<Applications/>}
+        loader={getAppsLoader}
+      />
 
       <Route path="/receivedReviews" element={<ReceivedReviews />} />
       <Route path="/givenReviews" element={<GivenReviews />} />
@@ -65,7 +72,14 @@ const router = createBrowserRouter(
         element={<CreateReview />}
         loader={paramsPassthrough}
       />
-      <Route path="/myJobs" element={<MyJobs />} />
+
+
+      <Route
+        path="/myJobs/:userType"
+        element={<MyJobs />}
+        loader={getListings}
+      />
+
 
       <Route
         path="/singleListing/:listingId"

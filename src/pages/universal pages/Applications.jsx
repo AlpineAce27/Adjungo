@@ -3,31 +3,18 @@ import axios from "axios"
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 import { BiListPlus, BiListUl } from "react-icons/bi"
+import { useLoaderData } from "react-router-dom"
+
 
 const Applications = () => {
   const navigate = useNavigate()
   //grabbing the usertype from redux store
   let userType = useSelector((state) => state.userType)
-  //create a state value for an array of listings
-  const [items, setItems] = useState([])
 
-  if (userType === "client") {
-    //if they are, grab listings where the assigned pilot matches the user
-    useEffect(() => {
-      axios.get("/api/applicationsForClient").then((response) => {
-        setItems(response.data)
-      })
-    }, [])
-  }
-  //if they are a pilot,
-  if (userType === "pilot") {
-    //if they are, grab listings where the assigned pilot matches the user
-    useEffect(() => {
-      axios.get("/api/appliedForJobs").then((response) => {
-        setItems(response.data)
-      })
-    }, [])
-  }
+  const loaderData = useLoaderData()
+
+  //create a state value for an array of listings
+  const [items, setItems] = useState(loaderData)
 
   //create an array of listings mapped to the axios response
   const tableItems = items.map((item) => {
