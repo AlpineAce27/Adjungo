@@ -15,6 +15,7 @@ const MyJobs = () => {
   //create a state value for an array of jobs
   const [jobs, setJobs] = useState(loaderData)
 
+
   //create an array of listings mapped to the axios response
   const listingsItems = jobs.map((listing) => {
     //change true/false/null to more readable strings

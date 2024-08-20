@@ -13,6 +13,8 @@ import axios from 'axios'
 import { useDispatch } from "react-redux"
 import { useEffect } from "react"
 
+import LogoTransparentBG from '../../public/LogoTransparentBG.png'
+
 function Header() {
   //grab the usertype property from redux
   let usertype = useSelector((state) => state.userType)
@@ -53,7 +55,7 @@ function Header() {
           >
             <img
               className="object-scale-down"
-              src="src\assets\LogoTransparentBG.png"
+              src={LogoTransparentBG}
               alt="Adjungo Logo"
             />
           </div>
@@ -126,7 +128,7 @@ function Header() {
           >
             <img
               className="object-scale-down"
-              src="src\assets\LogoTransparentBG.png"
+              src={LogoTransparentBG}
               alt="Adjungo Logo"
             />
           </div>
@@ -211,7 +213,7 @@ function Header() {
           >
             <img
               className="object-scale-down"
-              src="src\assets\LogoTransparentBG.png"
+              src={LogoTransparentBG}
               alt="Adjungo Logo"
             />
           </div>
