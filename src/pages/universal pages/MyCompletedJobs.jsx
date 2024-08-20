@@ -63,10 +63,7 @@ function MyCompletedJobs() {
           </td>
           <td>${listing.offer}</td>
           <td>{listing.flightDate}</td>
-          <td>{listing.hardwareProvided}</td>
-          <td>{listing.softwareProvided}</td>
-          <td>{listing.flightAddress}</td>
-          <td>{listing.flightRadius}</td>
+          <td>{listing.flightZipcode}</td>
           {pilotArray.includes(listing.assignedPilot) && (
             <td className="flex justify-center align-middle">
             <button className="flex h-8 w-8 rounded-full bg-ADJO_Keppel justify-center align-middle"
@@ -101,19 +98,16 @@ function MyCompletedJobs() {
         </p>
         {/* <input type="checkbox" id="showCompleted" name="showCompleted" value="showCompleted"/>
       <label for="showCompleted">Show Completed Jobs:</label> */}
-      <div className="flex justify-center bg-ADJO_Celeste bg-opacity-30 rounded-xl w-11/12 pr-10 pl-10 pt-5 pb-5">
-        <table className="table-auto border-collapse font-rubik pb-20">
+      <div className="flex justify-center bg-ADJO_Celeste bg-opacity-30 rounded-xl w-1/2 pr-10 pl-10 pt-5 pb-5">
+        <table className="table-auto border-collapse font-rubik pb-20 text-sm">
           <thead>
             <tr className="border-b-4 border-opacity-30 border-b-AJGO_DarkSlateGray">
               <th>Listing ID</th>
-              <th>Client ID</th>
-              <th>Assigned Pilot</th>
-              <th>Payment</th>
-              <th>Flight Date</th>
-              <th>Hardware Provided</th>
-              <th>Software Provided</th>
-              <th>Flight Location</th>
-              <th>Flight Radius</th>
+              <th>Client</th>
+              <th>Pilot</th>
+              <th className="w-[100px]">Payment</th>
+              <th className="w-[120px]">Date</th>
+              <th className="w-[120px]">Location</th>
               <th>Review Status</th>
             </tr>
           </thead>

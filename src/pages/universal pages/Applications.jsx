@@ -212,8 +212,8 @@ const Applications = () => {
         </div>
         {/* <input type="checkbox" id="showCompleted" name="showCompleted" value="showCompleted"/>
     <label for="showCompleted">Show Completed Jobs:</label> */}
-        <div className="flex justify-center bg-ADJO_Celeste bg-opacity-30 w-11/12 pl-10 pr-10 pt-5 pb-5">
-          <table className="table-auto border-collapse font-rubik">
+        <div className="flex justify-center bg-ADJO_Celeste bg-opacity-30 w-1/2 pl-10 pr-10 pt-5 pb-5">
+          <table className="table-auto border-collapse font-rubik w-full">
             <thead>
               {userType === "pilot" && (
                 <tr className="border-b-4 border-opacity-30 border-b-AJGO_DarkSlateGray">

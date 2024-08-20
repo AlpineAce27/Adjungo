@@ -8,7 +8,7 @@ function Home() {
       <Header />
       <div className="flex">
         <div className="w-[10vw] bg-AJGO_Platnum"></div>
-        <div className="w-[80vw] min-h-[87vh]">
+        <div className="flex w-[80vw] min-h-[87vh] justify-center items-start">
           <Outlet />
         </div>
         <div className="w-[10vw] bg-AJGO_Platnum"></div>

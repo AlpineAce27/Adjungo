@@ -139,8 +139,12 @@ Listing.init(
       allowNull: false,
     },
     flightDate: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false,
+    },
+    flightTime: {
+      type: DataTypes.TIME,
+      allowNull: true
     },
     multiday: {
       type: DataTypes.BOOLEAN,
@@ -197,6 +201,10 @@ Listing.init(
     flightAddress: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    flightZipcode: {
+      type: DataTypes.TEXT,
+      alllowNull: false,
     },
     flightRadius: {
       type: DataTypes.FLOAT,
