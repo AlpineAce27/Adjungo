@@ -19,7 +19,6 @@ function Listings() {
   if (userType === "client" || userType === "pilot") {
     //create an array of listings mapped to the axios response
     listingsItems = listings.map((listing) => {
-      //change true/false/null to more readable strings
 
       //change assigned pilot
       let assignedPilot
@@ -28,22 +27,9 @@ function Listings() {
       } else {
         assignedPilot = listing.assignedPilot
       }
-      //change "hardware provided"
-      let hardwareProvided
-      if (listing.hardwareProvided === true) {
-        hardwareProvided = "Yes"
-      } else {
-        hardwareProvided = "No"
-      }
-      //change "software provided"
-      let softwareProvided
-      if (listing.softwareProvided === true) {
-        softwareProvided = "Yes"
-      } else {
-        softwareProvided = "No"
-      }
 
       //create a table row with each variable in the correct spot
+      if(!listing.assignedPilot){
       return (
         <tr
           key={listing.listingId}
@@ -86,14 +72,22 @@ function Listings() {
             </td>
           )}
           <td>${listing.offer}</td>
+          <td>{listing.flightZipcode}</td>
           <td>{listing.flightDate}</td>
-          <td>{hardwareProvided}</td>
-          <td>{softwareProvided}</td>
-          <td>{listing.flightAddress}</td>
           <td>{listing.flightRadius}</td>
-          <td>{listing.completed}</td>
+          <td>{listing.multiday.toString()}</td>
+          <td>{listing.hardwareProvided.toString()}</td>
+          <td>{listing.softwareProvided.toString()}</td>
+          <td>{listing.internetProvided.toString()}</td>
+          <td>{listing.powerProvided.toString()}</td>
+          <td>{listing.highFlying.toString()}</td>
+          <td>{listing.payloadDropping.toString()}</td>
+          <td>{listing.hazmatFlying.toString()}</td>
+          <td>{listing.heavyFlying.toString()}</td>
+          <td>{listing.nightFlying.toString()}</td>
+          <td>{listing.crowdFlying.toString()}</td>
         </tr>
-      )
+      )}
     })
   } else {
     //create an array of listings mapped to the axios response
@@ -106,46 +100,36 @@ function Listings() {
       } else {
         assignedPilot = "Claimed"
       }
-      //change "hardware provided"
-      let hardwareProvided
-      if (listing.hardwareProvided === true) {
-        hardwareProvided = "Yes"
-      } else {
-        hardwareProvided = "No"
-      }
-      //change "software provided"
-      let softwareProvided
-      if (listing.softwareProvided === true) {
-        softwareProvided = "Yes"
-      } else {
-        softwareProvided = "No"
-      }
-      //change "completed"
-      let completed
-      if (listing.completed === true) {
-        completed = "Yes"
-      } else {
-        completed = "No"
-      }
-
+      
       //create a table row with each variable in the correct spot
-      return (
-        <tr
-          key={listing.listingId}
-          className="pt-2 pb-2 border-b-2 border-opacity-10 border-b-AJGO_DarkSlateGray"
-        >
-          <td>{listing.listingId}</td>
-          <td>{listing.clientId}</td>
-          <td>{assignedPilot}</td>
-          <td>${listing.offer}</td>
-          <td>{listing.flightDate}</td>
-          <td>{hardwareProvided}</td>
-          <td>{softwareProvided}</td>
-          <td>{listing.flightAddress}</td>
-          <td>{listing.flightRadius}</td>
-          <td>{listing.completed}</td>
-        </tr>
-      )
+      if(!listing.assignedPilot){
+        return (
+          <tr
+            key={listing.listingId}
+            className="pt-2 pb-2 border-b-2 border-opacity-10 border-b-AJGO_DarkSlateGray"
+          >
+            <td>{listing.listingId}</td>
+            <td>{listing.clientId}</td>
+            <td>{assignedPilot}</td>
+            <td>${listing.offer}</td>
+            <td>{listing.flightZipcode}</td>
+            <td>{listing.flightDate}</td>
+            <td>{listing.flightRadius}</td>
+            <td>{listing.multiday.toString()}</td>
+            <td>{listing.hardwareProvided.toString()}</td>
+            <td>{listing.softwareProvided.toString()}</td>
+            <td>{listing.internetProvided.toString()}</td>
+            <td>{listing.powerProvided.toString()}</td>
+            <td>{listing.highFlying.toString()}</td>
+            <td>{listing.payloadDropping.toString()}</td>
+            <td>{listing.hazmatFlying.toString()}</td>
+            <td>{listing.heavyFlying.toString()}</td>
+            <td>{listing.nightFlying.toString()}</td>
+            <td>{listing.crowdFlying.toString()}</td>
+          </tr>
+        )
+      }
+      
     })
   }
   //render all the elements we created on the page
@@ -168,18 +152,28 @@ function Listings() {
         <label for="showCompleted">Show Completed Jobs:</label> */}
         <section className="flex justify-center pb-10">
           <div className="flex justify-center bg-ADJO_Celeste bg-opacity-30 rounded-xl w-11/12 pr-10 pl-10 pt-5 pb-5">
-            <table className="table-auto border-collapse font-rubik pb-20">
+            <table className="table-auto border-collapse font-rubik pb-20 text-sm w-full">
               <thead>
                 <tr className="border-b-4 border-opacity-30 border-b-AJGO_DarkSlateGray">
-                  <th className="w-[100px]">Listing ID</th>
-                  <th className="w-[100px]">Client ID</th>
-                  <th className="w-[100px]">Assigned Pilot</th>
+                  <th className="w-[100px]">Listing</th>
+                  <th className="w-[100px]">Client</th>
+                  <th className="w-[100px]">Pilot</th>
                   <th className="w-[100px]">Offer</th>
-                  <th className="w-[130px]">Flight Date</th>
-                  <th>Hardware Provided</th>
-                  <th>Software Provided</th>
-                  <th className="w-[500px]">Flight Location</th>
-                  <th>Flight Radius</th>
+                  <th className="w-[200px]">Zipcode</th>
+                  <th className="w-[200px]">Date</th>
+                  <th>Radius</th>
+                  <th>Multiday</th>
+                  <th>Hardware</th>
+                  <th>Software</th>
+                  <th>Internet</th>
+                  <th>Power</th>
+                  <th>High</th>
+                  <th>Payload</th>
+                  <th>Hazmat</th>
+                  <th>Heavy</th>
+                  <th>Night</th>
+                  <th>Crowd</th>
+                  
                 </tr>
               </thead>
               <tbody>{listingsItems}</tbody>

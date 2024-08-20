@@ -36,7 +36,17 @@
     "website": "www.bigoilconglomrate.com",
     "contactEmail": "regionUT@bigoilcon.com",
     "contactPhone": "1-800-555-4444",
-    "companyBio": ".",
+    "companyBio": "We are one of the nations largest owners and operators of oil refinery plants.",
+    "individual": "false"
+  },
+  {
+    "company": "Bobs Burgers",
+    "login": "client5",
+    "password": "client5",
+    "website": "www.bobsburgs.com",
+    "contactEmail": "bob@BobsBurgs.com",
+    "contactPhone": "1-800-555-4231",
+    "companyBio": "We make great burgers at our family owned and operated burger joint downtown",
     "individual": "true"
   }
 ]

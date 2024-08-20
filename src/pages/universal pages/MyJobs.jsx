@@ -90,11 +90,20 @@ const MyJobs = () => {
           </>
         )}
         <td>${listing.offer}</td>
-        <td>{listing.flightDate}</td>
-        <td>{hardwareProvided}</td>
-        <td>{softwareProvided}</td>
-        <td>{listing.flightAddress}</td>
-        <td>{listing.flightRadius}</td>
+          <td>{listing.flightZipcode}</td>
+          <td>{listing.flightDate}</td>
+          <td>{listing.flightRadius}</td>
+          <td>{listing.multiday.toString()}</td>
+          <td>{listing.hardwareProvided.toString()}</td>
+          <td>{listing.softwareProvided.toString()}</td>
+          <td>{listing.internetProvided.toString()}</td>
+          <td>{listing.powerProvided.toString()}</td>
+          <td>{listing.highFlying.toString()}</td>
+          <td>{listing.payloadDropping.toString()}</td>
+          <td>{listing.hazmatFlying.toString()}</td>
+          <td>{listing.heavyFlying.toString()}</td>
+          <td>{listing.nightFlying.toString()}</td>
+          <td>{listing.crowdFlying.toString()}</td>
       </tr>
     )
   })
@@ -138,27 +147,35 @@ const MyJobs = () => {
             </div>
           )}
         </section>
-        <section>
-          {/* jobs table */}
+        
           <div className="flex justify-center bg-ADJO_Celeste bg-opacity-30 rounded-xl w-11/12 ps-10 pt-5 pb-5">
-            <table className="table-auto border-collapse font-rubik">
+            <table className="table-auto border-collapse font-rubik text-sm w-full">
               <thead>
                 <tr className="border-b-4 border-opacity-30 border-b-AJGO_DarkSlateGray">
-                  <th className="w-[100px]">Listing ID</th>
-                  <th className="w-[100px]">Listing Owner ID</th>
-                  <th className="w-[100px]">Assigned Pilot ID</th>
-                  <th>Offer</th>
-                  <th className="w-[130px]">Flight Date</th>
-                  <th>Hardware Provided</th>
-                  <th>Software Provided</th>
-                  <th className="w-[500px]">Flight Location</th>
-                  <th>Flight Radius</th>
+                <th className="w-[100px]">Listing</th>
+                  <th>Client</th>
+                  <th className="w-[100px]">Pilot</th>
+                  <th className="w-[100px]">Offer</th>
+                  <th className="w-[150px]">Zipcode</th>
+                  <th className="w-[150px]">Date</th>
+                  <th>Radius</th>
+                  <th>Multiday</th>
+                  <th>Hardware</th>
+                  <th>Software</th>
+                  <th>Internet</th>
+                  <th>Power</th>
+                  <th>High</th>
+                  <th>Payload</th>
+                  <th>Hazmat</th>
+                  <th>Heavy</th>
+                  <th>Night</th>
+                  <th>Crowd</th>
                 </tr>
               </thead>
               <tbody>{listingsItems}</tbody>
             </table>
           </div>
-        </section>
+        
         {userType === "client" && (
           <div className="flex justify-between">
             {/* other client options */}

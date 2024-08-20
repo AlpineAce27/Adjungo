@@ -69,7 +69,7 @@ function Login() {
   //what to render on the page
   return (
     <>
-      <div className=" flex flex-col items-center justify-between h-[100%]">
+      <div className=" flex flex-col items-center justify-between h-[100%] w-full">
         <div className="flex flex-col items-center pt-14">
           <h1 className="font-rubik font-medium text-[30px] text-AJGO_DarkSlateGray justify-center">Welcome to Adjungo!</h1>
           <p className="font-rubik font-medium text-AJGO_DarkSlateGray justify-center">Please log in</p>
