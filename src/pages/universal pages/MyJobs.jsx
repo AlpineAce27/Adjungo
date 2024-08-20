@@ -111,7 +111,7 @@ const MyJobs = () => {
   //render the page contents
   if (userType === "client" || "pilot") {
     return (
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center w-full">
         <section className="flex flex-col items-center">
           {userType === "client" && (
             <div className="flex flex-col items-center">
@@ -148,7 +148,7 @@ const MyJobs = () => {
           )}
         </section>
         
-          <div className="flex justify-center bg-ADJO_Celeste bg-opacity-30 rounded-xl w-11/12 ps-10 pt-5 pb-5">
+          <div className="flex justify-center bg-ADJO_Celeste bg-opacity-30 rounded-xl w-11/12 pr-10 pl-10 pt-5 pb-5">
             <table className="table-auto border-collapse font-rubik text-sm w-full">
               <thead>
                 <tr className="border-b-4 border-opacity-30 border-b-AJGO_DarkSlateGray">
