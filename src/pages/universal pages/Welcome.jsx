@@ -21,12 +21,13 @@ function Welcome() {
             <p className="font-rubik text-xl pb-5">
               Whether your a solo-pilot with a fresh new 107 card, or a
               multi-national corporation, Adjungo is here to fastrack your
-              partnership with a qualified pilot, or interested client
+              partnership with qualified pilots and interested clients.
             </p>
             <p className="font-rubik text-xl">
               Check out our listings page to get an idea of what kinds of Jobs
               the Adjungo community is doing! Or if you want to know more
-              about Adjungo itself, checkout the about page.
+              about Adjungo itself, checkout the about page. If you already
+              have an account, go ahead and log in!
             </p>
           </div>
           <div className="flex justify-center">
@@ -80,7 +81,7 @@ function Welcome() {
             <div className="flex flex-col items-center">
               <div className="flex justify-center">
                 <p className="font-rubik text-xl ps-5 pb-5">
-                  New to Adjungo and want to boost your drone operations? Create an
+                  New to Adjungo? Create an
                   account for free and get started!
                 </p>
                 <br />
