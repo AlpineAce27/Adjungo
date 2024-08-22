@@ -293,7 +293,7 @@ function Listings() {
           <tr key={listing.listingId} className="pt-2 pb-2 border-b-2 border-opacity-10 border-b-AJGO_DarkSlateGray">
             <td>{listing.listingId}</td>
             <td>{listing.clientId}</td>
-            <td>3.3</td>
+            <td>{listing.reviews}</td>
             <td>${listing.offer}</td>
             <td>{listing.flightZipcode}</td>
             <td>{listing.flightDate}</td>
@@ -476,7 +476,7 @@ function Listings() {
                         {sortCondition[0] !== "offer" &&
                         <BiSolidDollarCircle size={30} style={{ color: "#000000" }}/>
                         }
-                        
+
                       </Tooltip>
                     </button>
                   </th>
