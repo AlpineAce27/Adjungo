@@ -59,58 +59,116 @@ function PilotSingleListing() {
         </p>
       </div>
 
-      <div className="flex pt-10 pb-10 justify-between font-rubik font-medium text-[25px] text-AJGO_DarkSlateGray">
+      <div className="flex items-center justify-center w-5/6">
+          <section className="flex flex-col gap-3 items-start pt-10 pb-10 justify-between font-rubik font-medium text-[15px] text-AJGO_DarkSlateGray w-2/3 text-lg">
+            <p className="flex items-center justify-between">
+              Owner Id:{" "}
+              <button
+                className="flex items-center text-center justify-center border-2 border-ADJO_Keppel opacity-70 rounded-full h-[20px] w-[50px] text-ADJO_Keppel text-sm font-medium"
+                onClick={() => {
+                  navigate(`/userProfile/client/${listing.clientId}`)
+                }}
+              >
+                {" "}
+                {listing.clientId}
+              </button>
+            </p>
+            {listing.assignedPilot && (
+              <p className="flex items-center justify-between">
+                Assigned Pilot:
+                <button
+                  className="flex items-center text-center justify-center border-2 border-ADJO_Keppel opacity-70 rounded-full h-[20px] w-[50px] text-ADJO_Keppel text-sm font-medium"
+                  onClick={() => {
+                    navigate(`/userProfile/pilot/${listing.assignedPilot}`)
+                  }}
+                >
+                  {" "}
+                  {listing.clientId}
+                </button>
+              </p>
+            )}
+            {!listing.assignedPilot && (
+              <p className="flex items-center justify-between">
+                Assigned Pilot: None
+              </p>
+            )}
+            <p>Flight Date: {listing.flightDate}</p>
+            <p>Flight Time: {listing.flightTime}</p>
+            <div className="flex flex-col items-start text-left text-sm">
+              <p className="text-lg">Flight Address:</p>
+              <p>{listing.flightAddress}</p>
+            </div>
+            <div className="flex flex-col items-start text-left text-sm">
+              <p className="text-lg">Flight Area Zipcode:</p>
+              <p>{listing.flightZipcode}</p>
+            </div>
+            <div className="flex flex-col items-start text-left text-sm">
+              <p className="text-lg">Description:</p>
+              <p>{listing.description}</p>
+            </div>
+          </section>
 
-        <div className="pr-10 pl-10">
-          <h3 >Listing Id: {listing.listingId}</h3>
-          <h3>Owner Id: <button
-            onClick={() => {
-              navigate(`/userProfile/client/${listing.clientId}`)
-            }}
-            className="border-2 border-ADJO_Keppel opacity-70 rounded-full h-8 w-20 text-ADJO_Keppel text-lg font-medium"
-          >
-            {" "}
-            {listing.clientId}
-          </button></h3>
+          <section className="flex w-1/3 justify-center font-rubik font-medium text-[15px] text-AJGO_DarkSlateGray">
+            <div className="flex flex-col items-start pr-2 w-5/6">
+              <section className="pl-3 pr-3 flex justify-between bg-ADJO_Celeste w-full">
+                <p>Offer</p>
+                <p>${listing.offer}</p>
+              </section>
+              <section className="pl-3 pr-3 flex justify-between w-full">
+                <p>Flight Radius</p>
+                <p>{listing.flightRadius} miles</p>
+              </section>
+              <section className="pl-3 pr-3 flex justify-between bg-ADJO_Celeste w-full">
+                <p>Multi-Day</p>
+                <p>{listing.multiday.toString()}</p>
+              </section>
+              <section className="pl-3 pr-3 flex justify-between w-full">
+                <p>Hardware Provided</p>
+                <p>{listing.hardwareProvided.toString()}</p>
+              </section>
+              <section className="pl-3 pr-3 flex justify-between bg-ADJO_Celeste w-full">
+                <p>Software Provided</p>
+                <p>{listing.softwareProvided.toString()}</p>
+              </section>
+              <section className="pl-3 pr-3 flex justify-between w-full">
+                <p>Internet Access</p>
+                <p>{listing.internetProvided.toString()}</p>
+              </section>
+              <section className="pl-3 pr-3 flex justify-between bg-ADJO_Celeste w-full">
+                <p>Power Access</p>
+                <p>{listing.powerProvided.toString()}</p>
+              </section>
+              <section className="pl-3 pr-3 flex justify-between w-full">
+                <p>Flying over 400ft</p>
+                <p>{listing.highFlying.toString()}</p>
+              </section>
+              <section className="pl-3 pr-3 flex justify-between bg-ADJO_Celeste w-full">
+                <p>Beyond-line-of-sight</p>
+                <p>{listing.blosFlying.toString()}</p>
+              </section>
+              <section className="pl-3 pr-3 flex justify-between w-full">
+                <p>Payload Drop</p>
+                <p>{listing.payloadDropping.toString()}</p>
+              </section>
+              <section className="pl-3 pr-3 flex justify-between bg-ADJO_Celeste w-full">
+                <p>Carrying Hazmat</p>
+                <p>{listing.hazmatFlying.toString()}</p>
+              </section>
+              <section className="pl-3 pr-3 flex justify-between w-full">
+                <p>Liftoff Weight Over 55lbs</p>
+                <p>{listing.heavyFlying.toString()}</p>
+              </section>
+              <section className="pl-3 pr-3 flex justify-between bg-ADJO_Celeste w-full">
+                <p>Operating at Night</p>
+                <p>{listing.nightFlying.toString()}</p>
+              </section>
+              <section className="pl-3 pr-3 flex justify-between w-full">
+                <p>Operating over People</p>
+                <p>{listing.crowdFlying.toString()}</p>
+              </section>
+            </div>
+          </section>
         </div>
-
-        <div>
-          <p>Flight Date: {listing.flightDate}</p>
-          <p>Flight Address: {listing.flightAddress}</p>
-        </div>
-
-      </div >
-
-      <div className="flex pt-10 pb-10 font-rubik font-medium">
-        <p>Description: {listing.description}</p>
-      </div>
-
-      <div className="flex justify-center bg-ADJO_Celeste bg-opacity-30 rounded-xl w-11/12 pr-10 pl-10 pt-5 pb-5">
-        <table className="table-auto border-collapse font-rubik pb-20">
-          <thead>
-            <tr className="border-b-4 border-opacity-30 border-b-AJGO_DarkSlateGray">
-              <th>Offering</th>
-              <th>Multi-Day Operation</th>
-              <th>Providing Hardware</th>
-              <th>Providing Software</th>
-              <th>Operating at Night</th>
-              <th>Operating over People</th>
-              <th>Flight Radius</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{listing.offer}</td>
-              <td>{listing.multiday.toString()}</td>
-              <td>{listing.hardwareProvided.toString()}</td>
-              <td>{listing.softwareProvided.toString()}</td>
-              <td>{listing.nightFlying.toString()}</td>
-              <td>{listing.crowdFlying.toString()}</td>
-              <td>{listing.flightRadius}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
 
       <div className="pt-10 pb-10">
         {listingState === "new" && (

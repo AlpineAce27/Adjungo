@@ -103,9 +103,7 @@ const Applications = () => {
               {item.applyingPilot}
             </button>
           </td>
-          <td className="font-bold">
-          {item.reviews}
-          </td>
+          <td className={`font-bold text-${item.reviewColor}`}>{item.reviews}</td>
           <td>
             <button
               onClick={() => {

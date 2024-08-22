@@ -16,6 +16,7 @@ async function getAppsLoader({params}) {
 
     }
 
+    //console.log(data)
     return data
 }
 

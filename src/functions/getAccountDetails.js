@@ -8,6 +8,8 @@ async function getAccountDetails({params}) {
    //console.log("grabbed account:", userType, userId)
    data.userType = userType
    data.userId = userId
+
+   console.log(data)
    return data
  }
  

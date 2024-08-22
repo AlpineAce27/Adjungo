@@ -1,10 +1,4 @@
-import {
-  Client,
-  Pilot,
-  Listing,
-  ClientReview,
-  PilotReview,
-} from "./database/model.js"
+import { Client, Pilot, Listing, ClientReview, PilotReview } from "./database/model.js"
 
 import { Sequelize } from "sequelize"
 
@@ -14,26 +8,25 @@ import getRatingColor from "../src/functions/getRatingColor.js"
 export const getAllListings = async (req, res) => {
   const allListings = await Listing.findAll({
     where: { completed: false },
-    include: {model: Client}
+    include: { model: Client },
   })
 
   const listingCopy = [...allListings]
 
-  let finalCopy = await Promise.all(listingCopy.map(async (e, i) => {
-      let oneListing = {...listingCopy[i].dataValues}
+  let finalCopy = await Promise.all(
+    listingCopy.map(async (e, i) => {
+      let oneListing = { ...listingCopy[i].dataValues }
 
       const reviewsOnClient = await ClientReview.findAll({
         where: {
-          reviewedClient: e.client.clientId
+          reviewedClient: e.client.clientId,
         },
         // creates a column called 'avgRating' which is an aggregated average of the client_rating columns from the Client_Review
-        attributes: [
-          [Sequelize.fn("AVG", Sequelize.col("client_rating")), "avgRating"],
-        ],
+        attributes: [[Sequelize.fn("AVG", Sequelize.col("client_rating")), "avgRating"]],
       })
 
       oneListing.reviews = (+reviewsOnClient[0].dataValues.avgRating).toFixed(2)
-      oneListing.reviewCol = getRatingColor(oneListing.reviews)
+      oneListing.reviewCol = getRatingColor(+oneListing.reviews)
 
       console.log(oneListing)
       listingCopy[i] = oneListing
@@ -70,8 +63,8 @@ export const login = async (req, res) => {
       //console.log("Login:", req.session)
       res.send({
         success: true,
-        userId: user.clientId
-       })
+        userId: user.clientId,
+      })
     } else {
       res.status(401).send({ success: false })
     }
@@ -82,7 +75,8 @@ export const login = async (req, res) => {
       req.session.userType = "pilot"
       res.send({
         success: true,
-        userId: user.pilotId })
+        userId: user.pilotId,
+      })
     } else {
       res.status(401).send({ success: false })
     }
@@ -105,70 +99,96 @@ export const sessionCheck = async (req, res) => {
     res.send({ userId: req.session.userId, userType: req.session.userType })
   } else {
     res.send("No user logged in")
-}
+  }
 }
 
 //return account details based on the userID in the session
 export const getMyAccount = async (req, res) => {
+
   if (!req.session.userId) {
-    res.status(401).send({null: "No user logged in"})
+    res.status(401).send({ null: "No user logged in" })
   } else {
     if (req.session.userType === "client") {
       const user = await Client.findByPk(req.session.userId)
-      res.send(user)
-    } else if (req.session.userType === "pilot") {
-      const user = await Pilot.findByPk(req.session.userId)
-      res.send(user)
-    }
-  }
-}
-
-export const  getOtherAccount = async (req, res) => {
-    if (req.params.userType === "client") {
-      //find a client with the current userID
-      const user = await Client.findByPk(req.params.userId)
       //make a copy
       const userCopy = { ...user.dataValues }
-      //hide the password
-      delete userCopy.password
       //get the reviews on this user
       const reviewsOnClient = await ClientReview.findAll({
         where: {
-          reviewedClient: req.params.userId
+          reviewedClient: req.session.userId,
         },
         // creates a column called 'avgRating' which is an aggregated average of the client_rating columns from the Client_Review
-        attributes: [
-          [Sequelize.fn("AVG", Sequelize.col("client_rating")), "avgRating"],
-        ],
+        attributes: [[Sequelize.fn("AVG", Sequelize.col("client_rating")), "avgRating"]],
       })
       console.log(reviewsOnClient)
       //add rating as a key/property on the user copy
       userCopy.rating = (+reviewsOnClient[0].dataValues.avgRating).toFixed(2)
-      userCopy.ratingCol = getRatingColor(userCopy.reviews)
-      
+      userCopy.ratingCol = getRatingColor(userCopy.rating)
+
       //send the user copy
       res.send(userCopy)
 
-    } else if (req.params.userType === "pilot") {
-      const user = await Pilot.findByPk(req.params.userId)
+    } else if (req.session.userType === "pilot") {
+      const user = await Pilot.findByPk(req.session.userId)
       const userCopy = { ...user.dataValues }
-      delete userCopy.password
-
+  
       const reviewsOnPilot = await PilotReview.findAll({
         where: {
-          reviewedPilot: req.params.userId
+          reviewedPilot: req.session.userId,
         },
         // creates a column called 'avgRating' which is an aggregated average of the client_rating columns from the Pilot_Review
-        attributes: [
-          [Sequelize.fn("AVG", Sequelize.col("pilot_rating")), "avgRating"],
-        ],
+        attributes: [[Sequelize.fn("AVG", Sequelize.col("pilot_rating")), "avgRating"]],
       })
       userCopy.rating = (+reviewsOnPilot[0].dataValues.avgRating).toFixed(2)
-      userCopy.ratingCol = getRatingColor(userCopy.reviews)
-
+      userCopy.ratingCol = getRatingColor(userCopy.rating)
+  
       //console.log(userCopy)
       res.send(userCopy)
     }
+  }
+}
+
+export const getOtherAccount = async (req, res) => {
+  if (req.params.userType === "client") {
+    //find a client with the current userID
+    const user = await Client.findByPk(req.params.userId)
+    //make a copy
+    const userCopy = { ...user.dataValues }
+    //hide the password
+    delete userCopy.password
+    //get the reviews on this user
+    const reviewsOnClient = await ClientReview.findAll({
+      where: {
+        reviewedClient: req.params.userId,
+      },
+      // creates a column called 'avgRating' which is an aggregated average of the client_rating columns from the Client_Review
+      attributes: [[Sequelize.fn("AVG", Sequelize.col("client_rating")), "avgRating"]],
+    })
+    console.log(reviewsOnClient)
+    //add rating as a key/property on the user copy
+    userCopy.rating = (+reviewsOnClient[0].dataValues.avgRating).toFixed(2)
+    userCopy.ratingCol = getRatingColor(userCopy.reviews)
+
+    //send the user copy
+    res.send(userCopy)
+  } else if (req.params.userType === "pilot") {
+    const user = await Pilot.findByPk(req.params.userId)
+    const userCopy = { ...user.dataValues }
+    delete userCopy.password
+
+    const reviewsOnPilot = await PilotReview.findAll({
+      where: {
+        reviewedPilot: req.params.userId,
+      },
+      // creates a column called 'avgRating' which is an aggregated average of the client_rating columns from the Pilot_Review
+      attributes: [[Sequelize.fn("AVG", Sequelize.col("pilot_rating")), "avgRating"]],
+    })
+    userCopy.rating = (+reviewsOnPilot[0].dataValues.avgRating).toFixed(2)
+    userCopy.ratingCol = getRatingColor(userCopy.rating)
+
+    //console.log(userCopy)
+    res.send(userCopy)
+  }
 }
 //change account details based on the userID in the session
 export const editAccount = async (req, res) => {
@@ -238,15 +258,15 @@ export const getReviewsOnUser = async (req, res) => {
   if (userType === "client") {
     const reviews = await ClientReview.findAll({
       where: {
-        reviewedClient : userId
-      }
+        reviewedClient: userId,
+      },
     })
     res.send(reviews)
   } else if (userType === "pilot") {
     const reviews = await PilotReview.findAll({
       where: {
-        reviewedPilot : userId
-      }
+        reviewedPilot: userId,
+      },
     })
     res.send(reviews)
   }
@@ -301,40 +321,36 @@ export const createReview = async (req, res) => {
           assignedPilot: req.session.userId,
         },
       })
-      if (reviewAllowed){
-      newReview.reviewedClient = IdBeingReviewed
-      newReview.pilotReviewing = req.session.userId
-      newReview.reviewContent = reviewContent
-      newReview.clientRating = reviewRating
-      ClientReview.create(newReview)
-      console.log("new review created:", newReview)
-      res.send(newReview)
-      }else {
+      if (reviewAllowed) {
+        newReview.reviewedClient = IdBeingReviewed
+        newReview.pilotReviewing = req.session.userId
+        newReview.reviewContent = reviewContent
+        newReview.clientRating = reviewRating
+        ClientReview.create(newReview)
+        console.log("new review created:", newReview)
+        res.send(newReview)
+      } else {
         res.send("Pilots cannot review clients that they have not worked with")
       }
     }
   } else {
-    res
-      .status(401)
-      .send({ error: "Unauthorized, must be logged in to create a review" })
+    res.status(401).send({ error: "Unauthorized, must be logged in to create a review" })
   }
 }
 
 //get a single review
 export const getSingleReview = async (req, res) => {
-  const {authorUserType, reviewId} = req.params
+  const { authorUserType, reviewId } = req.params
   console.log(authorUserType, reviewId)
-  if(authorUserType === "client"){
+  if (authorUserType === "client") {
     //search the pilot reviews table for a matching authorId and review Id
     const review = await PilotReview.findByPk(reviewId)
     res.send(review)
-  }
-  else if(authorUserType === "pilot"){
+  } else if (authorUserType === "pilot") {
     //search the client reviews table for a match authorId and review Id
     const review = await ClientReview.findByPk(reviewId)
     res.send(review)
   }
-
 }
 
 //send a single review created by the current user (by review Id)
@@ -381,23 +397,22 @@ export const deleteGivenReview = async (req, res) => {
 
 export const getMyCompletedJobs = async (req, res) => {
   //find jobs that are labeled "complete" with the owner Id mathcing the current user Id
- if(req.session.userType === "client"){
-  const completedListings = await Listing.findAll({
-    where: {
-      completed: true,
-      clientId: req.session.userId,
-    },
-  })
-  res.send(completedListings)
- }
- else if (req.session.userType === "pilot"){
-  //find jobs that are labeled "complete" where the assigned pilot matches the current user Id
-  const completedListings = await Listing.findAll({
-    where: {
-      completed: true,
-      assignedPilot: req.session.userId,
-    },
-  })
-  res.send(completedListings)
- }
+  if (req.session.userType === "client") {
+    const completedListings = await Listing.findAll({
+      where: {
+        completed: true,
+        clientId: req.session.userId,
+      },
+    })
+    res.send(completedListings)
+  } else if (req.session.userType === "pilot") {
+    //find jobs that are labeled "complete" where the assigned pilot matches the current user Id
+    const completedListings = await Listing.findAll({
+      where: {
+        completed: true,
+        assignedPilot: req.session.userId,
+      },
+    })
+    res.send(completedListings)
+  }
 }

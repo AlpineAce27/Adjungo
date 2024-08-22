@@ -122,7 +122,7 @@ export const getApplicationsbyClient = async (req, res) => {
 
       // Adds a new key-value pair to the applicationCopy that includes the average review rating
       applicationCopy.reviews = (+reviewsOnPilot[0].dataValues.avgRating).toFixed(2)
-      applicationCopy.reviewColor = getRatingColor(application.reviews)
+      applicationCopy.reviewColor = getRatingColor(applicationCopy.reviews)
       
       // returns applicationCopy to the applicationsWithRatings array
       return applicationCopy
@@ -130,6 +130,7 @@ export const getApplicationsbyClient = async (req, res) => {
   )
 
   // Sends the updated array of objects to the front end
+  
   res.send(applicationsWithRatings)
 }
 
@@ -197,7 +198,7 @@ export const acceptApplication = async (req, res) => {
 
         applicationCopy.reviews = reviewsOnPilot[0]
         applicationCopy.reviewCol = getRatingColor(application.reviews)
-        
+
         return applicationCopy
       })
     )

@@ -12,9 +12,8 @@ function MyAccount() {
   const dispatch = useDispatch()
 
   const [accountDetails, SetAccountDetails] = useState({})
-  const [receivedReviews, SetReceivedReviews] = useState([])
-  const [rating, SetRating] = useState(0)
 
+ 
   //create a function to log the user out
   async function logout() {
     await axios.post(`/api/logout`)
@@ -27,14 +26,9 @@ function MyAccount() {
     axios.get("/api/myAccount").then((response) => {
       SetAccountDetails(response.data)
     })
-    axios.get("/api/receivedReviews").then((response) => {
-      SetReceivedReviews(response.data)
-    })
-    axios.get(`api/otherAccount/${userType}/${userId}`).then((response) => {
-      SetRating(response.data.rating)
-    })
   }, [])
 
+  console.log(accountDetails.ratingCol)
   //calculate the average rating that this user has
 
   return (
@@ -82,26 +76,7 @@ function MyAccount() {
                     Rating:{" "}
                   </h3>
                   <div>
-                    {rating < 2 && (
-                      <h3 className="text-[#dc2626] font-bold text-[20px]">
-                        {rating}
-                      </h3>
-                    )}
-                    {rating >= 2 && rating < 3 && (
-                      <h3 className="text-[#ea580c] font-bold text-[20px]">
-                        {rating}
-                      </h3>
-                    )}
-                    {rating >= 3 && rating < 4 && (
-                      <h3 className="text-[#fbbf24] font-bold text-[20px]">
-                        {rating}
-                      </h3>
-                    )}
-                    {rating >= 4 && rating < 5 && (
-                      <h3 className="text-[#84cc16] font-bold text-[20px]">
-                        {rating}
-                      </h3>
-                    )}
+                  <h3 className={`font-bold font-rubik text-[20px] text-${accountDetails.ratingCol}`}>{accountDetails.rating}</h3>
                   </div>
                 </div>
               </div>
@@ -164,28 +139,7 @@ function MyAccount() {
                     <h3 className="pr-2  font-rubik font-medium text-[20px] text-AJGO_DarkSlateGray justify-center">
                       Rating:{" "}
                     </h3>
-                    <div>
-                      {rating < 2 && (
-                        <h3 className="text-[#dc2626] font-bold text-[20px]">
-                          {rating}
-                        </h3>
-                      )}
-                      {rating >= 2 && rating < 3 && (
-                        <h3 className="text-[#ea580c] font-bold text-[20px]">
-                          {rating}
-                        </h3>
-                      )}
-                      {rating >= 3 && rating < 4 && (
-                        <h3 className="text-[#fbbf24] font-bold text-[20px]">
-                          {rating}
-                        </h3>
-                      )}
-                      {rating >= 4 && rating < 5 && (
-                        <h3 className="text-[#84cc16] font-bold text-[20px]">
-                          {rating}
-                        </h3>
-                      )}
-                    </div>
+                    <h3 className={`font-bold font-rubik text-[20px] text-${accountDetails.ratingCol}`}>{accountDetails.rating}</h3>
                   </div>
                 </div>
 

@@ -4,7 +4,7 @@ const yellowCol = "#fbbf24"
 const orangeCol = "#ea580c"
 const redCol ="#dc2626"
 
-async function getRatingColor(rating) {
+function getRatingColor(rating) {
     let color = ''
     if(+rating >= 4){
         color = greenCol

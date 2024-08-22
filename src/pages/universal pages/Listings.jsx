@@ -134,7 +134,7 @@ function Listings() {
                 {listing.clientId}
               </button>
             </td>
-            <td className="font-bold" style={{color: listing.reviewCol}}>{listing.reviews}</td>
+            <td className={`font-bold text-[${listing.reviewCol}]`}>{listing.reviews}</td>
             <td>${listing.offer}</td>
             <td>{listing.flightZipcode}</td>
             <td>{listing.flightDate}</td>
@@ -293,7 +293,7 @@ function Listings() {
           <tr key={listing.listingId} className="pt-2 pb-2 border-b-2 border-opacity-10 border-b-AJGO_DarkSlateGray">
             <td>{listing.listingId}</td>
             <td>{listing.clientId}</td>
-            <td className="font-bold" style={{color: listing.reviewCol}}>{listing.reviews}</td>
+            <td className={`font-bold text-[${listing.reviewCol}]`}>{listing.reviews}</td>
             <td>${listing.offer}</td>
             <td>{listing.flightZipcode}</td>
             <td>{listing.flightDate}</td>
