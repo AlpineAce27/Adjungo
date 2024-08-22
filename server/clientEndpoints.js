@@ -1,5 +1,6 @@
 import { Listing, Pilot, Application, PilotReview } from "./database/model.js"
 import { Sequelize } from "sequelize"
+import getRatingColor from "../src/functions/getRatingColor.js"
 
 //return all listings with a specific client id
 export const getListingsByClient = async (req, res) => {
@@ -121,7 +122,8 @@ export const getApplicationsbyClient = async (req, res) => {
 
       // Adds a new key-value pair to the applicationCopy that includes the average review rating
       applicationCopy.reviews = (+reviewsOnPilot[0].dataValues.avgRating).toFixed(2)
-
+      applicationCopy.reviewColor = getRatingColor(application.reviews)
+      
       // returns applicationCopy to the applicationsWithRatings array
       return applicationCopy
     })
@@ -194,7 +196,8 @@ export const acceptApplication = async (req, res) => {
         })
 
         applicationCopy.reviews = reviewsOnPilot[0]
-
+        applicationCopy.reviewCol = getRatingColor(application.reviews)
+        
         return applicationCopy
       })
     )
@@ -244,6 +247,7 @@ export const denyApplication = async (req, res) => {
         })
 
         applicationCopy.reviews = reviewsOnPilot[0]
+        applicationCopy.reviewCol = getRatingColor(application.reviews)
 
         return applicationCopy
       })

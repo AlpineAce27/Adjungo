@@ -8,6 +8,8 @@ import {
 
 import { Sequelize } from "sequelize"
 
+import getRatingColor from "../src/functions/getRatingColor.js"
+
 //return all listings
 export const getAllListings = async (req, res) => {
   const allListings = await Listing.findAll({
@@ -31,7 +33,9 @@ export const getAllListings = async (req, res) => {
       })
 
       oneListing.reviews = (+reviewsOnClient[0].dataValues.avgRating).toFixed(2)
+      oneListing.reviewCol = getRatingColor(oneListing.reviews)
 
+      console.log(oneListing)
       listingCopy[i] = oneListing
       return listingCopy[i]
     })
@@ -140,7 +144,8 @@ export const  getOtherAccount = async (req, res) => {
       console.log(reviewsOnClient)
       //add rating as a key/property on the user copy
       userCopy.rating = (+reviewsOnClient[0].dataValues.avgRating).toFixed(2)
-      //console.log(userCopy)
+      userCopy.ratingCol = getRatingColor(userCopy.reviews)
+      
       //send the user copy
       res.send(userCopy)
 
@@ -159,6 +164,8 @@ export const  getOtherAccount = async (req, res) => {
         ],
       })
       userCopy.rating = (+reviewsOnPilot[0].dataValues.avgRating).toFixed(2)
+      userCopy.ratingCol = getRatingColor(userCopy.reviews)
+
       //console.log(userCopy)
       res.send(userCopy)
     }

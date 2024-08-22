@@ -7,7 +7,7 @@ import { Tooltip } from "../../components/Tooltip"
 //icon imports
 import { ImCross, ImCheckmark, ImPowerCord } from "react-icons/im"
 import { GiOrange } from "react-icons/gi"
-import { TbCalendarStats, TbCalendar, TbDrone, TbWifi, TbCloudShare, TbRadioactiveFilled, TbArrowBigDownLine, TbArrowBigUpLine } from "react-icons/tb"
+import { TbCalendarStats, TbCalendar, TbDrone, TbWifi, TbCloudShare, TbRadioactiveFilled, TbArrowBigDownLine, TbArrowBigUpLine, TbStarsFilled } from "react-icons/tb"
 import { BiNetworkChart, BiSolidDollarCircle } from "react-icons/bi"
 import { GiBombingRun } from "react-icons/gi"
 import { MdDarkMode } from "react-icons/md"
@@ -134,7 +134,7 @@ function Listings() {
                 {listing.clientId}
               </button>
             </td>
-            <td>3.3</td>
+            <td className="font-bold" style={{color: listing.reviewCol}}>{listing.reviews}</td>
             <td>${listing.offer}</td>
             <td>{listing.flightZipcode}</td>
             <td>{listing.flightDate}</td>
@@ -293,7 +293,7 @@ function Listings() {
           <tr key={listing.listingId} className="pt-2 pb-2 border-b-2 border-opacity-10 border-b-AJGO_DarkSlateGray">
             <td>{listing.listingId}</td>
             <td>{listing.clientId}</td>
-            <td>{listing.reviews}</td>
+            <td className="font-bold" style={{color: listing.reviewCol}}>{listing.reviews}</td>
             <td>${listing.offer}</td>
             <td>{listing.flightZipcode}</td>
             <td>{listing.flightDate}</td>
@@ -462,7 +462,22 @@ function Listings() {
                   <th className="w-[50px]">Listing</th>
                   <th className="w-[50px]">Client</th>
                   <th>
-                    <button>Rating</button>
+                    <button onClick={() => changeSort("reviews")}>
+                      <Tooltip position="top" content="Client Rating">
+                        {sortCondition[0] === "reviews" && sortCondition[1] === "H-L" &&
+                        <TbArrowBigDownLine size={25} style={{ color: "#000000" }} />
+                        }
+                        {sortCondition[0] === "reviews" && sortCondition[1] === "L-H" &&
+                        <TbArrowBigUpLine size={25} style={{ color: "#000000" }}/>
+                        }
+                        {sortCondition[0] !== "reviews" &&
+                        <TbStarsFilled size={25
+
+                        } style={{ color: "#000000" }}/>
+                        }
+
+                      </Tooltip>
+                    </button>
                   </th>
                   <th>
                     <button onClick={() => changeSort("offer")}>
