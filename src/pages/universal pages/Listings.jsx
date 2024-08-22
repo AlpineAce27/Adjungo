@@ -1,4 +1,4 @@
-import { NavLink, Link, Navigate, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
@@ -7,8 +7,8 @@ import { Tooltip } from "../../components/Tooltip"
 //icon imports
 import { ImCross, ImCheckmark, ImPowerCord } from "react-icons/im"
 import { GiOrange } from "react-icons/gi"
-import { TbCalendarStats, TbCalendar, TbDrone, TbWifi, TbCloudShare, TbRadioactiveFilled } from "react-icons/tb"
-import { BiNetworkChart } from "react-icons/bi"
+import { TbCalendarStats, TbCalendar, TbDrone, TbWifi, TbCloudShare, TbRadioactiveFilled, TbArrowBigDownLine, TbArrowBigUpLine } from "react-icons/tb"
+import { BiNetworkChart, BiSolidDollarCircle } from "react-icons/bi"
 import { GiBombingRun } from "react-icons/gi"
 import { MdDarkMode } from "react-icons/md"
 import { FaPeopleGroup } from "react-icons/fa6"
@@ -21,8 +21,9 @@ function Listings() {
   //create a state value for an array of listings
   let [listings, setListings] = useState([])
 
-  //create state values for the filters
+  //create state values for the filters and sorting
   const [filterConditions, setFilterConditions] = useState({})
+  const [sortCondition, setSortCondition] = useState([])
 
   //create a handler function for changing filters
   const changeFilter = (key) => {
@@ -36,7 +37,24 @@ function Listings() {
       setFilterConditions({ ...filterConditions, [key]: true })
     }
   }
-  //console.log("filter changed:", filterConditions)
+
+   //create a handler function for sorting the listings
+   const changeSort = (key) => {
+    if (key === sortCondition[0])
+      if (sortCondition.length < 1) {
+        const array = [key, "H-L"]
+        setSortCondition(array)
+      } else if (sortCondition.length > 1 && sortCondition[1] === "H-L") {
+        const array = [key, "L-H"]
+        setSortCondition(array)
+      } else {
+        setSortCondition([])
+      }
+    else {
+      const array = [key, "H-L"]
+      setSortCondition(array)
+    }
+  }
 
   //create handler function for filtering the listings (Magic box)
   const filterListings = (data) => {
@@ -53,8 +71,32 @@ function Listings() {
     })
   }, [])
 
+  //filter the listings
   let filteredListings = filterListings(listings)
-  //console.log(filteredListings)
+
+  //sort the remaining listings
+  if(sortCondition.length > 1){
+    filteredListings.sort((a, b) => {
+      let aVar = Number(a[sortCondition[0]])
+      let bVar = Number(b[sortCondition[0]])
+
+      if(sortCondition[0] === "flightDate"){
+        aVar = a[sortCondition[0]].replace(/-/g, "")
+        bVar = b[sortCondition[0]].replace(/-/g, "")
+        if(sortCondition[1] === "H-L"){
+          return aVar-bVar
+        }else if (sortCondition[1] === "L-H"){
+          return bVar-aVar
+        }
+      }else{
+        if(sortCondition[1] === "H-L"){
+          return aVar-bVar
+        }else if (sortCondition[1] === "L-H"){
+          return bVar-aVar
+        }
+      }
+    })
+  }
 
   let listingsItems
   if (userType === "client" || userType === "pilot") {
@@ -243,7 +285,7 @@ function Listings() {
       } else {
         assignedPilot = "Claimed"
       }
-      
+
       //create a table row with each variable in the correct spot
       if (!listing.assignedPilot) {
         return (
@@ -418,11 +460,24 @@ function Listings() {
                 <tr className="border-b-4 border-opacity-30 border-b-AJGO_DarkSlateGray">
                   <th className="w-[50px]">Listing</th>
                   <th className="w-[50px]">Client</th>
-                  <th>Rating</th>
                   <th>
-                    <Tooltip position="top" content="Payment offering">
-                      Offer
-                    </Tooltip>
+                    <button>Rating</button>
+                  </th>
+                  <th>
+                    <button onClick={() => changeSort("offer")}>
+                      <Tooltip position="top" content="Payment">
+                        {sortCondition[0] === "offer" && sortCondition[1] === "H-L" &&
+                        <TbArrowBigDownLine size={25} style={{ color: "#000000" }} />
+                        }
+                        {sortCondition[0] === "offer" && sortCondition[1] === "L-H" &&
+                        <TbArrowBigUpLine size={25} style={{ color: "#000000" }}/>
+                        }
+                        {sortCondition[0] !== "offer" &&
+                        <BiSolidDollarCircle size={30} style={{ color: "#000000" }}/>
+                        }
+                        
+                      </Tooltip>
+                    </button>
                   </th>
                   <th>
                     <Tooltip position="top" content="Flight-Op location">
@@ -431,16 +486,32 @@ function Listings() {
                   </th>
                   <th>
                     <Tooltip position="top" content="Flight-Op date">
-                      <button>
+                      <button onClick={() => changeSort("flightDate")}>
+                      {sortCondition[0] === "flightDate" && sortCondition[1] === "H-L" &&
+                        <TbArrowBigDownLine size={25} style={{ color: "#000000" }} />
+                        }
+                        {sortCondition[0] === "flightDate" && sortCondition[1] === "L-H" &&
+                        <TbArrowBigUpLine size={25} style={{ color: "#000000" }}/>
+                        }
+                        {sortCondition[0] !== "flightDate" &&
                         <TbCalendar size={25} style={{ color: "#000000" }} />
+                        }
                       </button>
                     </Tooltip>
                   </th>
 
                   <th>
-                    <Tooltip position="top" content="Range of Flight-Op (miles)">
-                      <button>
+                    <Tooltip position="top" content="Range (miles)">
+                      <button onClick={() => changeSort("flightRadius")}>
+                      {sortCondition[0] === "flightRadius" && sortCondition[1] === "H-L" &&
+                        <TbArrowBigDownLine size={25} style={{ color: "#000000" }} />
+                        }
+                        {sortCondition[0] === "flightRadius" && sortCondition[1] === "L-H" &&
+                        <TbArrowBigUpLine size={25} style={{ color: "#000000" }}/>
+                        }
+                        {sortCondition[0] !== "flightRadius" &&
                         <GiOrange size={25} style={{ color: "#000000" }} />
+                        }
                       </button>
                     </Tooltip>
                   </th>
