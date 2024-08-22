@@ -12,6 +12,7 @@ function Listings() {
   //grab all the listings in the database
   useEffect(() => {
     axios.get("/api/listings").then((response) => {
+      console.log(response.data)
       setListings(response.data)
     })
   }, [])
@@ -100,7 +101,7 @@ function Listings() {
       } else {
         assignedPilot = "Claimed"
       }
-      
+
       //create a table row with each variable in the correct spot
       if(!listing.assignedPilot){
         return (
@@ -129,7 +130,7 @@ function Listings() {
           </tr>
         )
       }
-      
+
     })
   }
   //render all the elements we created on the page
@@ -173,7 +174,7 @@ function Listings() {
                   <th>Heavy</th>
                   <th>Night</th>
                   <th>Crowd</th>
-                  
+
                 </tr>
               </thead>
               <tbody>{listingsItems}</tbody>
