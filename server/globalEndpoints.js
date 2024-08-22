@@ -10,8 +10,36 @@ import { Sequelize } from "sequelize"
 
 //return all listings
 export const getAllListings = async (req, res) => {
-  const allListings = await Listing.findAll({ where: { completed: false } })
-  res.send(allListings)
+  const allListings = await Listing.findAll({
+    where: { completed: false },
+    include: {model: Client}
+  })
+
+  const listingCopy = [...allListings]
+
+  let finalCopy = await Promise.all(listingCopy.map(async (e, i) => {
+      let oneListing = {...listingCopy[i].dataValues}
+
+      const reviewsOnClient = await ClientReview.findAll({
+        where: {
+          reviewedClient: e.client.clientId
+        },
+        // creates a column called 'avgRating' which is an aggregated average of the client_rating columns from the Client_Review
+        attributes: [
+          [Sequelize.fn("AVG", Sequelize.col("client_rating")), "avgRating"],
+        ],
+      })
+
+      oneListing.reviews = (+reviewsOnClient[0].dataValues.avgRating).toFixed(2)
+
+      listingCopy[i] = oneListing
+      return listingCopy[i]
+    })
+  )
+
+  // console.log('finalCopy', finalCopy)
+
+  res.send(finalCopy)
 }
 
 //return a single listing with a specific listing id

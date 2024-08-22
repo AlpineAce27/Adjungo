@@ -67,6 +67,7 @@ function Listings() {
   //grab all the listings in the database
   useEffect(() => {
     axios.get("/api/listings").then((response) => {
+      console.log(response.data)
       setListings(response.data)
     })
   }, [])
