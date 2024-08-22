@@ -14,6 +14,9 @@ export default {
       serif: ["Merriweather", "serif"],
       rubik: ["Rubik", "sans-serif"]
     },
+    extend: {
+      customHeader: "bg-red"
+    },
     plugins: [],
   },
 }

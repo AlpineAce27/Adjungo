@@ -76,7 +76,7 @@ function SingleReview() {
 
   if (editing === false) {
     return (
-      <div className="flex flex-col items-center w-full">
+      <div className="flex flex-col items-center justify-center w-full gap-10">
         {review.clientReviewId &&
           <h1 className=" font-rubik font-medium text-[50px] text-AJGO_DarkSlateGray justify-center">Client Review #{review.clientReviewId}</h1>
         }
@@ -85,13 +85,13 @@ function SingleReview() {
         }
 
         {(userType === "client" && review.clientReviewing === userId) && (
-          <div className="flex flex-col items-center w-full">
+          <div className="flex flex-col items-center w-full gap-3">
             <p className="font-rubik text-xl">
               You created this review for pilot #{review.reviewedPilot}
             </p>
             <br />
             {editing === false && (
-              <div className="flex flex-col items-start pl-10 pr-10">
+              <div className="flex flex-col items-start pl-10 pr-10 w-full">
                 <h3 className=" font-rubik font-medium text-[25px] text-AJGO_DarkSlateGray justify-center">Rating: {review.pilotRating}</h3>
                 <br />
                 <div >
@@ -99,26 +99,26 @@ function SingleReview() {
                   <p className="font-rubik text-xl">{review.reviewContent}</p>
                 </div>
                 <br />
-                <div className="flex justify-center items-center">
+                <div className="flex justify-around items-center w-full">
                   <button
-                    className="border-2 border-x-ADJO_Keppel px-8 py-1 text-xl text- uppercase font-rubik rounded-lg text-ADJO_Keppel"
-                    onClick={handleEditButton}>Change My Review</button>
+                    className="border-2 border-x-ADJO_Keppel px-8 py-1 text-l text- uppercase font-rubik rounded-lg text-ADJO_Keppel"
+                    onClick={handleEditButton}>Edit this Review</button>
                   <button
-                    className="border-2 border-[#dd7d7d] px-8 py-1 text-xl text- uppercase font-rubik rounded-lg text-[#dd7d7d]"
-                    onClick={handleDeleteButton}>Delete my Review</button>
+                    className="border-2 border-[#dd7d7d] px-8 py-1 text-l text- uppercase font-rubik rounded-lg text-[#dd7d7d]"
+                    onClick={handleDeleteButton}>Delete this Review</button>
                 </div>
               </div>
             )}
           </div>
         )}
         {(userType === "pilot" && review.pilotReviewing === userId) && (
-          <div className="flex flex-col items-center w-full">
+          <div className="flex flex-col items-center w-full gap-3">
             <p className="font-rubik text-xl">
               You created this review for client #{review.reviewedClient}
             </p>
             <br />
             {editing === false && (
-              <div className="flex flex-col items-start pl-10 pr-10">
+              <div className="flex flex-col items-start pl-10 pr-10 w-full">
                 <h3 className=" font-rubik font-medium text-[25px] text-AJGO_DarkSlateGray justify-center">Rating: {review.clientRating}</h3>
                 <br />
                 <div >
@@ -126,13 +126,13 @@ function SingleReview() {
                   <p className="font-rubik text-xl">{review.reviewContent}</p>
                 </div>
                 <br />
-                <div className="flex justify-center items-center">
+                <div className="flex justify-around items-center w-full">
+                <button
+                    className="border-2 border-x-ADJO_Keppel px-8 py-1 text-l text- uppercase font-rubik rounded-lg text-ADJO_Keppel"
+                    onClick={handleEditButton}>Edit this Review</button>
                   <button
-                    className="border-2 border-x-ADJO_Keppel px-8 py-1 text-xl text- uppercase font-rubik rounded-lg text-ADJO_Keppel"
-                    onClick={handleEditButton}>Change My Review</button>
-                  <button
-                    className="border-2 border-[#dd7d7d] px-8 py-1 text-xl text- uppercase font-rubik rounded-lg text-[#dd7d7d]"
-                    onClick={handleDeleteButton}>Delete my Review</button>
+                    className="border-2 border-[#dd7d7d] px-8 py-1 text-l text- uppercase font-rubik rounded-lg text-[#dd7d7d]"
+                    onClick={handleDeleteButton}>Delete this Review</button>
                 </div>
               </div>
             )}
@@ -171,13 +171,13 @@ function SingleReview() {
     )
   } else if (editing === true) {
     return (
-      <div className="flex flex-col items-center">
-        <div className="flex flex-col items-center pt-10 pb-10">
+      <div className="flex flex-col items-center w-full">
+        <div className="flex flex-col items-center pt-10 pb-10 w-full">
           <h1 className=" font-rubik font-medium text-[50px] text-AJGO_DarkSlateGray justify-center">Edit Review</h1>
           <p className="font-rubik text-xl">Make your changes below, and save them when your ready</p>
         </div>
 
-        <form className="font-rubik text-xl bg-ADJO_Celeste p-5 rounded-lg w-3/5">
+        <form className="font-rubik text-l bg-ADJO_Celeste p-5 rounded-lg w-5/6">
           <div className="pb-1 pt-1">
             <label htmlFor="rating">Rating:</label>
             <input
@@ -209,11 +209,11 @@ function SingleReview() {
         </form>
         <div className="flex w-3/5 justify-around pt-10 pb-10">
           <button
-            className="bg-ADJO_Keppel px-8 py-1 text-xl text- uppercase font-rubik rounded-lg"
-            onClick={handleEditButton}>Cancel</button>
-          <button
-            className="bg-ADJO_Keppel px-8 py-1 text-xl text- uppercase font-rubik rounded-lg"
+            className="bg-ADJO_Keppel px-8 py-1 text-l text- uppercase font-rubik rounded-lg"
             onClick={handleReviewEdit}>Save Changes</button>
+            <button
+            className="bg-ADJO_Keppel px-8 py-1 text-l text- uppercase font-rubik rounded-lg"
+            onClick={handleEditButton}>Cancel</button>
         </div>
       </div>
     )

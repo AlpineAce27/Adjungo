@@ -27,7 +27,7 @@ function generateCompletionCriteria(pilot) {
 }
 
 //create the listings arrray
-const listings = Array.from({ length: 100 }, () => {
+const listings = Array.from({ length: 300 }, () => {
   const assignedPilot = generateAssignedPilot()
   const complete = generateCompletionCriteria(assignedPilot)
 
