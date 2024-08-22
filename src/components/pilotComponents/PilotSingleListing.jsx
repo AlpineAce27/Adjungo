@@ -176,7 +176,7 @@ function PilotSingleListing() {
             className="bg-ADJO_Keppel px-8 py-1 text-xl text- uppercase font-rubik rounded-lg"
             onClick={() => {
               axios.post(`/api/application/${listing.listingId}`)
-              navigate("/PilotJobsApplied")
+              navigate("/applications/pilot")
             }}>Apply For this Job</button>
         )}
         {listingState === "applied" && (
@@ -184,7 +184,7 @@ function PilotSingleListing() {
             className="bg-ADJO_Keppel px-8 py-1 text-xl text- uppercase font-rubik rounded-lg"
             onClick={() => {
               axios.delete(`/api/application/${currListingApplication.applicationId}`)
-              navigate("/PilotJobsApplied")
+              navigate("/applications/pilot")
             }}>Retract my Application</button>
         )}
         {listingState === "assigned" && (
@@ -192,7 +192,7 @@ function PilotSingleListing() {
             className="bg-ADJO_Keppel px-8 py-1 text-xl text- uppercase font-rubik rounded-lg"
             onClick={() => {
               axios.put(`/api/myJobs/${listing.listingId}`)
-              navigate("/PilotJobs")
+              navigate("/myJobs/pilot")
             }}>Resign from this job</button>
         )}
       </div>

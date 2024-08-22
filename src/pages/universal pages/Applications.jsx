@@ -2,7 +2,8 @@ import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
-import { BiListPlus, BiListUl } from "react-icons/bi"
+import { TbCalendarStats, TbCalendar, TbDrone, TbWifi, TbCloudShare, TbRadioactiveFilled, TbArrowBigDownLine, TbArrowBigUpLine, TbStarsFilled } from "react-icons/tb"
+import { BiListPlus, BiListUl, BiSolidDollarCircle } from "react-icons/bi"
 import { useLoaderData } from "react-router-dom"
 
 const Applications = () => {
@@ -62,10 +63,7 @@ const Applications = () => {
           </td>
           <td>${item.offer}</td>
           <td>{item.flightDate}</td>
-          <td>{hardwareProvided}</td>
-          <td>{softwareProvided}</td>
           <td>{item.flightAddress}</td>
-          <td>{item.flightRadius}</td>
           <td>
             <button
               onClick={() => {
@@ -136,7 +134,7 @@ const Applications = () => {
   if (userType === "client" || userType === "pilot") {
     return (
       <>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center w-full">
           <div className="flex flex-col items-center">
             {userType === "pilot" && (
               <div className="flex flex-col items-center">
@@ -165,19 +163,16 @@ const Applications = () => {
           </div>
           {/* <input type="checkbox" id="showCompleted" name="showCompleted" value="showCompleted"/>
     <label for="showCompleted">Show Completed Jobs:</label> */}
-          <div className="flex justify-center bg-ADJO_Celeste bg-opacity-30 w-1/2 pl-10 pr-10 pt-5 pb-5">
-            <table className="table-auto border-collapse font-rubik w-full">
+          <div className="flex justify-center bg-ADJO_Celeste bg-opacity-30 w-2/3 pl-10 pr-10 pt-5 pb-5">
+            <table className="table-auto border-collapse font-rubik text-sm w-full">
               <thead>
                 {userType === "pilot" && (
                   <tr className="border-b-4 border-opacity-30 border-b-AJGO_DarkSlateGray">
                     <th className="w-[100px]">Listing ID</th>
                     <th className="w-[100px]">Client ID</th>
-                    <th>Offer</th>
-                    <th className="w-[130px]">Flight Date</th>
-                    <th>Hardware Provided</th>
-                    <th>Software Provided</th>
+                    <th><button><BiSolidDollarCircle size={30} style={{ color: "#000000" }}/></button></th>
+                    <th className="w-[150px]"><button><TbCalendar size={25} style={{ color: "#000000" }} /></button></th>
                     <th className="w-[500px]">Flight Location</th>
-                    <th>Flight Radius</th>
                     <th className="w-[100px]">Retract This Application?</th>
                   </tr>
                 )}
