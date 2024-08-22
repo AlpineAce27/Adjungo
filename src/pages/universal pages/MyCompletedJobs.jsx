@@ -2,6 +2,7 @@ import { NavLink, Link, useNavigate } from "react-router-dom"
 import axios from "axios"
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
+import { Tooltip } from "../../components/Tooltip"
 
 //icon imports
 import { ImCross, ImCheckmark, ImPowerCord } from "react-icons/im"
@@ -21,6 +22,7 @@ import { GiBombingRun } from "react-icons/gi"
 import { MdDarkMode } from "react-icons/md"
 import { FaPeopleGroup } from "react-icons/fa6"
 import { FaWeightHanging } from "react-icons/fa6"
+
 
 function MyCompletedJobs() {
   //grabbing the usertype from redux store
@@ -128,33 +130,33 @@ function MyCompletedJobs() {
       return (
         <tr key={listing.listingId} className="pt-2 pb-2 border-b-2 border-opacity-10 border-b-AJGO_DarkSlateGray">
           <td>
-            <Link to={`/pilotListing/${listing.listingId}`}>{listing.listingId}</Link>
+            <button onClick = {()=>navigate(`/pilotListing/${listing.listingId}`)} className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium">
+            {listing.listingId}
+            </button>
           </td>
           <td>
-            <NavLink to={`/userProfile/client/${listing.clientId}`}>{listing.clientId}</NavLink>
-          </td>
-          <td>
-            <Link to={`/pilotProfile/${listing.assignedPilot}`}></Link>
-            {listing.assignedPilot}
+          <button onClick = {()=>navigate(`/pilotProfile/${listing.assignedPilot}`)} className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium">
+          {listing.assignedPilot}
+            </button>
           </td>
           <td>${listing.offer}</td>
           <td>{listing.flightDate}</td>
-          <td>{listing.flightZipcode}</td>
+          <td>{listing.flightAddress}</td>
           {pilotArray.includes(listing.assignedPilot) && (
             <td className="flex justify-center align-middle">
               <button
-                className="flex h-8 w-8 rounded-full bg-ADJO_Keppel justify-center align-middle"
+                className="flex h-6 w-6 rounded-full bg-ADJO_Keppel justify-center align-middle"
                 onClick={() => navigate(`/review/client/${thisReview[0].pilotReviewId}`)}>
-                <BiCommentEdit size={20} style={{ color: "#000000", alignSelf: "center" }} />
+                <BiCommentEdit size={15} style={{ color: "#000000", alignSelf: "center" }} />
               </button>
             </td>
           )}
           {!pilotArray.includes(listing.assignedPilot) && (
             <td className="flex justify-center align-middle">
               <button
-                className="flex h-8 w-8 rounded-full bg-[#fa8989] justify-center align-middle"
+                className="flex h-6 w-6 rounded-full bg-[#fa8989] justify-center align-middle"
                 onClick={() => navigate(`/createReview/${listing.assignedPilot}`)}>
-                <BiCommentAdd size={20} style={{ color: "#BDF3E7", alignSelf: "center" }} />
+                <BiCommentAdd size={15} style={{ color: "#BDF3E7", alignSelf: "center" }} />
               </button>
             </td>
           )}
@@ -176,17 +178,45 @@ function MyCompletedJobs() {
           </p>
           {/* <input type="checkbox" id="showCompleted" name="showCompleted" value="showCompleted"/>
       <label for="showCompleted">Show Completed Jobs:</label> */}
-          <div className="flex justify-center bg-ADJO_Celeste bg-opacity-30 rounded-xl w-1/2 pr-10 pl-10 pt-5 pb-5">
+          <div className="flex justify-center bg-ADJO_Celeste bg-opacity-30 rounded-xl w-11/12 pr-10 pl-10 pt-5 pb-5">
             <table className="table-auto border-collapse font-rubik pb-20 text-sm">
               <thead>
                 <tr className="border-b-4 border-opacity-30 border-b-AJGO_DarkSlateGray">
-                  <th>Listing ID</th>
-                  <th>Client</th>
-                  <th>Pilot</th>
-                  <th className="w-[100px]">Payment</th>
-                  <th className="w-[120px]">Date</th>
-                  <th className="w-[120px]">Location</th>
-                  <th>Review Status</th>
+                  <th className="w-[100px]">Listing ID</th>
+                  <th className="w-[100px]">Pilot</th>
+                  <th className="w-[100px]">
+                    <button onClick={() => changeSort("offer")}>
+                      <Tooltip position="top" content="Payment">
+                        {sortCondition[0] === "offer" && sortCondition[1] === "H-L" &&
+                        <TbArrowBigDownLine size={25} style={{ color: "#000000" }} />
+                        }
+                        {sortCondition[0] === "offer" && sortCondition[1] === "L-H" &&
+                        <TbArrowBigUpLine size={25} style={{ color: "#000000" }}/>
+                        }
+                        {sortCondition[0] !== "offer" &&
+                        <BiSolidDollarCircle size={25} style={{ color: "#000000" }}/>
+                        }
+                        
+                      </Tooltip>
+                    </button>
+                  </th>
+                  <th>
+                    <Tooltip position="top" content="Flight-Op date">
+                      <button onClick={() => changeSort("flightDate")}>
+                      {sortCondition[0] === "flightDate" && sortCondition[1] === "H-L" &&
+                        <TbArrowBigDownLine size={25} style={{ color: "#000000" }} />
+                        }
+                        {sortCondition[0] === "flightDate" && sortCondition[1] === "L-H" &&
+                        <TbArrowBigUpLine size={25} style={{ color: "#000000" }}/>
+                        }
+                        {sortCondition[0] !== "flightDate" &&
+                        <TbCalendar size={25} style={{ color: "#000000" }} />
+                        }
+                      </button>
+                    </Tooltip>
+                  </th>
+                  <th className="w-[500px]">Location</th>
+                  <th className="w-[100px]">Review Status</th>
                 </tr>
               </thead>
               <tbody>{completedListingsItems}</tbody>
@@ -196,7 +226,7 @@ function MyCompletedJobs() {
       </>
     )
   } else if (userType === "pilot") {
-    //if they are, grab completed jobs where the owner is matches the client ID, as well as any reviews on the assigned pilot
+    //if they are, grab completed jobs where the assigned pilot is matches the current user ID, as well as any reviews
     useEffect(() => {
       //console.log("useffect hit")
       axios.get("/api/myCompletedJobs").then((jobsResponse) => {
@@ -247,36 +277,41 @@ function MyCompletedJobs() {
       return (
         <tr key={listing.listingId} className="pt-2 pb-2 border-b-2 border-opacity-10 border-b-AJGO_DarkSlateGray">
           <td>
-            <Link to={`/pilotListing/${listing.listingId}`}>{listing.listingId}</Link>
+          <button
+              onClick={() => {
+                navigate(`/singleListing/${listing.listingId}`)
+              }}
+              className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium">
+              {listing.listingId}
+            </button>
           </td>
           <td>
-            <NavLink to={`/userProfile/client/${listing.clientId}`}>{listing.clientId}</NavLink>
-          </td>
-          <td>
-            <Link to={`/pilotProfile/${listing.assignedPilot}`}></Link>
-            {listing.assignedPilot}
+          <button
+              onClick={() => {
+                navigate(`/userProfile/client/${listing.clientId}`)
+              }}
+              className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium">
+              {listing.clientId}
+            </button>
           </td>
           <td>${listing.offer}</td>
           <td>{listing.flightDate}</td>
-          <td>{listing.hardwareProvided}</td>
-          <td>{listing.softwareProvided}</td>
           <td>{listing.flightAddress}</td>
-          <td>{listing.flightRadius}</td>
           {clientArray.includes(listing.clientId) && (
             <td className="flex justify-center align-middle">
               <button
-                className="flex h-8 w-8 rounded-full bg-ADJO_Keppel justify-center align-middle"
+                className="flex h-6 w-6 rounded-full bg-ADJO_Keppel justify-center align-middle"
                 onClick={() => navigate(`/review/pilot/${thisReview[0].clientReviewId}`)}>
-                <BiCommentEdit size={20} style={{ color: "#000000", alignSelf: "center" }} />
+                <BiCommentEdit size={15} style={{ color: "#000000", alignSelf: "center" }} />
               </button>
             </td>
           )}
           {!clientArray.includes(listing.clientId) && (
             <td className="flex justify-center align-middle">
               <button
-                className="flex h-8 w-8 rounded-full bg-[#fa8989] justify-center align-middle"
+                className="flex h-6 w-6 rounded-full bg-[#fa8989] justify-center align-middle"
                 onClick={() => navigate(`/createReview/${listing.clientId}`)}>
-                <BiCommentAdd size={20} style={{ color: "#BDF3E7", alignSelf: "center" }} />
+                <BiCommentAdd size={15} style={{ color: "#BDF3E7", alignSelf: "center" }} />
               </button>
             </td>
           )}
@@ -313,13 +348,12 @@ function MyCompletedJobs() {
             </section>
           </div>
           <div className="flex justify-center bg-ADJO_Celeste bg-opacity-30 rounded-xl w-11/12 pr-10 pl-10 pt-5 pb-5">
-            <table className="table-auto border-collapse font-rubik pb-20">
+            <table className="table-auto border-collapse font-rubik pb-20 text-sm">
               <thead>
                 <tr className="border-b-4 border-opacity-30 border-b-AJGO_DarkSlateGray">
                   <th className="w-[100px]">Listing ID</th>
                   <th className="w-[100px]">Client ID</th>
-                  <th className="w-[100px]">Pilot ID</th>
-                  <th>
+                  <th className="w-[100px]">
                     <button onClick={() => changeSort("offer")}>
                       <Tooltip position="top" content="Payment">
                         {sortCondition[0] === "offer" && sortCondition[1] === "H-L" &&
@@ -329,7 +363,7 @@ function MyCompletedJobs() {
                         <TbArrowBigUpLine size={25} style={{ color: "#000000" }}/>
                         }
                         {sortCondition[0] !== "offer" &&
-                        <BiSolidDollarCircle size={30} style={{ color: "#000000" }}/>
+                        <BiSolidDollarCircle size={25} style={{ color: "#000000" }}/>
                         }
                         
                       </Tooltip>
@@ -350,24 +384,7 @@ function MyCompletedJobs() {
                       </button>
                     </Tooltip>
                   </th>
-                  <Tooltip position="top" content="Flight-Op location">
-                      Zipcode
-                    </Tooltip>
-                  <th>
-                    <Tooltip position="top" content="Range (miles)">
-                      <button onClick={() => changeSort("flightRadius")}>
-                      {sortCondition[0] === "flightRadius" && sortCondition[1] === "H-L" &&
-                        <TbArrowBigDownLine size={25} style={{ color: "#000000" }} />
-                        }
-                        {sortCondition[0] === "flightRadius" && sortCondition[1] === "L-H" &&
-                        <TbArrowBigUpLine size={25} style={{ color: "#000000" }}/>
-                        }
-                        {sortCondition[0] !== "flightRadius" &&
-                        <GiOrange size={25} style={{ color: "#000000" }} />
-                        }
-                      </button>
-                    </Tooltip>
-                  </th>
+                  <th className="w-[500px]"> Flight Location</th>
                   <th className="w-[100px]">Review Status</th>
                 </tr>
               </thead>

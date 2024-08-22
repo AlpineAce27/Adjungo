@@ -32,8 +32,7 @@ function CreateReview() {
   if (userType === "client" || userType === "pilot") {
     return (
       <>
-
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center w-full">
           <div className="flex flex-col items-center pt-10 pb-10">
             <h1 className=" font-rubik font-medium text-[50px] text-AJGO_DarkSlateGray justify-center">Create Review</h1>
             {userType === "client" && (
@@ -44,7 +43,7 @@ function CreateReview() {
             )}
           </div>
 
-          <form className="font-rubik text-xl bg-ADJO_Celeste p-5 rounded-lg w-3/5">
+          <form className="font-rubik bg-ADJO_Celeste p-5 rounded-lg w-5/6 text-lg">
             <div className="pb-1 pt-1">
               <label htmlFor="rating">Rating:</label>
               <input
