@@ -60,7 +60,7 @@ function NewListing() {
         },
       })
       .then(() => {
-        navigate("/myJobs")
+        navigate("/myJobs/client")
         console.log(
           "A new listing has been created. User redirected to 'my listings' page."
         )
