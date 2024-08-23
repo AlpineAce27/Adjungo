@@ -112,8 +112,7 @@ function Listings() {
 
   //make sure to only show the max number of listings
   filteredListings = filteredListings.slice(0, maxListingQty)
-  console.log(filteredListings)
-
+  //console.log(filteredListings)
   //create an array of listings mapped to the filtered listings array
   let listingsItems = filteredListings.map((listing) => {
     //change assigned pilot

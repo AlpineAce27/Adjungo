@@ -38,24 +38,22 @@ const MyJobs = () => {
   //create state values for the filters and sorting
   const [filterConditions, setFilterConditions] = useState({})
   const [sortCondition, setSortCondition] = useState([])
+  const [count, setCount] = useState(1)
 
   //create a handler funciton for completing a job
   const completeJob = (job) => {
     if (job.assignedPilot) {
-      axios.put(`/api/listing/${job.listingId}`, {
-        changes: { completed: true },
-      })
-      let looseEndApplications = []
-      axios.get(`/api/applicationsForClient/${job.listingId}`).then((response) => {
-        looseEndApplications = response.data
-        console.log(looseEndApplications)
-      })
-      if(looseEndApplications.length > 0){
-        looseEndApplications.forEach((application)=>{
-          axios.delete(`/api/denyApplication/${application.appilcationId}`)
+      axios
+        .put(`/api/listing/${job.listingId}`, {
+          changes: { completed: true },
         })
-      }
-      navigate(`/myJobs/client`)
+        .then((res) => {
+          console.log(res.data)
+          if(res.data.length){
+            setJobs(res.data)
+          }
+          //window.location.reload()
+        })
     }
   }
   //create a handler function for changing filters
@@ -151,10 +149,10 @@ const MyJobs = () => {
     const listingDate = new Date(listing.flightDate)
     let flightDatePassed
 
-    if(listingDate < currDate){
+    if (listingDate < currDate) {
       flightDatePassed = true
-    }else flightDatePassed = false
-    
+    } else flightDatePassed = false
+
     //check if this listing can be marked as completed
     let canBeCompleted
     if (listing.assignedPilot !== "None" && flightDatePassed === true) {
@@ -172,7 +170,7 @@ const MyJobs = () => {
               <Tooltip position="right" content='mark this job as "complete"'>
                 <button
                   className="flex justify-center items-center h-6 w-6 rounded-full bg-ADJO_Keppel "
-                  onClick={()=>completeJob(listing)}>
+                  onClick={() => completeJob(listing)}>
                   <BiCheckCircle size={20} style={{ color: "#BDF3E7", alignSelf: "center" }} />
                 </button>
               </Tooltip>

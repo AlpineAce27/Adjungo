@@ -1,6 +1,7 @@
 import { Listing, Pilot, Application, PilotReview } from "./database/model.js"
 import { Sequelize } from "sequelize"
 import getRatingColor from "../src/functions/getRatingColor.js"
+import { IoEllipseSharp } from "react-icons/io5"
 
 //return all listings with a specific client id
 export const getListingsByClient = async (req, res) => {
@@ -40,9 +41,7 @@ export const createListing = async (req, res) => {
   if (req.session.userId) {
     newListing.clientId = req.session.userId
     Listing.create(newListing)
-    res.send(
-      `New listing created! ${newListing.listingId}: ${newListing.clientId}`
-    )
+    res.send(`New listing created! ${newListing.listingId}: ${newListing.clientId}`)
   } else {
     res.status(401).json({
       error: "The Client ID on the listing does not match Current User ID",
@@ -64,8 +63,40 @@ export const editListing = async (req, res) => {
   if (req.session.userId === listing.clientId) {
     listing.set(changes)
     await listing.save()
-    console.log(listing)
-    res.send(listing)
+
+    //if we just marked a listing as complete, we should delete all the other applications for that listing
+    if (listing.completed === true) {
+      const ownedByUser = await Listing.findOne({
+        where: { listingId: listingId, clientId: req.session.userId },
+      })
+      console.log(ownedByUser)
+      if (ownedByUser) {
+        const applications = await Application.findAll({
+          include: {
+            model: Listing,
+            where: {
+              listingId: listingId,
+              clientId: req.session.userId,
+            },
+          },
+        })
+        await Promise.all(
+          applications.map(async (application) => {
+            await application.destroy()
+          })
+        )
+      }
+      // re-send the listings to update the page
+      const updatedOwnedByUser = await Listing.findAll({
+        where: { completed: false, clientId: req.session.userId },
+      })
+      //send the updated list of listings
+      res.send(updatedOwnedByUser)
+    } else {
+      //send the updated listing
+      res.send(listing)
+    }
+    //console.log(listing)
   } else {
     res.status(401).json({
       error: "The Client ID on the listing does not match Current User ID",
@@ -115,22 +146,30 @@ export const getApplicationsbyClient = async (req, res) => {
           reviewedPilot: application.applyingPilot,
         },
         // creates a column called 'avgRating' which is an aggregated average of the pilot_rating columns from the PilotReview
-        attributes: [
-          [Sequelize.fn("AVG", Sequelize.col("pilot_rating")), "avgRating"],
-        ],
+        attributes: [[Sequelize.fn("AVG", Sequelize.col("pilot_rating")), "avgRating"]],
       })
 
       // Adds a new key-value pair to the applicationCopy that includes the average review rating
       applicationCopy.reviews = (+reviewsOnPilot[0].dataValues.avgRating).toFixed(2)
       applicationCopy.reviewColor = getRatingColor(applicationCopy.reviews)
-      
+
+      //we also need to check if the listing this applicaiton references already has an assigned pilot
+      const listing = await Listing.findByPk(applicationCopy.applyingListing)
+      if (listing.assignedPilot) {
+        console.log("listing", listing.listingId, "already has an assigned pilot:", listing.assignedPilot)
+        applicationCopy.listingTaken = true
+      } else {
+        console.log("listing", listing.listingId, "is still seeking applicants")
+        applicationCopy.listingTaken = false
+      }
+
       // returns applicationCopy to the applicationsWithRatings array
       return applicationCopy
     })
   )
 
   // Sends the updated array of objects to the front end
-  
+
   res.send(applicationsWithRatings)
 }
 
@@ -162,7 +201,7 @@ export const acceptApplication = async (req, res) => {
   const { applicationId } = req.params
   const application = await Application.findByPk(applicationId)
   //console.log(application)
-  console.log("session", req.session)
+  //console.log("session", req.session)
 
   const listing = await Listing.findByPk(application.applyingListing)
   //console.log(listing.listingId, listing.assignedPilot, listing.clientId)
@@ -191,13 +230,21 @@ export const acceptApplication = async (req, res) => {
           where: {
             reviewedPilot: application.applyingPilot,
           },
-          attributes: [
-            [Sequelize.fn("AVG", Sequelize.col("pilot_rating")), "avgRating"],
-          ],
+          attributes: [[Sequelize.fn("AVG", Sequelize.col("pilot_rating")), "avgRating"]],
         })
 
-        applicationCopy.reviews = reviewsOnPilot[0]
-        applicationCopy.reviewCol = getRatingColor(application.reviews)
+        applicationCopy.reviews = (+reviewsOnPilot[0].dataValues.avgRating).toFixed(2)
+        applicationCopy.reviewCol = getRatingColor(applicationCopy.reviews)
+
+        //we also need to check if the listing this applicaiton references already has an assigned pilot
+        const listing = await Listing.findByPk(applicationCopy.applyingListing)
+        if (listing.assignedPilot) {
+          console.log("listing", listing.listingId, "already has an assigned pilot:", listing.assignedPilot)
+          applicationCopy.listingTaken = true
+        } else {
+          console.log("listing", listing.listingId, "is still seeking applicants")
+          applicationCopy.listingTaken = false
+        }
 
         return applicationCopy
       })
@@ -216,7 +263,7 @@ export const denyApplication = async (req, res) => {
   const { applicationId } = req.params
   const application = await Application.findByPk(applicationId)
   //console.log(application)
-  console.log("session", req.session)
+  //console.log("session", req.session)
 
   const listing = await Listing.findByPk(application.applyingListing)
   //console.log(listing.listingId, listing.assignedPilot, listing.clientId)
@@ -242,13 +289,21 @@ export const denyApplication = async (req, res) => {
           where: {
             reviewedPilot: application.applyingPilot,
           },
-          attributes: [
-            [Sequelize.fn("AVG", Sequelize.col("pilot_rating")), "avgRating"],
-          ],
+          attributes: [[Sequelize.fn("AVG", Sequelize.col("pilot_rating")), "avgRating"]],
         })
 
-        applicationCopy.reviews = reviewsOnPilot[0]
-        applicationCopy.reviewCol = getRatingColor(application.reviews)
+        applicationCopy.reviews = (+reviewsOnPilot[0].dataValues.avgRating).toFixed(2)
+        applicationCopy.reviewCol = getRatingColor(applicationCopy.reviews)
+
+        //we also need to check if the listing this applicaiton references already has an assigned pilot
+        const listing = await Listing.findByPk(applicationCopy.applyingListing)
+        if (listing.assignedPilot) {
+          console.log("listing", listing.listingId, "already has an assigned pilot:", listing.assignedPilot)
+          applicationCopy.listingTaken = true
+        } else {
+          console.log("listing", listing.listingId, "is still seeking applicants")
+          applicationCopy.listingTaken = false
+        }
 
         return applicationCopy
       })

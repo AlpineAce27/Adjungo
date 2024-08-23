@@ -2,10 +2,20 @@ import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
-import { TbCalendarStats, TbCalendar, TbDrone, TbWifi, TbCloudShare, TbRadioactiveFilled, TbArrowBigDownLine, TbArrowBigUpLine, TbStarsFilled } from "react-icons/tb"
+import {
+  TbCalendarStats,
+  TbCalendar,
+  TbDrone,
+  TbWifi,
+  TbCloudShare,
+  TbRadioactiveFilled,
+  TbArrowBigDownLine,
+  TbArrowBigUpLine,
+  TbStarsFilled,
+} from "react-icons/tb"
 import { BiListPlus, BiListUl, BiSolidDollarCircle } from "react-icons/bi"
 import { useLoaderData } from "react-router-dom"
-
+import { Tooltip } from "../../components/Tooltip"
 const Applications = () => {
   const navigate = useNavigate()
   //grabbing the usertype from redux store
@@ -15,7 +25,7 @@ const Applications = () => {
 
   //create a state value for an array of listings
   const [items, setItems] = useState(loaderData)
-
+  console.log(items)
   //create an array of listings mapped to the axios response
   const tableItems = items.map((item) => {
     //change true/false/null to more readable strings
@@ -103,20 +113,29 @@ const Applications = () => {
           </td>
           <td className={`font-bold text-${item.reviewColor}`}>{item.reviews}</td>
           <td>
-            <button
-              onClick={() => {
-                axios.put(`/api/acceptApplication/${item.applicationId}`).then((response) => {
-                  setItems(response.data)
-                })
-              }}
-              className="bg-ADJO_Keppel opacity-70 rounded-full w-20 text-black font-medium">
-              Accept
-            </button>
+            {item.listingTaken === false && (
+              <button
+                onClick={() => {
+                  axios.put(`/api/acceptApplication/${item.applicationId}`).then((response) => {
+                    console.log("accept resonse data", response.data)
+                    setItems(response.data)
+                  })
+                }}
+                className="bg-ADJO_Keppel opacity-70 rounded-full w-20 text-black font-medium">
+                Accept
+              </button>
+            )}
+            {item.listingTaken === true && (
+              <Tooltip position="left" content="this job already has an assigned pilot">
+                <button className="bg-AJGO_Platnum text-[#ffffff] opacity-70 rounded-full w-20 text-black font-medium">Accept</button>
+              </Tooltip>
+            )}
           </td>
           <td>
             <button
               onClick={() => {
                 axios.delete(`/api/denyApplication/${item.applicationId}`).then((response) => {
+                  console.log("deny resonse data", response.data)
                   setItems(response.data)
                 })
               }}
@@ -170,8 +189,16 @@ const Applications = () => {
                   <tr className="border-b-4 border-opacity-30 border-b-AJGO_DarkSlateGray">
                     <th className="w-[100px]">Listing ID</th>
                     <th className="w-[100px]">Client ID</th>
-                    <th><button><BiSolidDollarCircle size={30} style={{ color: "#000000" }}/></button></th>
-                    <th className="w-[150px]"><button><TbCalendar size={25} style={{ color: "#000000" }} /></button></th>
+                    <th>
+                      <button>
+                        <BiSolidDollarCircle size={30} style={{ color: "#000000" }} />
+                      </button>
+                    </th>
+                    <th className="w-[150px]">
+                      <button>
+                        <TbCalendar size={25} style={{ color: "#000000" }} />
+                      </button>
+                    </th>
                     <th className="w-[500px]">Flight Location</th>
                     <th className="w-[100px]">Retract This Application?</th>
                   </tr>
