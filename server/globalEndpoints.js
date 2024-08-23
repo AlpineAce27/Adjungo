@@ -131,7 +131,7 @@ export const getMyAccount = async (req, res) => {
     } else if (req.session.userType === "pilot") {
       const user = await Pilot.findByPk(req.session.userId)
       const userCopy = { ...user.dataValues }
-  
+
       const reviewsOnPilot = await PilotReview.findAll({
         where: {
           reviewedPilot: req.session.userId,
@@ -141,7 +141,7 @@ export const getMyAccount = async (req, res) => {
       })
       userCopy.rating = (+reviewsOnPilot[0].dataValues.avgRating).toFixed(2)
       userCopy.ratingCol = getRatingColor(userCopy.rating)
-  
+
       //console.log(userCopy)
       res.send(userCopy)
     }
@@ -197,6 +197,7 @@ export const editAccount = async (req, res) => {
   } else {
     //req.body should come with an object called changes that contains all the properties and values to be changed
     const { changes } = req.body
+
     if (req.session.userType === "client") {
       const user = await Client.findByPk(req.session.userId)
       user.set(changes)

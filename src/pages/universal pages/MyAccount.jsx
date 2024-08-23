@@ -2,6 +2,7 @@ import { useNavigate, NavLink } from "react-router-dom"
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
+import ModalEditAccount from "../../components/ModalEditAccount"
 
 function MyAccount() {
   //grabbing the usertype from redux store
@@ -11,9 +12,10 @@ function MyAccount() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const [accountDetails, SetAccountDetails] = useState({})
+  const [accountDetails, setAccountDetails] = useState({})
+  const [showEdit, setShowEdit] = useState(false)
 
- 
+
   //create a function to log the user out
   async function logout() {
     await axios.post(`/api/logout`)
@@ -24,11 +26,16 @@ function MyAccount() {
   //grab account information of the current user
   useEffect(() => {
     axios.get("/api/myAccount").then((response) => {
-      SetAccountDetails(response.data)
+      // console.log(response.data)
+      setAccountDetails(response.data)
     })
-  }, [])
+  }, [showEdit])
 
-  console.log(accountDetails.ratingCol)
+  const toggleEdit = () => {
+    setShowEdit(!showEdit)
+  }
+
+  // console.log(accountDetails.ratingCol)
   //calculate the average rating that this user has
 
   return (
@@ -45,12 +52,18 @@ function MyAccount() {
           </h1>
         )}
 
-        <p className="font-rubik text-l pb-5 w-3/4 text-center">
+        {!showEdit && <p className="font-rubik text-l pb-5 w-3/4 text-center">
           Here you can view your Account details, your rating, and links to your
           reviews
-        </p>
+        </p>}
 
-        {userType === "client" && (
+        {showEdit && <p className="font-rubik text-l pb-5 w-3/4 text-center">
+          Edit your account details here
+        </p>}
+
+        {showEdit && <ModalEditAccount accountDetails={accountDetails} toggleEdit={() => toggleEdit(false)} showEdit={showEdit} setShowEdit={setShowEdit} />}
+
+        {userType === "client" && !showEdit && (
           <div className="flex flex-col pb-5 w-3/4">
             <div className="flex flex-col">
               <div className="pb-5">
@@ -121,7 +134,7 @@ function MyAccount() {
             </div>
           </div>
         )}
-        {userType === "pilot" && (
+        {userType === "pilot" && !showEdit && (
           <>
             <div className="flex flex-col pb-5 w-3/4">
               <div className="flex flex-col">
@@ -185,10 +198,11 @@ function MyAccount() {
             </div>
           </>
         )}
-        <div className="flex justify-around pt-4 w-3/4 ">
+
+        {!showEdit && <div className="flex justify-around pt-4 w-3/4 pb-6 ">
           <button
-            className="bg-ADJO_Keppel px-8 py-1 text-l text- uppercase font-rubik rounded-lg opacity-20"
-            onClick={logout}
+            className="bg-ADJO_Keppel px-8 py-1 text-l text- uppercase font-rubik rounded-lg"
+            onClick={toggleEdit}
           >
             Edit Account
           </button>
@@ -198,7 +212,7 @@ function MyAccount() {
           >
             Log Out
           </button>
-        </div>
+        </div>}
       </div>
     </>
   )
