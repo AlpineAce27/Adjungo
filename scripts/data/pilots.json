@@ -48,5 +48,155 @@
       "contactPhone": "1-800-555-5231",
       "bio": "My name is Jake, I have a a lot of flight experience with film and photography, especially real-estate.",
       "part107Cert": 5283135
+    },
+    {
+      "fname": "Liam",
+      "lname": "O'Connor",
+      "login": "pilot6",
+      "password": "pilot6",
+      "contactEmail": "LOConnor@flyhigh.com",
+      "contactPhone": "1-800-555-6123",
+      "bio": "I'm Liam, a drone enthusiast with a focus on aerial photography.",
+      "part107Cert": 6214739
+    },
+    {
+      "fname": "Emma",
+      "lname": "Thompson",
+      "login": "pilot7",
+      "password": "pilot7",
+      "contactEmail": "EThompson@dronepro.com",
+      "contactPhone": "1-800-555-7234",
+      "bio": "Emma here. I'm a certified drone pilot specializing in mapping and surveying.",
+      "part107Cert": 7325840
+    },
+    {
+      "fname": "Noah",
+      "lname": "Peterson",
+      "login": "pilot8",
+      "password": "pilot8",
+      "contactEmail": "NoahPeterson@aviation.com",
+      "contactPhone": "1-800-555-8345",
+      "bio": "Hi, I'm Noah. I have extensive experience in commercial drone operations.",
+      "part107Cert": 8436951
+    },
+    {
+      "fname": "Olivia",
+      "lname": "Morris",
+      "login": "pilot9",
+      "password": "pilot9",
+      "contactEmail": "OMorris@dronesupreme.com",
+      "contactPhone": "1-800-555-9456",
+      "bio": "I'm Olivia, and I focus on drone videography for promotional content.",
+      "part107Cert": 9547062
+    },
+    {
+      "fname": "James",
+      "lname": "Walker",
+      "login": "pilot10",
+      "password": "pilot10",
+      "contactEmail": "JWalker@skyview.com",
+      "contactPhone": "1-800-555-0567",
+      "bio": "James here. I have a knack for drone racing and competitive flying.",
+      "part107Cert": 10681773
+    },
+    {
+      "fname": "Sophia",
+      "lname": "Johnson",
+      "login": "pilot11",
+      "password": "pilot11",
+      "contactEmail": "SJohnson@flytech.com",
+      "contactPhone": "1-800-555-1678",
+      "bio": "Sophia, specializing in agricultural drone applications.",
+      "part107Cert": 11792884
+    },
+    {
+      "fname": "Benjamin",
+      "lname": "Smith",
+      "login": "pilot12",
+      "password": "pilot12",
+      "contactEmail": "BSmith@droneflyers.com",
+      "contactPhone": "1-800-555-2789",
+      "bio": "I'm Benjamin, with a focus on drone maintenance and repairs.",
+      "part107Cert": 12903995
+    },
+    {
+      "fname": "Ava",
+      "lname": "Lee",
+      "login": "pilot13",
+      "password": "pilot13",
+      "contactEmail": "ALee@dronezone.com",
+      "contactPhone": "1-800-555-3890",
+      "bio": "Ava here. I work primarily in real estate drone photography.",
+      "part107Cert": 14015106
+    },
+    {
+      "fname": "Mason",
+      "lname": "Brown",
+      "login": "pilot14",
+      "password": "pilot14",
+      "contactEmail": "MBrown@airview.com",
+      "contactPhone": "1-800-555-4901",
+      "bio": "Mason, experienced in emergency response drone operations.",
+      "part107Cert": 15126217
+    },
+    {
+      "fname": "Isabella",
+      "lname": "Davis",
+      "login": "pilot15",
+      "password": "pilot15",
+      "contactEmail": "IDavis@skycam.com",
+      "contactPhone": "1-800-555-5012",
+      "bio": "I'm Isabella, and I specialize in aerial cinematography for film.",
+      "part107Cert": 16237328
+    },
+    {
+      "fname": "Ethan",
+      "lname": "Martinez",
+      "login": "pilot16",
+      "password": "pilot16",
+      "contactEmail": "EMartinez@flyhigh.com",
+      "contactPhone": "1-800-555-6124",
+      "bio": "Ethan here. I'm focused on drone inspections and surveying.",
+      "part107Cert": 17348439
+    },
+    {
+      "fname": "Mia",
+      "lname": "Wilson",
+      "login": "pilot17",
+      "password": "pilot17",
+      "contactEmail": "MWilson@dronemaster.com",
+      "contactPhone": "1-800-555-7235",
+      "bio": "Mia, a drone pilot with a focus on event coverage and live streaming.",
+      "part107Cert": 18459550
+    },
+    {
+      "fname": "Alexander",
+      "lname": "Taylor",
+      "login": "pilot18",
+      "password": "pilot18",
+      "contactEmail": "ATaylor@dronedreams.com",
+      "contactPhone": "1-800-555-8346",
+      "bio": "I'm Alexander, with expertise in high-altitude drone flights.",
+      "part107Cert": 19570661
+    },
+    {
+      "fname": "Charlotte",
+      "lname": "Anderson",
+      "login": "pilot19",
+      "password": "pilot19",
+      "contactEmail": "CAnderson@flytech.com",
+      "contactPhone": "1-800-555-9457",
+      "bio": "Charlotte, specializing in drone photography for wildlife conservation.",
+      "part107Cert": 20681772
+    },
+    {
+      "fname": "William",
+      "lname": "Thomas",
+      "login": "pilot20",
+      "password": "pilot20",
+      "contactEmail": "WThomas@skyhigh.com",
+      "contactPhone": "1-800-555-0568",
+      "bio": "I'm William, a drone pilot with experience in search and rescue operations.",
+      "part107Cert": 21792883
     }
   ]

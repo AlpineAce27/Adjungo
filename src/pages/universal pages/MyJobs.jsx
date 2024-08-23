@@ -127,25 +127,51 @@ const MyJobs = () => {
       softwareProvided = "No"
     }
 
+    //check is the listing date has passed todays date
+    const currDate = new Date()
+    const listingDate = new Date(listing.flightDate)
+    let flightDatePassed
+
+    if(listingDate < currDate){
+      flightDatePassed = true
+    }else flightDatePassed = false
+    
+    //check if this listing can be marked as completed
+    let canBeCompleted
+    if (listing.assignedPilot !== "None" && flightDatePassed === true) {
+      canBeCompleted = true
+    } else {
+      canBeCompleted = false
+    }
+
     //create a table row with the data from this listing iteration
     return (
       <tr key={listing.listingId} className="pt-2 pb-2 border-b-2 border-opacity-10 border-b-AJGO_DarkSlateGray">
         {userType === "client" && (
           <td>
-            <Tooltip position="right" content='mark this job as "complete"'>
-              <button
-                className="flex justify-center items-center h-6 w-6 rounded-full bg-ADJO_Keppel "
-                onClick={() => {
-                  if (listing.assignedPilot) {
-                    axios.put(`/api/listing/${listing.listingId}`, {
-                      changes: { completed: true },
-                    })
-                    navigate(`/myJobs/client`)
-                  }
-                }}>
-                <BiCheckCircle size={20} style={{ color: "#BDF3E7", alignSelf: "center" }} />
-              </button>
-            </Tooltip>
+            {canBeCompleted === true && (
+              <Tooltip position="right" content='mark this job as "complete"'>
+                <button
+                  className="flex justify-center items-center h-6 w-6 rounded-full bg-ADJO_Keppel "
+                  onClick={() => {
+                    if (listing.assignedPilot) {
+                      axios.put(`/api/listing/${listing.listingId}`, {
+                        changes: { completed: true },
+                      })
+                      navigate(`/myJobs/client`)
+                    }
+                  }}>
+                  <BiCheckCircle size={20} style={{ color: "#BDF3E7", alignSelf: "center" }} />
+                </button>
+              </Tooltip>
+            )}
+            {canBeCompleted === false && (
+              <Tooltip position="right" content='cannot mark as "complete"'>
+                <button className="flex justify-center items-center h-6 w-6 rounded-full bg-[#e0e0e0] ">
+                  <BiCheckCircle size={20} style={{ color: "#ffffff", alignSelf: "center" }} />
+                </button>
+              </Tooltip>
+            )}
           </td>
         )}
         <td>

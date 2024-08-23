@@ -46,5 +46,185 @@
     "clientReviewing": 1,
     "reviewContent": "Isaac great. He's took a little longer than other pilots, but he still gets the job done.",
     "pilotRating": 4.2
+  },
+  {
+    "reviewedPilot": 6,
+    "clientReviewing": 1,
+    "reviewContent": "Liam provided excellent aerial shots and was very professional throughout the project.",
+    "pilotRating": 4.8
+  },
+  {
+    "reviewedPilot": 6,
+    "clientReviewing": 2,
+    "reviewContent": "Great experience with Liam. His attention to detail was impressive.",
+    "pilotRating": 4.6
+  },
+  {
+    "reviewedPilot": 7,
+    "clientReviewing": 3,
+    "reviewContent": "Emma's expertise in drone mapping made our project a success. Highly recommended!",
+    "pilotRating": 5.0
+  },
+  {
+    "reviewedPilot": 7,
+    "clientReviewing": 4,
+    "reviewContent": "Emma was thorough and professional, though the project took a bit longer than expected.",
+    "pilotRating": 4.4
+  },
+  {
+    "reviewedPilot": 8,
+    "clientReviewing": 5,
+    "reviewContent": "Noah's drone work was exceptional, but communication could be improved.",
+    "pilotRating": 4.2
+  },
+  {
+    "reviewedPilot": 8,
+    "clientReviewing": 6,
+    "reviewContent": "Very skilled pilot with great results, though we had some scheduling issues.",
+    "pilotRating": 4.5
+  },
+  {
+    "reviewedPilot": 9,
+    "clientReviewing": 7,
+    "reviewContent": "Olivia was fantastic and provided high-quality footage for our promotional video.",
+    "pilotRating": 4.9
+  },
+  {
+    "reviewedPilot": 9,
+    "clientReviewing": 8,
+    "reviewContent": "Olivia's drone work was excellent, but the project was slightly delayed.",
+    "pilotRating": 4.7
+  },
+  {
+    "reviewedPilot": 10,
+    "clientReviewing": 9,
+    "reviewContent": "James's drone racing skills are impressive, though not ideal for our project needs.",
+    "pilotRating": 3.8
+  },
+  {
+    "reviewedPilot": 10,
+    "clientReviewing": 10,
+    "reviewContent": "James was fast but sometimes too reckless. Not the best fit for delicate tasks.",
+    "pilotRating": 2.5
+  },
+  {
+    "reviewedPilot": 11,
+    "clientReviewing": 11,
+    "reviewContent": "Sophia was a great addition to our project with her expertise in agriculture.",
+    "pilotRating": 4.6
+  },
+  {
+    "reviewedPilot": 11,
+    "clientReviewing": 12,
+    "reviewContent": "Sophia did an excellent job, though the turnaround time was a bit longer than expected.",
+    "pilotRating": 4.4
+  },
+  {
+    "reviewedPilot": 12,
+    "clientReviewing": 13,
+    "reviewContent": "Benjamin's drone maintenance skills are top-notch. Highly reliable.",
+    "pilotRating": 4.7
+  },
+  {
+    "reviewedPilot": 12,
+    "clientReviewing": 14,
+    "reviewContent": "Benjamin was good with repairs but had some trouble with the initial setup.",
+    "pilotRating": 3.2
+  },
+  {
+    "reviewedPilot": 13,
+    "clientReviewing": 15,
+    "reviewContent": "Ava did a fantastic job with real estate photography. The results were stunning.",
+    "pilotRating": 4.9
+  },
+  {
+    "reviewedPilot": 13,
+    "clientReviewing": 16,
+    "reviewContent": "Ava was very professional and the photos were top quality.",
+    "pilotRating": 4.8
+  },
+  {
+    "reviewedPilot": 14,
+    "clientReviewing": 17,
+    "reviewContent": "Mason's work in emergency response was impressive. Highly skilled and reliable.",
+    "pilotRating": 4.6
+  },
+  {
+    "reviewedPilot": 14,
+    "clientReviewing": 18,
+    "reviewContent": "Mason was excellent under pressure, though there were a few minor communication issues.",
+    "pilotRating": 3.5
+  },
+  {
+    "reviewedPilot": 15,
+    "clientReviewing": 19,
+    "reviewContent": "Isabella's aerial cinematography was perfect for our film project. Highly recommended.",
+    "pilotRating": 5.0
+  },
+  {
+    "reviewedPilot": 15,
+    "clientReviewing": 20,
+    "reviewContent": "Isabella was great with the camera work, though the project was slightly behind schedule.",
+    "pilotRating": 4.7
+  },
+  {
+    "reviewedPilot": 16,
+    "clientReviewing": 1,
+    "reviewContent": "Ethan did an excellent job with drone inspections. Very thorough and professional.",
+    "pilotRating": 4.8
+  },
+  {
+    "reviewedPilot": 16,
+    "clientReviewing": 2,
+    "reviewContent": "Ethan's work was very detailed, though there were some delays in receiving the final report.",
+    "pilotRating": 3.9
+  },
+  {
+    "reviewedPilot": 17,
+    "clientReviewing": 3,
+    "reviewContent": "Mia's event coverage was impressive and she managed live streaming flawlessly.",
+    "pilotRating": 4.9
+  },
+  {
+    "reviewedPilot": 17,
+    "clientReviewing": 4,
+    "reviewContent": "Mia did a fantastic job, but the video editing took longer than expected.",
+    "pilotRating": 4.2
+  },
+  {
+    "reviewedPilot": 18,
+    "clientReviewing": 5,
+    "reviewContent": "Alexander's high-altitude flights were exactly what we needed. Great results.",
+    "pilotRating": 4.7
+  },
+  {
+    "reviewedPilot": 18,
+    "clientReviewing": 6,
+    "reviewContent": "Alexander's work was very good, though the weather caused some delays.",
+    "pilotRating": 3.6
+  },
+  {
+    "reviewedPilot": 19,
+    "clientReviewing": 7,
+    "reviewContent": "Charlotte provided excellent drone footage for our wildlife project. Very detailed work.",
+    "pilotRating": 4.9
+  },
+  {
+    "reviewedPilot": 19,
+    "clientReviewing": 8,
+    "reviewContent": "Charlotte's work was top-notch, although there were minor issues with equipment.",
+    "pilotRating": 4.4
+  },
+  {
+    "reviewedPilot": 20,
+    "clientReviewing": 9,
+    "reviewContent": "William's search and rescue operations were outstanding. Very skilled and dependable.",
+    "pilotRating": 5.0
+  },
+  {
+    "reviewedPilot": 20,
+    "clientReviewing": 10,
+    "reviewContent": "William did a great job with the rescue mission, but there were some delays in the initial response.",
+    "pilotRating": 4.1
   }
 ]

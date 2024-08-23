@@ -45,7 +45,6 @@ function ClientSingleListing() {
   const [nightFlying, setNightflying] = useState(listing.nightFlying)
   const [crowdFlying, setCrowdflying] = useState(listing.crowdFlying)
   const [description, setDescription] = useState(listing.description)
-  const [completed, setCompleted] = useState(listing.completed)
 
   //setup the navigate functionality
   const navigate = useNavigate()
@@ -185,7 +184,7 @@ function ClientSingleListing() {
               Edit Listing
             </button>
             <button
-              className="bg-ADJO_Keppel px-8 py-1 text-xl text- uppercase font-rubik rounded-lg"
+              className="border-2 w-[200px] border-[#dd7d7d] px-3 py-1 text-xl uppercase font-rubik rounded-lg text-[#dd7d7d]"
               onClick={() => {
                 //This will delete the listing we are currently viewing from the database, and then redirect the user back to their listings
                 axios.delete(`/api/listing/${listing.listingId}`).then(() => {
@@ -225,7 +224,6 @@ function ClientSingleListing() {
             flightAddress: flightAddress,
             flightZipcode: flightZipcode,
             flightRadius: flightRadius,
-            completed: completed,
           },
         })
         .then((res) => {
@@ -325,19 +323,6 @@ function ClientSingleListing() {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               ></textarea>
-              <br />
-              <div>
-                <input
-                  type="checkbox"
-                  className="h-5 w-5 checked:bg-ADJO_Keppel text-ADJO_Keppel hover:ring-2 hover:ring-inset hover:ring-ADJO_Keppel"
-                  name="completed"
-                  check={completed}
-                  onChange={(e) => setCompleted(e.target.checked)}
-                ></input>
-                <label className="pl-3" htmlFor="completed">
-                  This Job is complete
-                </label>
-              </div>
             </div>
           </section>
 
@@ -522,23 +507,22 @@ function ClientSingleListing() {
           </section>
         </form>
 
-        <div className="flex flex-col items-center">
-          <div className="flex flex-col items-center pt-10 pb-10"></div>
+       
           <div className="pt-10 pb-10 flex w-3/5 justify-around">
             <button
-              className="bg-ADJO_Keppel px-8 py-1 text-xl text- uppercase font-rubik rounded-lg"
+              className="border-2 w-[200px] border-x-ADJO_Keppel px-8 py-1 text-l uppercase font-rubik rounded-lg text-ADJO_Keppel"
               onClick={handleListingEdit}
             >
               Save Changes
             </button>
             <button
-              className="bg-ADJO_Keppel px-8 py-1 text-xl text- uppercase font-rubik rounded-lg"
+              className="border-2 w-[200px] border-[#dd7d7d] px-8 py-1 text-l uppercase font-rubik rounded-lg text-[#dd7d7d]"
               onClick={handleEditButton}
             >
               Cancel
             </button>
           </div>
-        </div>
+        
       </div>
     )
   }
