@@ -2,79 +2,242 @@
   {
     "reviewedClient": 1,
     "pilotReviewing": 1,
-    "reviewContent": "Roofers United has been great to work with.",
-    "clientRating": 4.5
+    "reviewContent": "Roofers United was fairly easy to work with, though their feedback process was sometimes slow.",
+    "clientRating": 3.8
   },
   {
     "reviewedClient": 1,
     "pilotReviewing": 2,
-    "reviewContent": "They were nice, but I they're instructions could be clearer",
-    "clientRating": 3.7
+    "reviewContent": "Roofers United frequently changed project details, which made the job more complicated than expected.",
+    "clientRating": 2.4
   },
   {
-    "reviewedClient": 1,
+    "reviewedClient": 2,
     "pilotReviewing": 3,
-    "reviewContent": "I crashed their drone, luckily they had a backup! Although I could do without the yelling.",
+    "reviewContent": "Scanners Inc was very organized and their requirements were clear, though their responses could be quicker.",
+    "clientRating": 4.1
+  },
+  {
+    "reviewedClient": 2,
+    "pilotReviewing": 4,
+    "reviewContent": "Scanners Inc had a tendency to be indecisive, which caused some delays in the project.",
+    "clientRating": 2.6
+  },
+  {
+    "reviewedClient": 3,
+    "pilotReviewing": 5,
+    "reviewContent": "JS Films provided clear directions and was very approachable, but sometimes their schedule was tight.",
+    "clientRating": 4.5
+  },
+  {
+    "reviewedClient": 3,
+    "pilotReviewing": 6,
+    "reviewContent": "JS Films was disorganized and didn't provide consistent feedback, making the project more challenging.",
+    "clientRating": 2.1
+  },
+  {
+    "reviewedClient": 4,
+    "pilotReviewing": 7,
+    "reviewContent": "Big Oil was very professional and their requirements were well-defined, though their processes were rigid.",
+    "clientRating": 4.4
+  },
+  {
+    "reviewedClient": 4,
+    "pilotReviewing": 8,
+    "reviewContent": "Big Oil's bureaucracy made communication difficult and slowed down the project.",
+    "clientRating": 2.3
+  },
+  {
+    "reviewedClient": 5,
+    "pilotReviewing": 9,
+    "reviewContent": "Bobs Burgers was friendly and clear with their instructions, though there were occasional misunderstandings.",
+    "clientRating": 4.2
+  },
+  {
+    "reviewedClient": 5,
+    "pilotReviewing": 10,
+    "reviewContent": "Bobs Burgers had some issues with project direction and their feedback wasn't always timely.",
+    "clientRating": 2.8
+  },
+  {
+    "reviewedClient": 6,
+    "pilotReviewing": 11,
+    "reviewContent": "EcoTech Solutions was thorough in their instructions but sometimes lacked flexibility when issues arose.",
+    "clientRating": 4.0
+  },
+  {
+    "reviewedClient": 6,
+    "pilotReviewing": 12,
+    "reviewContent": "EcoTech Solutions had a lot of technical issues and their support wasn't always helpful.",
+    "clientRating": 2.7
+  },
+  {
+    "reviewedClient": 7,
+    "pilotReviewing": 13,
+    "reviewContent": "Fitness Fusion was very supportive and clear, though their project timelines were a bit unrealistic.",
+    "clientRating": 4.3
+  },
+  {
+    "reviewedClient": 7,
+    "pilotReviewing": 14,
+    "reviewContent": "Fitness Fusion was sometimes unresponsive and had a lot of last-minute changes.",
+    "clientRating": 2.5
+  },
+  {
+    "reviewedClient": 8,
+    "pilotReviewing": 15,
+    "reviewContent": "Techie Trends was excellent with providing up-to-date information and feedback, though they were occasionally slow to respond.",
+    "clientRating": 4.6
+  },
+  {
+    "reviewedClient": 8,
+    "pilotReviewing": 16,
+    "reviewContent": "Techie Trends had unclear project goals and their feedback was inconsistent.",
+    "clientRating": 2.2
+  },
+  {
+    "reviewedClient": 9,
+    "pilotReviewing": 17,
+    "reviewContent": "Creative Creations was great to work with and provided solid direction, but sometimes their feedback was delayed.",
+    "clientRating": 4.4
+  },
+  {
+    "reviewedClient": 9,
+    "pilotReviewing": 18,
+    "reviewContent": "Creative Creations had issues with clarity and timeliness, which impacted the project.",
     "clientRating": 3.0
   },
   {
-    "reviewedClient": 1,
-    "pilotReviewing": 4,
-    "reviewContent": "Roofers United has been absolutely perfect, great instructions, very professional, and alwasy answered my questions",
-    "clientRating": 5.0
+    "reviewedClient": 10,
+    "pilotReviewing": 19,
+    "reviewContent": "Urban Eats was very organized and their feedback was helpful, though their schedule was often tight.",
+    "clientRating": 4.2
   },
   {
-    "reviewedClient": 2,
+    "reviewedClient": 10,
+    "pilotReviewing": 20,
+    "reviewContent": "Urban Eats had inconsistent communication and their project requirements were often unclear.",
+    "clientRating": 2.6
+  },
+  {
+    "reviewedClient": 11,
     "pilotReviewing": 1,
-    "reviewContent": "Scanners has been great to work with.",
-    "clientRating": 4.7
+    "reviewContent": "Bright Future Academy was clear in their requirements and professional, but their responses were sometimes slow.",
+    "clientRating": 4.3
   },
   {
-    "reviewedClient": 2,
+    "reviewedClient": 11,
     "pilotReviewing": 2,
-    "reviewContent": "They were nice, but they're instructions could be clearer",
-    "clientRating": 3.7
+    "reviewContent": "Bright Future Academy had some issues with project management and clarity of instructions.",
+    "clientRating": 3.1
   },
   {
-    "reviewedClient": 2,
+    "reviewedClient": 12,
     "pilotReviewing": 3,
-    "reviewContent": "I crashed their drone, luckily they had a backup! Although I could do without the yelling.",
-    "clientRating": 1.2
+    "reviewContent": "Horizon Ventures provided good support but had a lot of red tape that slowed down the project.",
+    "clientRating": 3.9
   },
   {
-    "reviewedClient": 2,
+    "reviewedClient": 12,
     "pilotReviewing": 4,
-    "reviewContent": "Scanners has been absolutely perfect, great instructions, very professional, and alwasy answered my questions",
-    "clientRating": 4.9
-  },
-  {
-    "reviewedClient": 1,
-    "pilotReviewing": 4,
-    "reviewContent": "Roofers United is a great company to work with. I would highly recommend them",
-    "clientRating": 4.5
-  },
-  {
-    "reviewedClient": 3,
-    "pilotReviewing": 1,
-    "reviewContent": "Jack has been great to work with.",
-    "clientRating": 4.7
-  },
-  {
-    "reviewedClient": 3,
-    "pilotReviewing": 2,
-    "reviewContent": "JS Films is great, he's a chill guy with some really cool films and is awesome to work with",
-    "clientRating": 5.0
-  },
-  {
-    "reviewedClient": 4,
-    "pilotReviewing": 3,
-    "reviewContent": "This was my first job I DIDN'T crash a drone! They were very complimentary of my piloting skills.",
-    "clientRating": 4.5
-  },
-  {
-    "reviewedClient": 4,
-    "pilotReviewing": 4,
-    "reviewContent": "Big Oil is the opitome of 'too big to fail', it feels like working with the DMV, and it seemed like no one knew exactly who was in charge.",
+    "reviewContent": "Horizon Ventures had poor communication and their project planning was inefficient.",
     "clientRating": 2.3
+  },
+  {
+    "reviewedClient": 13,
+    "pilotReviewing": 5,
+    "reviewContent": "Sparkle Cleaners was very professional and responsive, though their feedback could have been more detailed.",
+    "clientRating": 4.2
+  },
+  {
+    "reviewedClient": 13,
+    "pilotReviewing": 6,
+    "reviewContent": "Sparkle Cleaners had issues with clarity in their requirements and responsiveness.",
+    "clientRating": 2.8
+  },
+  {
+    "reviewedClient": 14,
+    "pilotReviewing": 7,
+    "reviewContent": "Green Thumb Gardening was clear in their instructions and supportive, but their scheduling was sometimes problematic.",
+    "clientRating": 4.1
+  },
+  {
+    "reviewedClient": 14,
+    "pilotReviewing": 8,
+    "reviewContent": "Green Thumb Gardening had issues with responsiveness and project direction.",
+    "clientRating": 2.5
+  },
+  {
+    "reviewedClient": 15,
+    "pilotReviewing": 9,
+    "reviewContent": "Peak Performance was very professional and helpful, though their feedback was occasionally delayed.",
+    "clientRating": 4.4
+  },
+  {
+    "reviewedClient": 15,
+    "pilotReviewing": 10,
+    "reviewContent": "Peak Performance struggled with clear communication and timely responses.",
+    "clientRating": 3.2
+  },
+  {
+    "reviewedClient": 16,
+    "pilotReviewing": 11,
+    "reviewContent": "Pet Paradise provided good support and clear instructions but was sometimes slow to respond.",
+    "clientRating": 4.0
+  },
+  {
+    "reviewedClient": 16,
+    "pilotReviewing": 12,
+    "reviewContent": "Pet Paradise had issues with responsiveness and unclear project goals.",
+    "clientRating": 2.7
+  },
+  {
+    "reviewedClient": 17,
+    "pilotReviewing": 13,
+    "reviewContent": "Visionary Media was excellent with clear direction and timely feedback, though their project requirements were sometimes ambiguous.",
+    "clientRating": 4.5
+  },
+  {
+    "reviewedClient": 17,
+    "pilotReviewing": 14,
+    "reviewContent": "Visionary Media had inconsistent communication and project scope issues.",
+    "clientRating": 2.4
+  },
+  {
+    "reviewedClient": 18,
+    "pilotReviewing": 15,
+    "reviewContent": "Sunny Days Travel was great with clear instructions and support, though their project deadlines were tight.",
+    "clientRating": 4.3
+  },
+  {
+    "reviewedClient": 18,
+    "pilotReviewing": 16,
+    "reviewContent": "Sunny Days Travel had issues with timely responses and project direction.",
+    "clientRating": 2.6
+  },
+  {
+    "reviewedClient": 19,
+    "pilotReviewing": 17,
+    "reviewContent": "Artisan Jewelry was professional and clear, though their feedback was sometimes slow.",
+    "clientRating": 4.1
+  },
+  {
+    "reviewedClient": 19,
+    "pilotReviewing": 18,
+    "reviewContent": "Artisan Jewelry struggled with project clarity and responsiveness.",
+    "clientRating": 2.7
+  },
+  {
+    "reviewedClient": 20,
+    "pilotReviewing": 19,
+    "reviewContent": "Home Comfort was very organized and supportive, though their feedback could be more detailed.",
+    "clientRating": 4.2
+  },
+  {
+    "reviewedClient": 20,
+    "pilotReviewing": 20,
+    "reviewContent": "Home Comfort had issues with communication and project clarity, which made the process more difficult.",
+    "clientRating": 2.5
   }
 ]
+

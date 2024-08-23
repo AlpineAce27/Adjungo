@@ -23,7 +23,7 @@
     "company": "JS Films",
     "login": "client3",
     "password": "client3",
-    "website": null,
+    "website": "jsfilms.com",
     "contactEmail": "js@gmail.com",
     "contactPhone": "1-800-555-3333",
     "companyBio": "My name is Jack Smith and I make short films.",
@@ -48,5 +48,155 @@
     "contactPhone": "1-800-555-4231",
     "companyBio": "We make great burgers at our family owned and operated burger joint downtown",
     "individual": "true"
+  },
+  {
+    "company": "EcoTech Solutions",
+    "login": "client6",
+    "password": "client6",
+    "website": "www.EcoTechSolutions.com",
+    "contactEmail": "info@EcoTechSolutions.com",
+    "contactPhone": "1-800-555-5555",
+    "companyBio": "We provide eco-friendly technology solutions for a sustainable future.",
+    "individual": "false"
+  },
+  {
+    "company": "Fitness Fusion",
+    "login": "client7",
+    "password": "client7",
+    "website": "www.FitnessFusion.com",
+    "contactEmail": "contact@FitnessFusion.com",
+    "contactPhone": "1-800-555-6666",
+    "companyBio": "Your one-stop-shop for all fitness needs, from equipment to personal training.",
+    "individual": "false"
+  },
+  {
+    "company": "Techie Trends",
+    "login": "client8",
+    "password": "client8",
+    "website": "www.TechieTrends.com",
+    "contactEmail": "support@TechieTrends.com",
+    "contactPhone": "1-800-555-7777",
+    "companyBio": "Bringing you the latest in technology and gadgets.",
+    "individual": "false"
+  },
+  {
+    "company": "Creative Creations",
+    "login": "client9",
+    "password": "client9",
+    "website": "www.CreativeCreations.com",
+    "contactEmail": "info@CreativeCreations.com",
+    "contactPhone": "1-800-555-8888",
+    "companyBio": "Custom art and design services for your creative needs.",
+    "individual": "false"
+  },
+  {
+    "company": "Urban Eats",
+    "login": "client10",
+    "password": "client10",
+    "website": "www.UrbanEats.com",
+    "contactEmail": "hello@UrbanEats.com",
+    "contactPhone": "1-800-555-9999",
+    "companyBio": "Serving delicious and innovative dishes from around the world.",
+    "individual": "false"
+  },
+  {
+    "company": "Bright Future Academy",
+    "login": "client11",
+    "password": "client11",
+    "website": "www.BrightFutureAcademy.com",
+    "contactEmail": "info@BrightFutureAcademy.com",
+    "contactPhone": "1-800-555-1000",
+    "companyBio": "Providing quality education and training for future leaders.",
+    "individual": "false"
+  },
+  {
+    "company": "Horizon Ventures",
+    "login": "client12",
+    "password": "client12",
+    "website": "www.HorizonVentures.com",
+    "contactEmail": "contact@HorizonVentures.com",
+    "contactPhone": "1-800-555-2000",
+    "companyBio": "Investing in innovative startups and emerging technologies.",
+    "individual": "false"
+  },
+  {
+    "company": "Sparkle Cleaners",
+    "login": "client13",
+    "password": "client13",
+    "website": "www.SparkleCleaners.com",
+    "contactEmail": "info@SparkleCleaners.com",
+    "contactPhone": "1-800-555-3000",
+    "companyBio": "Expert cleaning services for homes and businesses.",
+    "individual": "false"
+  },
+  {
+    "company": "Green Thumb Gardening",
+    "login": "client14",
+    "password": "client14",
+    "website": "www.GreenThumbGardening.com",
+    "contactEmail": "contact@GreenThumbGardening.com",
+    "contactPhone": "1-800-555-4000",
+    "companyBio": "Your partner in creating beautiful and sustainable gardens.",
+    "individual": "false"
+  },
+  {
+    "company": "Peak Performance",
+    "login": "client15",
+    "password": "client15",
+    "website": "www.PeakPerformance.com",
+    "contactEmail": "info@PeakPerformance.com",
+    "contactPhone": "1-800-555-5000",
+    "companyBio": "Enhancing your personal and professional performance through coaching.",
+    "individual": "false"
+  },
+  {
+    "company": "Pet Paradise",
+    "login": "client16",
+    "password": "client16",
+    "website": "www.PetParadise.com",
+    "contactEmail": "info@PetParadise.com",
+    "contactPhone": "1-800-555-6000",
+    "companyBio": "Offering premium pet products and services.",
+    "individual": "false"
+  },
+  {
+    "company": "Visionary Media",
+    "login": "client17",
+    "password": "client17",
+    "website": "www.VisionaryMedia.com",
+    "contactEmail": "info@VisionaryMedia.com",
+    "contactPhone": "1-800-555-7000",
+    "companyBio": "Creating cutting-edge media content and digital solutions.",
+    "individual": "false"
+  },
+  {
+    "company": "Sunny Days Travel",
+    "login": "client18",
+    "password": "client18",
+    "website": "www.SunnyDaysTravel.com",
+    "contactEmail": "contact@SunnyDaysTravel.com",
+    "contactPhone": "1-800-555-8000",
+    "companyBio": "Your gateway to memorable travel experiences and adventures.",
+    "individual": "false"
+  },
+  {
+    "company": "Artisan Jewelry",
+    "login": "client19",
+    "password": "client19",
+    "website": "www.ArtisanJewelry.com",
+    "contactEmail": "info@ArtisanJewelry.com",
+    "contactPhone": "1-800-555-9000",
+    "companyBio": "Handcrafted jewelry that celebrates individuality and style.",
+    "individual": "false"
+  },
+  {
+    "company": "Home Comfort",
+    "login": "client20",
+    "password": "client20",
+    "website": "www.HomeComfort.com",
+    "contactEmail": "support@HomeComfort.com",
+    "contactPhone": "1-800-555-0101",
+    "companyBio": "Providing home essentials and comfort products for every household.",
+    "individual": "false"
   }
 ]
