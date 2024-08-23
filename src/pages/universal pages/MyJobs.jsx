@@ -39,6 +39,25 @@ const MyJobs = () => {
   const [filterConditions, setFilterConditions] = useState({})
   const [sortCondition, setSortCondition] = useState([])
 
+  //create a handler funciton for completing a job
+  const completeJob = (job) => {
+    if (job.assignedPilot) {
+      axios.put(`/api/listing/${job.listingId}`, {
+        changes: { completed: true },
+      })
+      let looseEndApplications = []
+      axios.get(`/api/applicationsForClient/${job.listingId}`).then((response) => {
+        looseEndApplications = response.data
+        console.log(looseEndApplications)
+      })
+      if(looseEndApplications.length > 0){
+        looseEndApplications.forEach((application)=>{
+          axios.delete(`/api/denyApplication/${application.appilcationId}`)
+        })
+      }
+      navigate(`/myJobs/client`)
+    }
+  }
   //create a handler function for changing filters
   const changeFilter = (key) => {
     if (filterConditions[key] === false) {
@@ -153,14 +172,7 @@ const MyJobs = () => {
               <Tooltip position="right" content='mark this job as "complete"'>
                 <button
                   className="flex justify-center items-center h-6 w-6 rounded-full bg-ADJO_Keppel "
-                  onClick={() => {
-                    if (listing.assignedPilot) {
-                      axios.put(`/api/listing/${listing.listingId}`, {
-                        changes: { completed: true },
-                      })
-                      navigate(`/myJobs/client`)
-                    }
-                  }}>
+                  onClick={()=>completeJob(listing)}>
                   <BiCheckCircle size={20} style={{ color: "#BDF3E7", alignSelf: "center" }} />
                 </button>
               </Tooltip>
