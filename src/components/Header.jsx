@@ -26,7 +26,7 @@ function Header() {
   const sessionCheck = () => {
     axios.get('/api/sessionCheck')
       .then((res) => {
-        console.log('session check success', res.data)
+        // console.log('session check success', res.data)
         dispatch({
           type: "LOGIN",
           payload: res.data

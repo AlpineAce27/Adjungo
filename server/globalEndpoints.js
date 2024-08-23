@@ -230,6 +230,7 @@ export const editAccount = async (req, res) => {
   } else {
     //req.body should come with an object called changes that contains all the properties and values to be changed
     const { changes } = req.body
+
     if (req.session.userType === "client") {
       const user = await Client.findByPk(req.session.userId)
       user.set(changes)
