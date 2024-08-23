@@ -7,8 +7,18 @@ import { Tooltip } from "../../components/Tooltip"
 //icon imports
 import { ImCross, ImCheckmark, ImPowerCord } from "react-icons/im"
 import { GiOrange } from "react-icons/gi"
-import { TbCalendarStats, TbCalendar, TbDrone, TbWifi, TbCloudShare, TbRadioactiveFilled, TbArrowBigDownLine, TbArrowBigUpLine, TbStarsFilled } from "react-icons/tb"
-import { BiNetworkChart, BiSolidDollarCircle } from "react-icons/bi"
+import {
+  TbCalendarStats,
+  TbCalendar,
+  TbDrone,
+  TbWifi,
+  TbCloudShare,
+  TbRadioactiveFilled,
+  TbArrowBigDownLine,
+  TbArrowBigUpLine,
+  TbStarsFilled,
+} from "react-icons/tb"
+import { BiNetworkChart, BiSolidDollarCircle, BiPlusCircle, BiMinusCircle } from "react-icons/bi"
 import { GiBombingRun } from "react-icons/gi"
 import { MdDarkMode } from "react-icons/md"
 import { FaPeopleGroup } from "react-icons/fa6"
@@ -20,6 +30,7 @@ function Listings() {
   let userType = useSelector((state) => state.userType)
   //create a state value for an array of listings
   let [listings, setListings] = useState([])
+  let [maxListingQty, setMaxListingQty] = useState(10)
 
   //create state values for the filters and sorting
   const [filterConditions, setFilterConditions] = useState({})
@@ -38,8 +49,8 @@ function Listings() {
     }
   }
 
-   //create a handler function for sorting the listings
-   const changeSort = (key) => {
+  //create a handler function for sorting the listings
+  const changeSort = (key) => {
     if (key === sortCondition[0])
       if (sortCondition.length < 1) {
         const array = [key, "H-L"]
@@ -66,8 +77,8 @@ function Listings() {
 
   //grab all the listings in the database
   useEffect(() => {
-    axios.get("/api/listings").then((response) => {
-      console.log(response.data)
+    axios.get("/api/openListings").then((response) => {
+      //console.log(response.data)
       setListings(response.data)
     })
   }, [])
@@ -76,365 +87,212 @@ function Listings() {
   let filteredListings = filterListings(listings)
 
   //sort the remaining listings
-  if(sortCondition.length > 1){
+  if (sortCondition.length > 1) {
     filteredListings.sort((a, b) => {
       let aVar = Number(a[sortCondition[0]])
       let bVar = Number(b[sortCondition[0]])
 
-      if(sortCondition[0] === "flightDate"){
+      if (sortCondition[0] === "flightDate") {
         aVar = a[sortCondition[0]].replace(/-/g, "")
         bVar = b[sortCondition[0]].replace(/-/g, "")
-        if(sortCondition[1] === "H-L"){
-          return aVar-bVar
-        }else if (sortCondition[1] === "L-H"){
-          return bVar-aVar
+        if (sortCondition[1] === "H-L") {
+          return aVar - bVar
+        } else if (sortCondition[1] === "L-H") {
+          return bVar - aVar
         }
-      }else{
-        if(sortCondition[1] === "H-L"){
-          return aVar-bVar
-        }else if (sortCondition[1] === "L-H"){
-          return bVar-aVar
+      } else {
+        if (sortCondition[1] === "H-L") {
+          return aVar - bVar
+        } else if (sortCondition[1] === "L-H") {
+          return bVar - aVar
         }
       }
     })
   }
 
-  let listingsItems
-  if (userType === "client" || userType === "pilot") {
-    //create an array of listings mapped to the axios response
-    listingsItems = filteredListings.map((listing) => {
-      //change assigned pilot
-      let assignedPilot
-      if (listing.assignedPilot === null) {
-        assignedPilot = "Unclaimed"
-      } else {
-        assignedPilot = listing.assignedPilot
-      }
-      //create a table row with each variable in the correct spot
-      if (!listing.assignedPilot) {
-        return (
-          <tr key={listing.listingId} className="pt-2 pb-2 border-b-2 border-opacity-10 border-b-AJGO_DarkSlateGray">
-            <td>
-              <button
-                onClick={() => {
-                  navigate(`/singleListing/${listing.listingId}`)
-                }}
-                className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium">
-                {" "}
-                {listing.listingId}
-              </button>
-            </td>
-            <td>
-              <button
-                onClick={() => {
-                  navigate(`/userProfile/client/${listing.clientId}`)
-                }}
-                className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium">
-                {" "}
-                {listing.clientId}
-              </button>
-            </td>
-            <td className={`font-bold text-[${listing.reviewCol}]`}>{listing.reviews}</td>
-            <td>${listing.offer}</td>
-            <td>{listing.flightZipcode}</td>
-            <td>{listing.flightDate}</td>
-            <td>{listing.flightRadius}</td>
-            <td>
-              {listing.multiday === true && (
-                <div className="flex items-center justify-center">
-                  <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
-                </div>
-              )}
-              {listing.multiday === false && (
-                <div className="flex items-center justify-center">
-                  <ImCross size={13} style={{ color: "#dc2626" }} />
-                </div>
-              )}
-            </td>
-            <td>
-              {listing.hardwareProvided === true && (
-                <div className="flex items-center justify-center">
-                  <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
-                </div>
-              )}
-              {listing.hardwareProvided === false && (
-                <div className="flex items-center justify-center">
-                  <ImCross size={13} style={{ color: "#dc2626" }} />
-                </div>
-              )}
-            </td>
-            <td>
-              {listing.softwareProvided === true && (
-                <div className="flex items-center justify-center">
-                  <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
-                </div>
-              )}
-              {listing.softwareProvided === false && (
-                <div className="flex items-center justify-center">
-                  <ImCross size={13} style={{ color: "#dc2626" }} />
-                </div>
-              )}
-            </td>
-            <td>
-              {listing.internetProvided === true && (
-                <div className="flex items-center justify-center">
-                  <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
-                </div>
-              )}
-              {listing.internetProvided === false && (
-                <div className="flex items-center justify-center">
-                  <ImCross size={13} style={{ color: "#dc2626" }} />
-                </div>
-              )}
-            </td>
-            <td>
-              {listing.powerProvided === true && (
-                <div className="flex items-center justify-center">
-                  <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
-                </div>
-              )}
-              {listing.powerProvided === false && (
-                <div className="flex items-center justify-center">
-                  <ImCross size={13} style={{ color: "#dc2626" }} />
-                </div>
-              )}
-            </td>
-            <td>
-              {listing.highFlying === true && (
-                <div className="flex items-center justify-center">
-                  <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
-                </div>
-              )}
-              {listing.highFlying === false && (
-                <div className="flex items-center justify-center">
-                  <ImCross size={13} style={{ color: "#dc2626" }} />
-                </div>
-              )}
-            </td>
-            <td>
-              {listing.payloadDropping === true && (
-                <div className="flex items-center justify-center">
-                  <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
-                </div>
-              )}
-              {listing.payloadDropping === false && (
-                <div className="flex items-center justify-center">
-                  <ImCross size={13} style={{ color: "#dc2626" }} />
-                </div>
-              )}
-            </td>
-            <td>
-              {listing.hazmatFlying === true && (
-                <div className="flex items-center justify-center">
-                  <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
-                </div>
-              )}
-              {listing.hazmatFlying === false && (
-                <div className="flex items-center justify-center">
-                  <ImCross size={13} style={{ color: "#dc2626" }} />
-                </div>
-              )}
-            </td>
-            <td>
-              {listing.heavyFlying === true && (
-                <div className="flex items-center justify-center">
-                  <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
-                </div>
-              )}
-              {listing.heavyFlying === false && (
-                <div className="flex items-center justify-center">
-                  <ImCross size={13} style={{ color: "#dc2626" }} />
-                </div>
-              )}
-            </td>
-            <td>
-              {listing.nightFlying === true && (
-                <div className="flex items-center justify-center">
-                  <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
-                </div>
-              )}
-              {listing.nightFlying === false && (
-                <div className="flex items-center justify-center">
-                  <ImCross size={13} style={{ color: "#dc2626" }} />
-                </div>
-              )}
-            </td>
-            <td>
-              {listing.crowdFlying === true && (
-                <div className="flex items-center justify-center">
-                  <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
-                </div>
-              )}
-              {listing.crowdFlying === false && (
-                <div className="flex items-center justify-center">
-                  <ImCross size={13} style={{ color: "#dc2626" }} />
-                </div>
-              )}
-            </td>
-          </tr>
-        )
-      }
-    })
-  } else {
-    //create an array of listings mapped to the axios response
-    listingsItems = filteredListings.map((listing) => {
-      //change true/false/null to more readable strings
-      //change "assigned pilot"
-      let assignedPilot
-      if (listing.assignedPilot === null) {
-        assignedPilot = "Unclaimed"
-      } else {
-        assignedPilot = "Claimed"
-      }
+  //make sure to only show the max number of listings
+  filteredListings = filteredListings.slice(0, maxListingQty)
+  console.log(filteredListings)
 
-      //create a table row with each variable in the correct spot
-      if (!listing.assignedPilot) {
-        return (
-          <tr key={listing.listingId} className="pt-2 pb-2 border-b-2 border-opacity-10 border-b-AJGO_DarkSlateGray">
-            <td>{listing.listingId}</td>
-            <td>{listing.clientId}</td>
-            <td className={`font-bold text-[${listing.reviewCol}]`}>{listing.reviews}</td>
-            <td>${listing.offer}</td>
-            <td>{listing.flightZipcode}</td>
-            <td>{listing.flightDate}</td>
-            <td>{listing.flightRadius}</td>
-            <td>
-              {listing.multiday === true && (
-                <div className="flex items-center justify-center">
-                  <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
-                </div>
-              )}
-              {listing.multiday === false && (
-                <div className="flex items-center justify-center">
-                  <ImCross size={13} style={{ color: "#dc2626" }} />
-                </div>
-              )}
-            </td>
-            <td>
-              {listing.hardwareProvided === true && (
-                <div className="flex items-center justify-center">
-                  <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
-                </div>
-              )}
-              {listing.hardwareProvided === false && (
-                <div className="flex items-center justify-center">
-                  <ImCross size={13} style={{ color: "#dc2626" }} />
-                </div>
-              )}
-            </td>
-            <td>
-              {listing.softwareProvided === true && (
-                <div className="flex items-center justify-center">
-                  <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
-                </div>
-              )}
-              {listing.softwareProvided === false && (
-                <div className="flex items-center justify-center">
-                  <ImCross size={13} style={{ color: "#dc2626" }} />
-                </div>
-              )}
-            </td>
-            <td>
-              {listing.internetProvided === true && (
-                <div className="flex items-center justify-center">
-                  <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
-                </div>
-              )}
-              {listing.internetProvided === false && (
-                <div className="flex items-center justify-center">
-                  <ImCross size={13} style={{ color: "#dc2626" }} />
-                </div>
-              )}
-            </td>
-            <td>
-              {listing.powerProvided === true && (
-                <div className="flex items-center justify-center">
-                  <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
-                </div>
-              )}
-              {listing.powerProvided === false && (
-                <div className="flex items-center justify-center">
-                  <ImCross size={13} style={{ color: "#dc2626" }} />
-                </div>
-              )}
-            </td>
-            <td>
-              {listing.highFlying === true && (
-                <div className="flex items-center justify-center">
-                  <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
-                </div>
-              )}
-              {listing.highFlying === false && (
-                <div className="flex items-center justify-center">
-                  <ImCross size={13} style={{ color: "#dc2626" }} />
-                </div>
-              )}
-            </td>
-            <td>
-              {listing.payloadDropping === true && (
-                <div className="flex items-center justify-center">
-                  <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
-                </div>
-              )}
-              {listing.payloadDropping === false && (
-                <div className="flex items-center justify-center">
-                  <ImCross size={13} style={{ color: "#dc2626" }} />
-                </div>
-              )}
-            </td>
-            <td>
-              {listing.hazmatFlying === true && (
-                <div className="flex items-center justify-center">
-                  <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
-                </div>
-              )}
-              {listing.hazmatFlying === false && (
-                <div className="flex items-center justify-center">
-                  <ImCross size={13} style={{ color: "#dc2626" }} />
-                </div>
-              )}
-            </td>
-            <td>
-              {listing.heavyFlying === true && (
-                <div className="flex items-center justify-center">
-                  <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
-                </div>
-              )}
-              {listing.heavyFlying === false && (
-                <div className="flex items-center justify-center">
-                  <ImCross size={13} style={{ color: "#dc2626" }} />
-                </div>
-              )}
-            </td>
-            <td>
-              {listing.nightFlying === true && (
-                <div className="flex items-center justify-center">
-                  <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
-                </div>
-              )}
-              {listing.nightFlying === false && (
-                <div className="flex items-center justify-center">
-                  <ImCross size={13} style={{ color: "#dc2626" }} />
-                </div>
-              )}
-            </td>
-            <td>
-              {listing.crowdFlying === true && (
-                <div className="flex items-center justify-center">
-                  <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
-                </div>
-              )}
-              {listing.crowdFlying === false && (
-                <div className="flex items-center justify-center">
-                  <ImCross size={13} style={{ color: "#dc2626" }} />
-                </div>
-              )}
-            </td>
-          </tr>
-        )
-      }
-    })
-  }
+  //create an array of listings mapped to the filtered listings array
+  let listingsItems = filteredListings.map((listing) => {
+    //change assigned pilot
+    let assignedPilot
+    if (listing.assignedPilot === null) {
+      assignedPilot = "Unclaimed"
+    } else {
+      assignedPilot = listing.assignedPilot
+    }
+
+    //create a table row with each variable in the correct spot
+    return (
+      <tr key={listing.listingId} className="pt-2 pb-2 border-b-2 border-opacity-10 border-b-AJGO_DarkSlateGray">
+        <td>
+          {(userType === "client" || userType === "pilot") && (
+            <button
+              onClick={() => {
+                navigate(`/singleListing/${listing.listingId}`)
+              }}
+              className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium">
+              {" "}
+              {listing.listingId}
+            </button>
+          )}
+          {userType !== "client" && userType !== "pilot" && <>{listing.listingId}</>}
+        </td>
+        <td>
+          {(userType === "client" || userType === "pilot") && (
+            <button
+              onClick={() => {
+                navigate(`/userProfile/client/${listing.clientId}`)
+              }}
+              className="border-2 border-ADJO_Keppel opacity-70 rounded-full w-20 text-ADJO_Keppel font-medium">
+              {" "}
+              {listing.clientId}
+            </button>
+          )}
+          {userType !== "client" && userType !== "pilot" && <>{listing.clientId}</>}
+        </td>
+        <td className={`font-bold text-[${listing.reviewCol}]`}>{listing.reviews}</td>
+        <td>${listing.offer}</td>
+        <td>{listing.flightZipcode}</td>
+        <td>{listing.flightDate}</td>
+        <td>{listing.flightRadius}</td>
+        <td>
+          {listing.multiday === true && (
+            <div className="flex items-center justify-center">
+              <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
+            </div>
+          )}
+          {listing.multiday === false && (
+            <div className="flex items-center justify-center">
+              <ImCross size={13} style={{ color: "#dc2626" }} />
+            </div>
+          )}
+        </td>
+        <td>
+          {listing.hardwareProvided === true && (
+            <div className="flex items-center justify-center">
+              <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
+            </div>
+          )}
+          {listing.hardwareProvided === false && (
+            <div className="flex items-center justify-center">
+              <ImCross size={13} style={{ color: "#dc2626" }} />
+            </div>
+          )}
+        </td>
+        <td>
+          {listing.softwareProvided === true && (
+            <div className="flex items-center justify-center">
+              <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
+            </div>
+          )}
+          {listing.softwareProvided === false && (
+            <div className="flex items-center justify-center">
+              <ImCross size={13} style={{ color: "#dc2626" }} />
+            </div>
+          )}
+        </td>
+        <td>
+          {listing.internetProvided === true && (
+            <div className="flex items-center justify-center">
+              <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
+            </div>
+          )}
+          {listing.internetProvided === false && (
+            <div className="flex items-center justify-center">
+              <ImCross size={13} style={{ color: "#dc2626" }} />
+            </div>
+          )}
+        </td>
+        <td>
+          {listing.powerProvided === true && (
+            <div className="flex items-center justify-center">
+              <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
+            </div>
+          )}
+          {listing.powerProvided === false && (
+            <div className="flex items-center justify-center">
+              <ImCross size={13} style={{ color: "#dc2626" }} />
+            </div>
+          )}
+        </td>
+        <td>
+          {listing.highFlying === true && (
+            <div className="flex items-center justify-center">
+              <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
+            </div>
+          )}
+          {listing.highFlying === false && (
+            <div className="flex items-center justify-center">
+              <ImCross size={13} style={{ color: "#dc2626" }} />
+            </div>
+          )}
+        </td>
+        <td>
+          {listing.payloadDropping === true && (
+            <div className="flex items-center justify-center">
+              <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
+            </div>
+          )}
+          {listing.payloadDropping === false && (
+            <div className="flex items-center justify-center">
+              <ImCross size={13} style={{ color: "#dc2626" }} />
+            </div>
+          )}
+        </td>
+        <td>
+          {listing.hazmatFlying === true && (
+            <div className="flex items-center justify-center">
+              <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
+            </div>
+          )}
+          {listing.hazmatFlying === false && (
+            <div className="flex items-center justify-center">
+              <ImCross size={13} style={{ color: "#dc2626" }} />
+            </div>
+          )}
+        </td>
+        <td>
+          {listing.heavyFlying === true && (
+            <div className="flex items-center justify-center">
+              <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
+            </div>
+          )}
+          {listing.heavyFlying === false && (
+            <div className="flex items-center justify-center">
+              <ImCross size={13} style={{ color: "#dc2626" }} />
+            </div>
+          )}
+        </td>
+        <td>
+          {listing.nightFlying === true && (
+            <div className="flex items-center justify-center">
+              <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
+            </div>
+          )}
+          {listing.nightFlying === false && (
+            <div className="flex items-center justify-center">
+              <ImCross size={13} style={{ color: "#dc2626" }} />
+            </div>
+          )}
+        </td>
+        <td>
+          {listing.crowdFlying === true && (
+            <div className="flex items-center justify-center">
+              <ImCheckmark size={15} style={{ color: "#08BFA1" }} />
+            </div>
+          )}
+          {listing.crowdFlying === false && (
+            <div className="flex items-center justify-center">
+              <ImCross size={13} style={{ color: "#dc2626" }} />
+            </div>
+          )}
+        </td>
+      </tr>
+    )
+  })
 
   //render all the elements we created on the page
   return (
@@ -454,7 +312,7 @@ function Listings() {
 
         {/* <input type="checkbox" id="showCompleted" name="showCompleted" value="showCompleted"/>
         <label for="showCompleted">Show Completed Jobs:</label> */}
-        <section className="flex justify-center pb-10">
+        <section className="flex justify-center">
           <div className="flex justify-center bg-ADJO_Celeste bg-opacity-30 rounded-xl w-11/12 pr-10 pl-10 pt-5 pb-5">
             <table className="border-collapse font-rubik pb-20 text-sm w-full">
               <thead>
@@ -464,34 +322,26 @@ function Listings() {
                   <th>
                     <button onClick={() => changeSort("reviews")}>
                       <Tooltip position="top" content="Client Rating">
-                        {sortCondition[0] === "reviews" && sortCondition[1] === "H-L" &&
-                        <TbArrowBigDownLine size={25} style={{ color: "#000000" }} />
-                        }
-                        {sortCondition[0] === "reviews" && sortCondition[1] === "L-H" &&
-                        <TbArrowBigUpLine size={25} style={{ color: "#000000" }}/>
-                        }
-                        {sortCondition[0] !== "reviews" &&
-                        <TbStarsFilled size={25
-
-                        } style={{ color: "#000000" }}/>
-                        }
-
+                        {sortCondition[0] === "reviews" && sortCondition[1] === "H-L" && (
+                          <TbArrowBigDownLine size={25} style={{ color: "#000000" }} />
+                        )}
+                        {sortCondition[0] === "reviews" && sortCondition[1] === "L-H" && (
+                          <TbArrowBigUpLine size={25} style={{ color: "#000000" }} />
+                        )}
+                        {sortCondition[0] !== "reviews" && <TbStarsFilled size={25} style={{ color: "#000000" }} />}
                       </Tooltip>
                     </button>
                   </th>
                   <th>
                     <button onClick={() => changeSort("offer")}>
                       <Tooltip position="top" content="Payment">
-                        {sortCondition[0] === "offer" && sortCondition[1] === "H-L" &&
-                        <TbArrowBigDownLine size={25} style={{ color: "#000000" }} />
-                        }
-                        {sortCondition[0] === "offer" && sortCondition[1] === "L-H" &&
-                        <TbArrowBigUpLine size={25} style={{ color: "#000000" }}/>
-                        }
-                        {sortCondition[0] !== "offer" &&
-                        <BiSolidDollarCircle size={30} style={{ color: "#000000" }}/>
-                        }
-
+                        {sortCondition[0] === "offer" && sortCondition[1] === "H-L" && (
+                          <TbArrowBigDownLine size={25} style={{ color: "#000000" }} />
+                        )}
+                        {sortCondition[0] === "offer" && sortCondition[1] === "L-H" && (
+                          <TbArrowBigUpLine size={25} style={{ color: "#000000" }} />
+                        )}
+                        {sortCondition[0] !== "offer" && <BiSolidDollarCircle size={30} style={{ color: "#000000" }} />}
                       </Tooltip>
                     </button>
                   </th>
@@ -503,15 +353,13 @@ function Listings() {
                   <th>
                     <Tooltip position="top" content="Flight-Op date">
                       <button onClick={() => changeSort("flightDate")}>
-                      {sortCondition[0] === "flightDate" && sortCondition[1] === "H-L" &&
-                        <TbArrowBigDownLine size={25} style={{ color: "#000000" }} />
-                        }
-                        {sortCondition[0] === "flightDate" && sortCondition[1] === "L-H" &&
-                        <TbArrowBigUpLine size={25} style={{ color: "#000000" }}/>
-                        }
-                        {sortCondition[0] !== "flightDate" &&
-                        <TbCalendar size={25} style={{ color: "#000000" }} />
-                        }
+                        {sortCondition[0] === "flightDate" && sortCondition[1] === "H-L" && (
+                          <TbArrowBigDownLine size={25} style={{ color: "#000000" }} />
+                        )}
+                        {sortCondition[0] === "flightDate" && sortCondition[1] === "L-H" && (
+                          <TbArrowBigUpLine size={25} style={{ color: "#000000" }} />
+                        )}
+                        {sortCondition[0] !== "flightDate" && <TbCalendar size={25} style={{ color: "#000000" }} />}
                       </button>
                     </Tooltip>
                   </th>
@@ -519,15 +367,13 @@ function Listings() {
                   <th>
                     <Tooltip position="top" content="Range (miles)">
                       <button onClick={() => changeSort("flightRadius")}>
-                      {sortCondition[0] === "flightRadius" && sortCondition[1] === "H-L" &&
-                        <TbArrowBigDownLine size={25} style={{ color: "#000000" }} />
-                        }
-                        {sortCondition[0] === "flightRadius" && sortCondition[1] === "L-H" &&
-                        <TbArrowBigUpLine size={25} style={{ color: "#000000" }}/>
-                        }
-                        {sortCondition[0] !== "flightRadius" &&
-                        <GiOrange size={25} style={{ color: "#000000" }} />
-                        }
+                        {sortCondition[0] === "flightRadius" && sortCondition[1] === "H-L" && (
+                          <TbArrowBigDownLine size={25} style={{ color: "#000000" }} />
+                        )}
+                        {sortCondition[0] === "flightRadius" && sortCondition[1] === "L-H" && (
+                          <TbArrowBigUpLine size={25} style={{ color: "#000000" }} />
+                        )}
+                        {sortCondition[0] !== "flightRadius" && <GiOrange size={25} style={{ color: "#000000" }} />}
                       </button>
                     </Tooltip>
                   </th>
@@ -725,6 +571,28 @@ function Listings() {
             </table>
           </div>
         </section>
+        <div className="flex justify-center pt-3 pb-10">
+          <div className="flex w-1/2 justify-center">
+          {maxListingQty > 10 && (
+            <section
+              onClick={() => {
+                setMaxListingQty(maxListingQty - 10)
+              }}
+              className="flex w-[200px] items-center justify-center hover: cursor-pointer">
+              <BiMinusCircle size={25} style={{ color: "#08BFA1" }} />
+              <section className="pl-2 font-rubik font-medium text-[20px] text-ADJO_Keppel">Show Less</section>
+            </section>
+          )}
+            <section
+              onClick={() => {
+                setMaxListingQty(maxListingQty + 10)
+              }}
+              className="flex w-[200px] items-center justify-center hover: cursor-pointer">
+              <BiPlusCircle size={25} style={{ color: "#08BFA1" }} />
+              <section className="pl-2 font-rubik font-medium text-[20px] text-ADJO_Keppel">Show More</section>
+            </section>
+          </div>
+        </div>
       </div>
     </>
   )

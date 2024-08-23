@@ -39,6 +39,41 @@ export const getAllListings = async (req, res) => {
   res.send(finalCopy)
 }
 
+//return all listings
+export const getAllOpenListings = async (req, res) => {
+  const allListings = await Listing.findAll({
+    where: { completed: false, assignedPilot: null },
+    include: { model: Client },
+  })
+
+  const listingCopy = [...allListings]
+
+  let finalCopy = await Promise.all(
+    listingCopy.map(async (e, i) => {
+      let oneListing = { ...listingCopy[i].dataValues }
+
+      const reviewsOnClient = await ClientReview.findAll({
+        where: {
+          reviewedClient: e.client.clientId,
+        },
+        // creates a column called 'avgRating' which is an aggregated average of the client_rating columns from the Client_Review
+        attributes: [[Sequelize.fn("AVG", Sequelize.col("client_rating")), "avgRating"]],
+      })
+
+      oneListing.reviews = (+reviewsOnClient[0].dataValues.avgRating).toFixed(2)
+      oneListing.reviewCol = getRatingColor(+oneListing.reviews)
+
+      console.log(oneListing)
+      listingCopy[i] = oneListing
+      return listingCopy[i]
+    })
+  )
+
+  // console.log('finalCopy', finalCopy)
+
+  res.send(finalCopy)
+}
+
 //return a single listing with a specific listing id
 export const getOneListing = async (req, res) => {
   const { listingId } = req.params
@@ -104,7 +139,6 @@ export const sessionCheck = async (req, res) => {
 
 //return account details based on the userID in the session
 export const getMyAccount = async (req, res) => {
-
   if (!req.session.userId) {
     res.status(401).send({ null: "No user logged in" })
   } else {
@@ -127,11 +161,10 @@ export const getMyAccount = async (req, res) => {
 
       //send the user copy
       res.send(userCopy)
-
     } else if (req.session.userType === "pilot") {
       const user = await Pilot.findByPk(req.session.userId)
       const userCopy = { ...user.dataValues }
-  
+
       const reviewsOnPilot = await PilotReview.findAll({
         where: {
           reviewedPilot: req.session.userId,
@@ -141,7 +174,7 @@ export const getMyAccount = async (req, res) => {
       })
       userCopy.rating = (+reviewsOnPilot[0].dataValues.avgRating).toFixed(2)
       userCopy.ratingCol = getRatingColor(userCopy.rating)
-  
+
       //console.log(userCopy)
       res.send(userCopy)
     }

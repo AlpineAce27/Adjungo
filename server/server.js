@@ -5,6 +5,7 @@ import ViteExpress from "vite-express";
 //import { Client, Pilot, Listing, Application } from "../src/model.js";
 import {
   getAllListings,
+  getAllOpenListings,
   getOneListing,
   login,
   logout,
@@ -54,6 +55,7 @@ app.use(session({ secret: "ssshhhhh", saveUninitialized: true, resave: false }))
 
 //Universal Endpoints (both pilots and clients can access use them)
 app.get("/api/listings", getAllListings)
+app.get("/api/openListings", getAllOpenListings)
 app.get("/api/listings/:listingId", getOneListing)
 app.post("/api/auth", login)
 app.post("/api/logout", logout)
