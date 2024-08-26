@@ -32,6 +32,9 @@ function Listings() {
   let [listings, setListings] = useState([])
   let [maxListingQty, setMaxListingQty] = useState(10)
 
+  //create a state value for the entry fields on location, client, etc
+  let [currentLocation, setCurrentLocation] = useState(`40°45'38"N 111°53'27"W`)
+
   //create state values for the filters and sorting
   const [filterConditions, setFilterConditions] = useState({})
   const [sortCondition, setSortCondition] = useState([])
@@ -308,7 +311,16 @@ function Listings() {
             property. You can easily sort and filter by clicking on column header icons.
           </p>
         </section>
-
+        <section>
+          <form>
+            <input
+            type="text" name="currLocation" id="currLocation"
+            value={currentLocation}
+            onChange={(e) => setCurrentLocation(e.target.value)} 
+            />
+            
+          </form>
+        </section>
         {/* <input type="checkbox" id="showCompleted" name="showCompleted" value="showCompleted"/>
         <label for="showCompleted">Show Completed Jobs:</label> */}
         <section className="flex justify-center">
