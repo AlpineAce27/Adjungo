@@ -3,6 +3,7 @@ import axios from "axios"
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 import { Tooltip } from "../../components/Tooltip"
+;("use client")
 
 //icon imports
 import { ImCross, ImCheckmark, ImPowerCord } from "react-icons/im"
@@ -24,16 +25,28 @@ import { MdDarkMode } from "react-icons/md"
 import { FaPeopleGroup } from "react-icons/fa6"
 import { FaWeightHanging } from "react-icons/fa6"
 
+//Google APIs
+import { APIProvider, Map, AdvancedMarker, Pin, InfoWindow } from "@vis.gl/react-google-maps"
+import { API_KEY, mapId, getCoordinatesFromAddress } from "../../../util/location"
+
+//set up some google maps utilities
+
 function Listings() {
   const navigate = useNavigate()
   //grabbing the usertype from redux store
   let userType = useSelector((state) => state.userType)
   //create a state value for an array of listings
   let [listings, setListings] = useState([])
+  let [allListingPins, setAllListingPins] = useState([])
   let [maxListingQty, setMaxListingQty] = useState(10)
 
+  //40°45'33"N 111°53'14"W
   //create a state value for the entry fields on location, client, etc
-  let [currentLocation, setCurrentLocation] = useState(`40°45'38"N 111°53'27"W`)
+
+  let [currentLat, setCurrentLat] = useState(40.759)
+  let [currentLng, setCurrentLng] = useState(-111.886)
+  let [currentLocation, setCurrentLocation] = useState({ lat: 40.759, lng: -111.886 })
+  let [range, setRange] = useState(6)
 
   //create state values for the filters and sorting
   const [filterConditions, setFilterConditions] = useState({})
@@ -89,6 +102,10 @@ function Listings() {
   //filter the listings
   let filteredListings = filterListings(listings)
 
+  useEffect(() => {
+    asdf()
+  }, [listings])
+
   //sort the remaining listings
   if (sortCondition.length > 1) {
     filteredListings.sort((a, b) => {
@@ -116,6 +133,24 @@ function Listings() {
   //make sure to only show the max number of listings
   filteredListings = filteredListings.slice(0, maxListingQty)
   //console.log(filteredListings)
+
+  //create an array of pins to show on the map
+  const asdf = async () => {
+    let listingsPins = await Promise.all(
+      filteredListings.map(async (listing) => {
+        const coordinates = await getCoordinatesFromAddress(listing.flightAddress)
+        //console.log(listing.listingId, coordinates)
+        return (
+          <AdvancedMarker key={listing.listingId} position={coordinates}>
+            <Pin background={"#08BFA1"} borderColor={"#283B36"} glyphColor={"#283B36"} />
+          </AdvancedMarker>
+        )
+      })
+    )
+    setAllListingPins(listingsPins)
+  }
+  console.log("listing Pins", allListingPins)
+  
   //create an array of listings mapped to the filtered listings array
   let listingsItems = filteredListings.map((listing) => {
     //change assigned pilot
@@ -298,29 +333,83 @@ function Listings() {
 
   //render all the elements we created on the page
   return (
-    <>
-      <div className="flex-col items-center">
+    <APIProvider apiKey="AIzaSyAaHN0-rTbSmQ-lZ9iFo_MNKkcCz2fGkFw">
+      <div className="flex-col items-center justify-center gap-32">
         <section className="flex flex-col justify-center items-center">
           <h1 className="pt-10 pb-10 font-rubik font-medium text-[40px] text-AJGO_DarkSlateGray justify-center">
             Welcome the Adjungo Listings
           </h1>
-
-          <p className="font-rubik text-l pb-5 w-3/4 text-center">
-            This page shows all the listings on the entire Adjungo site! If you are logged in, then you can click on
-            listing ID to view more details. Hover over a column header icon to understand more about that listing
-            property. You can easily sort and filter by clicking on column header icons.
-          </p>
         </section>
-        <section>
-          <form>
-            <input
-            type="text" name="currLocation" id="currLocation"
-            value={currentLocation}
-            onChange={(e) => setCurrentLocation(e.target.value)} 
-            />
-            
-          </form>
-        </section>
+        <div className="flex justify-center">
+          <section className="flex justify-center items-center w-5/6">
+            <div className="flex flex-col items-center justify-center w-1/2 pr-10">
+              <section className="font-rubik text-l text-left">
+                <p>
+                  This page shows all the listings on the entire Adjungo site! If you are logged in, then you can click
+                  on listing ID to view more details.
+                </p>{" "}
+                <br />
+                <p>-Hover over a column header icon to understand more about that listing property.</p> <br />
+                <p>-You can easily sort and filter by clicking on column header icons.</p> <br />
+                <p>-You can also search for jobs by location using the map functionality</p> <br />
+              </section>
+              <div className=" flex flex-col items-start font-rubik text-l text-left ">
+                <div className="flex justify-between w-full border-2 border-ADJO_Celeste p-2 rounded-lg">
+                  <div>
+                    <label htmlFor="lat">Latitude:</label>
+                    <input
+                      className="w-[100px]"
+                      type="number"
+                      name="lat"
+                      id="lat"
+                      value={currentLat}
+                      onChange={(e) => setCurrentLat(+e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="lng">Longitude:</label>
+                    <input
+                      className="w-[100px]"
+                      type="number"
+                      name="lng"
+                      id="lng"
+                      value={currentLng}
+                      onChange={(e) => setCurrentLng(+e.target.value)}
+                    />
+                  </div>
+                  <button
+                    className="border-2 w-[200px] border-x-ADJO_Keppel px-1 py-1 text-l uppercase font-rubik rounded-lg text-ADJO_Keppel"
+                    onClick={() => setCurrentLocation({ lat: currentLat, lng: currentLng })}>
+                    Center Map
+                  </button>
+                </div>
+                <br />
+                <div className="flex">
+                  <label htmlFor="range">Include jobs within:</label>
+                  <input
+                    type="number"
+                    name="range"
+                    id="range"
+                    value={range}
+                    className="w-12"
+                    onChange={(e) => setRange(e.target.value)}
+                  />
+                  <label htmlFor="range">miles</label>
+                </div>
+                <br />
+              </div>
+            </div>
+            <div className="bg-ADJO_Keppel w-[500px] h-[400px] p-3 rounded-lg">
+              <Map className="" zoom={range} defaultCenter={currentLocation} mapId={mapId}>
+                <AdvancedMarker position={currentLocation}>
+                  <Pin background={"#283B36"} borderColor={"#08BFA1"} glyphColor={"#08BFA1"} />
+                </AdvancedMarker>
+                {allListingPins}
+              </Map>
+            </div>
+          </section>
+        </div>
+        <br />
         {/* <input type="checkbox" id="showCompleted" name="showCompleted" value="showCompleted"/>
         <label for="showCompleted">Show Completed Jobs:</label> */}
         <section className="flex justify-center">
@@ -584,16 +673,16 @@ function Listings() {
         </section>
         <div className="flex justify-center pt-3 pb-10">
           <div className="flex w-1/2 justify-center">
-          {maxListingQty > 10 && (
-            <section
-              onClick={() => {
-                setMaxListingQty(maxListingQty - 10)
-              }}
-              className="flex w-[200px] items-center justify-center hover: cursor-pointer">
-              <BiMinusCircle size={25} style={{ color: "#08BFA1" }} />
-              <section className="pl-2 font-rubik font-medium text-[20px] text-ADJO_Keppel">Show Less</section>
-            </section>
-          )}
+            {maxListingQty > 10 && (
+              <section
+                onClick={() => {
+                  setMaxListingQty(maxListingQty - 10)
+                }}
+                className="flex w-[200px] items-center justify-center hover: cursor-pointer">
+                <BiMinusCircle size={25} style={{ color: "#08BFA1" }} />
+                <section className="pl-2 font-rubik font-medium text-[20px] text-ADJO_Keppel">Show Less</section>
+              </section>
+            )}
             <section
               onClick={() => {
                 setMaxListingQty(maxListingQty + 10)
@@ -605,7 +694,7 @@ function Listings() {
           </div>
         </div>
       </div>
-    </>
+    </APIProvider>
   )
 }
 

@@ -42,7 +42,7 @@ function highOddsOfTrue() {
 }
 
 //create the listings arrray
-const listings = Array.from({ length: 300 }, () => {
+const listings = Array.from({ length: 50 }, () => {
   const assignedPilot = generateAssignedPilot()
   const complete = generateCompletionCriteria(assignedPilot)
 
@@ -69,7 +69,7 @@ const listings = Array.from({ length: 300 }, () => {
     heavyFlying: lowOddsOfTrue(),
     nightFlying: datatype.boolean(),
     crowdFlying: datatype.boolean(),
-    flightAddress: location.streetAddress(),
+    flightAddress: location.streetAddress() + ", " + location.city() +", "+ location.state(),
     flightZipcode: location.zipCode(),
     flightRadius: number.float({ min: 0.1, max: 2.5, multipleOf: 0.1 }),
     completed: complete,
