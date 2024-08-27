@@ -2,13 +2,13 @@ import axios from "axios"
 import { useLoaderData, useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { useSelector } from "react-redux"
-import { getCoordinatesFromAddress } from "../../../util/location"
+import { getCoordinatesFromAddress, API_KEY, mapId } from "../../../util/location"
 
 function ClientSingleListing() {
   //take the data from the loader and assign it to the listing variable (this should be an entire listing object)
   //this loader data comes from the loader section of this route in the App.jsx
   const [listing, setListing] = useState(useLoaderData())
-  //console.log("clientsinglelisting rendered")
+  console.log(listing)
   //create a value to determine if we are viewing this listing, or editing this listing
   const [editing, setEditing] = useState(false)
 
@@ -31,15 +31,11 @@ function ClientSingleListing() {
   const [flightRadius, setFlightRadius] = useState(listing.flightRadius)
   const [hardwareProvided, setHardware] = useState(listing.hardwareProvided)
   const [softwareProvided, setSoftware] = useState(listing.softwareProvided)
-  const [internetProvided, setInternetProvided] = useState(
-    listing.internetProvided
-  )
+  const [internetProvided, setInternetProvided] = useState(listing.internetProvided)
   const [powerProvided, setPowerProvided] = useState(listing.powerProvided)
   const [highFlying, setHighFlying] = useState(listing.highFlying)
   const [blosFlying, setBlosFlying] = useState(listing.blosFlying)
-  const [payloadDropping, setPayloadDropping] = useState(
-    listing.payloadDropping
-  )
+  const [payloadDropping, setPayloadDropping] = useState(listing.payloadDropping)
   const [hazmatFlying, setHazmatFlying] = useState(listing.hazmatFlying)
   const [heavyFlying, setHeavyFlying] = useState(listing.heavyFlying)
   const [nightFlying, setNightflying] = useState(listing.nightFlying)
@@ -60,22 +56,20 @@ function ClientSingleListing() {
             Listing #{listing.listingId}
           </h1>
           <p className="font-rubik text-xl">
-            This show's all the details for listing {listing.listingId}, here
-            you can edit or delete the listing, as well as accept or deny
-            applications
+            This show's all the details for listing {listing.listingId}, here you can edit or delete the listing, as
+            well as accept or deny applications
           </p>
         </div>
 
-        <div className="flex items-center justify-center w-5/6">
-          <section className="flex flex-col gap-3 items-start pt-10 pb-10 justify-between font-rubik font-medium text-[15px] text-AJGO_DarkSlateGray w-2/3 text-lg">
+        <div className="flex items-center justify-center w-5/6 gap-5 h-[40vh]">
+          <section className="flex flex-col gap-3 items-start py-8 justify-between font-rubik font-medium text-[15px] text-AJGO_DarkSlateGray w-1/3 text-lg pl-5 border-ADJO_Celeste border-4 h-full rounded-lg">
             <p className="flex items-center justify-between">
               Owner Id:{" "}
               <button
                 className="flex items-center text-center justify-center border-2 border-ADJO_Keppel opacity-70 rounded-full h-[20px] w-[50px] text-ADJO_Keppel text-sm font-medium"
                 onClick={() => {
                   navigate(`/userProfile/client/${listing.clientId}`)
-                }}
-              >
+                }}>
                 {" "}
                 {listing.clientId}
               </button>
@@ -87,43 +81,36 @@ function ClientSingleListing() {
                   className="flex items-center text-center justify-center border-2 border-ADJO_Keppel opacity-70 rounded-full h-[20px] w-[50px] text-ADJO_Keppel text-sm font-medium"
                   onClick={() => {
                     navigate(`/userProfile/pilot/${listing.assignedPilot}`)
-                  }}
-                >
+                  }}>
                   {" "}
                   {listing.clientId}
                 </button>
               </p>
             )}
-            {!listing.assignedPilot && (
-              <p className="flex items-center justify-between">
-                Assigned Pilot: None
-              </p>
-            )}
+            {!listing.assignedPilot && <p className="flex items-center justify-between">Assigned Pilot: None</p>}
             <p>Flight Date: {listing.flightDate}</p>
             <p>Flight Time: {listing.flightTime}</p>
             <div className="flex flex-col items-start text-left text-sm">
-              <p name="lat" className="text-lg">Flight Address:</p>
+              <p name="lat" className="text-lg">
+                Flight Address:
+              </p>
               <p>{listing.flightAddress}</p>
             </div>
             <div className="flex flex-col items-start text-left text-sm">
               <p className="text-lg">Flight Coordinates:</p>
               <div className="flex">
-              <label htmlFor="lat">Latitude:</label>
-              <p>{JSON.parse(listing.flightCoordinates)[0]}</p>
+                <label htmlFor="lat">Latitude:</label>
+                <p>{JSON.parse(listing.flightCoordinates).lat}</p>
               </div>
               <div className="flex">
-              <label htmlFor="lng">Longitude:</label>
-              <p>{JSON.parse(listing.flightCoordinates)[1]}</p>
+                <label htmlFor="lng">Longitude:</label>
+                <p>{JSON.parse(listing.flightCoordinates).lng}</p>
               </div>
-            </div>
-            <div className="flex flex-col items-start text-left text-sm">
-              <p className="text-lg">Description:</p>
-              <p>{listing.description}</p>
             </div>
           </section>
 
-          <section className="flex w-1/3 justify-center font-rubik font-medium text-[15px] text-AJGO_DarkSlateGray">
-            <div className="flex flex-col items-start pr-2 w-5/6">
+          <section className="flex w-1/3 justify-center items-center font-rubik font-medium text-[15px] text-AJGO_DarkSlateGray border-ADJO_Celeste border-4 h-full rounded-lg">
+            <div className="flex flex-col items-start w-full">
               <section className="pl-3 pr-3 flex justify-between bg-ADJO_Celeste w-full">
                 <p>Offer</p>
                 <p>${listing.offer}</p>
@@ -182,14 +169,22 @@ function ClientSingleListing() {
               </section>
             </div>
           </section>
+          <section className="flex w-1/3 h-full border-ADJO_Celeste border-4  rounded-lg justify-center items-center">
+            <img className="rounded-lg"src={`https://maps.googleapis.com/maps/api/staticmap?center=${JSON.parse(listing.flightCoordinates).lat},${JSON.parse(listing.flightCoordinates).lng}&zoom=15&size=300x300&map_id=${mapId}&markers=color:red%7Csize:large%7Cscale:4%7C${JSON.parse(listing.flightCoordinates).lat},${JSON.parse(listing.flightCoordinates).lng}&key=${API_KEY}`} alt="" />
+          </section>
+        </div>
+
+        <div className="flex flex-col items-start justify-center w-3/4 font-rubik font-medium text-[15px] text-left text-AJGO_DarkSlateGray pt-5">
+              <p className="text-lg">Description:</p>
+              <p>{listing.description}</p>
+           
         </div>
 
         {listing.clientId === userId && (
           <div className=" w-1/2 pt-10 pb-10 flex justify-around">
             <button
               className="bg-ADJO_Keppel px-8 py-1 text-xl text- uppercase font-rubik rounded-lg"
-              onClick={handleEditButton}
-            >
+              onClick={handleEditButton}>
               Edit Listing
             </button>
             <button
@@ -199,18 +194,20 @@ function ClientSingleListing() {
                 axios.delete(`/api/listing/${listing.listingId}`).then(() => {
                   navigate("/myJobs/client")
                 })
-              }}
-            >
+              }}>
               Delete Listing
             </button>
           </div>
         )}
+        
       </div>
     )
   } else if (editing === true) {
     //Render this if they clicked the edit button
-    const handleListingEdit = (e) => {
+    const handleListingEdit = async (e) => {
       e.preventDefault()
+      let coordinates = await getCoordinatesFromAddress(flightAddress)
+      coordinates = JSON.stringify(coordinates)
       axios
         .put(`/api/listing/${listing.listingId}`, {
           changes: {
@@ -231,7 +228,7 @@ function ClientSingleListing() {
             nightFlying: nightFlying,
             crowdFlying: crowdFlying,
             flightAddress: flightAddress,
-            flightCoordinates: JSON.stringify(getCoordinatesFromAddress(flightAddress)),
+            flightCoordinates: coordinates,
             flightRadius: flightRadius,
           },
         })
@@ -248,13 +245,11 @@ function ClientSingleListing() {
             Edit this Listing
           </h1>
           <p className="font-rubik text-xl">
-            This show's all the details for listing {listing.listingId}, here
-            you can edit or delete the listing, as well as accept or deny
-            applications
+            This show's all the details for listing {listing.listingId}, here you can edit or delete the listing, as
+            well as accept or deny applications
           </p>
           <p className="font-rubik text-xl">
-            Here you can change any property on this listing, including marking
-            it as complete
+            Here you can change any property on this listing, including marking it as complete
           </p>
         </div>
 
@@ -268,8 +263,7 @@ function ClientSingleListing() {
                 className="flex items-center text-center justify-center border-2 border-ADJO_Keppel opacity-70 rounded-full h-[20px] w-[50px] text-ADJO_Keppel text-sm font-medium"
                 onClick={() => {
                   navigate(`/userProfile/client/${listing.clientId}`)
-                }}
-              >
+                }}>
                 {" "}
                 {listing.clientId}
               </button>
@@ -283,8 +277,7 @@ function ClientSingleListing() {
                 name="flightDate"
                 value={flightDate}
                 required
-                onChange={(e) => setFlightDate(e.target.value)}
-              ></input>
+                onChange={(e) => setFlightDate(e.target.value)}></input>
             </div>
 
             <div className="pb-1 pt-1">
@@ -294,8 +287,7 @@ function ClientSingleListing() {
                 type="time"
                 name="flightTime"
                 value={flightTime}
-                onChange={(e) => setFlightTime(e.target.value)}
-              ></input>
+                onChange={(e) => setFlightTime(e.target.value)}></input>
             </div>
 
             <div className="pb-1 pt-1 text-left ">
@@ -306,8 +298,7 @@ function ClientSingleListing() {
                 name="flightAddress"
                 value={flightAddress}
                 onChange={(e) => setFlightAddress(e.target.value)}
-                required
-              ></input>
+                required></input>
             </div>
 
             <div className="flex flex-col items-start">
@@ -318,8 +309,7 @@ function ClientSingleListing() {
                 rows="10"
                 cols="50"
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              ></textarea>
+                onChange={(e) => setDescription(e.target.value)}></textarea>
             </div>
           </section>
 
@@ -334,8 +324,7 @@ function ClientSingleListing() {
                   value={offer}
                   step={5}
                   onChange={(e) => setOffer(Number(e.target.value).toFixed(2))}
-                  required
-                ></input>
+                  required></input>
               </section>
               <section className="pl-3 pt-2 pb-2 pr-3 flex justify-between w-full">
                 <label htmlFor="flightRadius">Flight Radius: </label>
@@ -348,178 +337,135 @@ function ClientSingleListing() {
                     min={0.1}
                     max={5}
                     value={flightRadius}
-                    onChange={(e) =>
-                      setFlightRadius(Number(e.target.value).toFixed(1))
-                    }
-                    required
-                  ></input>
+                    onChange={(e) => setFlightRadius(Number(e.target.value).toFixed(1))}
+                    required></input>
                   <label htmlFor="flightRadius"> miles </label>
                 </div>
               </section>
               <section className="pl-3 pr-3 pt-2 pb-2 flex justify-between bg-ADJO_Celeste w-full">
-                <label htmlFor="multiday">
-                  This operation will take multiple days to complete
-                </label>
+                <label htmlFor="multiday">This operation will take multiple days to complete</label>
                 <input
                   type="checkbox"
                   className="h-5 w-5 checked:bg-ADJO_Keppel text-ADJO_Keppel hover:ring-2 hover:ring-inset hover:ring-ADJO_Keppel"
                   name="multiday"
                   checked={multiday}
-                  onChange={(e) => setMultiday(e.target.checked)}
-                ></input>
+                  onChange={(e) => setMultiday(e.target.checked)}></input>
               </section>
               <section className="pl-3 pr-3 pt-2 pb-2 flex justify-between w-full">
-                <label htmlFor="hardwareProvided">
-                  I can provide some or all of the hardware needed
-                </label>
+                <label htmlFor="hardwareProvided">I can provide some or all of the hardware needed</label>
                 <input
                   type="checkbox"
                   className="h-5 w-5 checked:bg-ADJO_Keppel text-ADJO_Keppel hover:ring-2 hover:ring-inset hover:ring-ADJO_Keppel"
                   name="hardwareProvided"
                   checked={hardwareProvided}
-                  onChange={(e) => setHardware(e.target.checked)}
-                ></input>
+                  onChange={(e) => setHardware(e.target.checked)}></input>
               </section>
               <section className="pl-3 pr-3 pt-2 pb-2 flex justify-between bg-ADJO_Celeste w-full">
-                <label htmlFor="softwareProvided">
-                  I can provide some or all of the software needed
-                </label>
+                <label htmlFor="softwareProvided">I can provide some or all of the software needed</label>
                 <input
                   type="checkbox"
                   className="h-5 w-5 checked:bg-ADJO_Keppel text-ADJO_Keppel hover:ring-2 hover:ring-inset hover:ring-ADJO_Keppel"
                   name="softwareProvided"
                   checked={softwareProvided}
-                  onChange={(e) => setSoftware(e.target.checked)}
-                ></input>
+                  onChange={(e) => setSoftware(e.target.checked)}></input>
               </section>
               <section className="pl-3 pr-3 pt-2 pb-2 flex justify-between w-full">
-                <label htmlFor="internetProvided">
-                  There will be internet access at this flight location
-                </label>
+                <label htmlFor="internetProvided">There will be internet access at this flight location</label>
                 <input
                   type="checkbox"
                   className="h-5 w-5 checked:bg-ADJO_Keppel text-ADJO_Keppel hover:ring-2 hover:ring-inset hover:ring-ADJO_Keppel"
                   name="internetProvided"
                   checked={internetProvided}
-                  onChange={(e) => setInternetProvided(e.target.checked)}
-                ></input>
+                  onChange={(e) => setInternetProvided(e.target.checked)}></input>
               </section>
               <section className="pl-3 pr-3 pt-2 pb-2 flex justify-between bg-ADJO_Celeste w-full">
-                <label htmlFor="powerProvided">
-                  There will be access to power at this flight location
-                </label>
+                <label htmlFor="powerProvided">There will be access to power at this flight location</label>
                 <input
                   type="checkbox"
                   className="h-5 w-5 checked:bg-ADJO_Keppel text-ADJO_Keppel hover:ring-2 hover:ring-inset hover:ring-ADJO_Keppel"
                   name="powerProvided"
                   checked={powerProvided}
-                  onChange={(e) => setPowerProvided(e.target.checked)}
-                ></input>
+                  onChange={(e) => setPowerProvided(e.target.checked)}></input>
               </section>
               <section className="pl-3 pr-3 pt-2 pb-2 flex justify-between w-full">
-                <label htmlFor="highFlying">
-                  This job requires flying over 400ft
-                </label>
+                <label htmlFor="highFlying">This job requires flying over 400ft</label>
                 <input
                   type="checkbox"
                   className="h-5 w-5 checked:bg-ADJO_Keppel text-ADJO_Keppel hover:ring-2 hover:ring-inset hover:ring-ADJO_Keppel"
                   name="highFlying"
                   checked={highFlying}
-                  onChange={(e) => setHighFlying(e.target.checked)}
-                ></input>
+                  onChange={(e) => setHighFlying(e.target.checked)}></input>
               </section>
               <section className="pl-3 pr-3 pt-2 pb-2 flex justify-between bg-ADJO_Celeste w-full">
-                <label htmlFor="blosFlying">
-                  This job requires flying beyond line-of-sight
-                </label>
+                <label htmlFor="blosFlying">This job requires flying beyond line-of-sight</label>
                 <input
                   type="checkbox"
                   className="h-5 w-5 checked:bg-ADJO_Keppel text-ADJO_Keppel hover:ring-2 hover:ring-inset hover:ring-ADJO_Keppel"
                   name="blosFlying"
                   checked={blosFlying}
-                  onChange={(e) => setBlosFlying(e.target.checked)}
-                ></input>
+                  onChange={(e) => setBlosFlying(e.target.checked)}></input>
               </section>
               <section className="pl-3 pr-3 pt-2 pb-2 flex justify-between w-full">
-                <label htmlFor="payloadDropping">
-                  This job requires dropping a payload
-                </label>
+                <label htmlFor="payloadDropping">This job requires dropping a payload</label>
                 <input
                   type="checkbox"
                   className="h-5 w-5 checked:bg-ADJO_Keppel text-ADJO_Keppel hover:ring-2 hover:ring-inset hover:ring-ADJO_Keppel"
                   name="payloadDropping"
                   checked={payloadDropping}
-                  onChange={(e) => setPayloadDropping(e.target.checked)}
-                ></input>
+                  onChange={(e) => setPayloadDropping(e.target.checked)}></input>
               </section>
               <section className="pl-3 pr-3 pt-2 pb-2 flex justify-between bg-ADJO_Celeste w-full">
-                <label htmlFor="hazmat">
-                  This job requires carrying of hazardous materials
-                </label>
+                <label htmlFor="hazmat">This job requires carrying of hazardous materials</label>
                 <input
                   type="checkbox"
                   className="h-5 w-5 checked:bg-ADJO_Keppel text-ADJO_Keppel hover:ring-2 hover:ring-inset hover:ring-ADJO_Keppel"
                   name="hazmat"
                   checked={hazmatFlying}
-                  onChange={(e) => setHazmatFlying(e.target.checked)}
-                ></input>
+                  onChange={(e) => setHazmatFlying(e.target.checked)}></input>
               </section>
               <section className="pl-3 pr-3 pt-2 pb-2 flex justify-between w-full">
-                <label htmlFor="heavyFlying">
-                  The drone and payload will weigh more than 55lbs on take-off
-                </label>
+                <label htmlFor="heavyFlying">The drone and payload will weigh more than 55lbs on take-off</label>
                 <input
                   type="checkbox"
                   className="h-5 w-5 checked:bg-ADJO_Keppel text-ADJO_Keppel hover:ring-2 hover:ring-inset hover:ring-ADJO_Keppel"
                   name="heavyFlying"
                   checked={heavyFlying}
-                  onChange={(e) => setHeavyFlying(e.target.checked)}
-                ></input>
+                  onChange={(e) => setHeavyFlying(e.target.checked)}></input>
               </section>
               <section className="pl-3 pr-3 pt-2 pb-2 flex justify-between bg-ADJO_Celeste w-full">
-                <label htmlFor="nightFlying">
-                  This job requires flying at dusk, dawn, or at night
-                </label>
+                <label htmlFor="nightFlying">This job requires flying at dusk, dawn, or at night</label>
                 <input
                   type="checkbox"
                   className="h-5 w-5 checked:bg-ADJO_Keppel text-ADJO_Keppel hover:ring-2 hover:ring-inset hover:ring-ADJO_Keppel"
                   name="nightFlying"
                   checked={nightFlying}
-                  onChange={(e) => setNightflying(e.target.checked)}
-                ></input>
+                  onChange={(e) => setNightflying(e.target.checked)}></input>
               </section>
               <section className="pl-3 pr-3 pt-2 pb-2 flex justify-between w-full">
-                <label htmlFor="crowdFlying">
-                  This job requires flying over people
-                </label>
+                <label htmlFor="crowdFlying">This job requires flying over people</label>
                 <input
                   type="checkbox"
                   className="h-5 w-5 checked:bg-ADJO_Keppel text-ADJO_Keppel hover:ring-2 hover:ring-inset hover:ring-ADJO_Keppel"
                   name="crowdFlying"
                   checked={crowdFlying}
-                  onChange={(e) => setCrowdflying(e.target.checked)}
-                ></input>
+                  onChange={(e) => setCrowdflying(e.target.checked)}></input>
               </section>
             </div>
           </section>
         </form>
 
-       
-          <div className="pt-10 pb-10 flex w-3/5 justify-around">
-            <button
-              className="border-2 w-[200px] border-x-ADJO_Keppel px-8 py-1 text-l uppercase font-rubik rounded-lg text-ADJO_Keppel"
-              onClick={handleListingEdit}
-            >
-              Save Changes
-            </button>
-            <button
-              className="border-2 w-[200px] border-[#dd7d7d] px-8 py-1 text-l uppercase font-rubik rounded-lg text-[#dd7d7d]"
-              onClick={handleEditButton}
-            >
-              Cancel
-            </button>
-          </div>
-        
+        <div className="pt-10 pb-10 flex w-3/5 justify-around">
+          <button
+            className="border-2 w-[200px] border-x-ADJO_Keppel px-8 py-1 text-l uppercase font-rubik rounded-lg text-ADJO_Keppel"
+            onClick={handleListingEdit}>
+            Save Changes
+          </button>
+          <button
+            className="border-2 w-[200px] border-[#dd7d7d] px-8 py-1 text-l uppercase font-rubik rounded-lg text-[#dd7d7d]"
+            onClick={handleEditButton}>
+            Cancel
+          </button>
+        </div>
       </div>
     )
   }

@@ -103,7 +103,7 @@ function Listings() {
   let filteredListings = filterListings(listings)
 
   useEffect(() => {
-    asdf()
+    createPins()
   }, [listings])
 
   //sort the remaining listings
@@ -135,13 +135,13 @@ function Listings() {
   //console.log(filteredListings)
 
   //create an array of pins to show on the map
-  const asdf = async () => {
+  const createPins = async () => {
     let listingsPins = await Promise.all(
       filteredListings.map(async (listing) => {
         const coordinates = JSON.parse(listing.flightCoordinates)
-        console.log(listing.listingId, coordinates)
+        //console.log(listing.listingId, coordinates)
         return (
-          <AdvancedMarker key={listing.listingId} position={{lat: coordinates[0], lng: coordinates[1]}}>
+          <AdvancedMarker key={listing.listingId} position={{lat: coordinates.lat, lng: coordinates.lng}} onClick={()=> {navigate(`/singleListing/${listing.listingId}`)}}>
             <Pin background={"#08BFA1"} borderColor={"#283B36"} glyphColor={"#283B36"} />
           </AdvancedMarker>
         )

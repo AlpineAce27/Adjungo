@@ -32,8 +32,10 @@ function NewListing() {
   )
   const [completed, setCompleted] = useState(false)
 
-  const handleListingSubmission = (e) => {
+  const handleListingSubmission = async (e) => {
     e.preventDefault()
+    let coordinates = await getCoordinatesFromAddress(flightAddress)
+    //console.log(coordinates)
     axios
       .post("/api/listing", {
         newListing: {
@@ -54,7 +56,7 @@ function NewListing() {
           nightFlying: nightFlying,
           crowdFlying: crowdFlying,
           flightAddress: flightAddress,
-          flightCoordinates: JSON.stringify(getCoordinatesFromAddress(flightAddress)),
+          flightCoordinates: coordinates,
           flightRadius: flightRadius,
           completed: completed,
         },
@@ -100,7 +102,9 @@ function NewListing() {
                 type="time"
                 name="flightTime"
                 value={flightTime}
-                onChange={(e) => setFlightTime(e.target.value)}
+                onChange={(e) => {setFlightTime(e.target.value)
+                  console.log(flightTime)
+                }}
               ></input>
             </div>
 

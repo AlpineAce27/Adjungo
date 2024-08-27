@@ -53,6 +53,7 @@ const listingsInDB = await Promise.all(
       assignedPilot: listing.assignedPilot,
       offer: listing.offer,
       flightDate: listing.flightDate,
+      flightTime: listing.flightTime,
       multiday: listing.multiday,
       hardwareProvided: listing.hardwareProvided,
       softwareProvided: listing.softwareProvided,
