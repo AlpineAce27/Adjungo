@@ -67,7 +67,7 @@ const listingsInDB = await Promise.all(
       nightFlying: listing.nightFlying,
       crowdFlying: listing.crowdFlying,
       flightAddress: listing.flightAddress,
-      flightZipcode: listing.flightZipcode,
+      flightCoordinates: JSON.stringify(listing.flightCoordinates),
       flightRadius: listing.flightRadius,
       completed: listing.completed
     })

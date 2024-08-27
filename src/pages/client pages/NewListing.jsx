@@ -2,6 +2,7 @@ import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { useState } from "react"
+import { getCoordinatesFromAddress} from "../../../util/location"
 
 function NewListing() {
   let usertype = useSelector((state) => state.userType)
@@ -14,7 +15,6 @@ function NewListing() {
   const [flightTime, setFlightTime] = useState("12:30")
   const [multiday, setMultiday] = useState(false)
   const [flightAddress, setFlightAddress] = useState("123 Blue Sky Way")
-  const [flightZipcode, setFlightZipcode] = useState(10001)
   const [flightRadius, setFlightRadius] = useState(0.1)
   const [hardwareProvided, setHardware] = useState(false)
   const [softwareProvided, setSoftware] = useState(false)
@@ -54,7 +54,7 @@ function NewListing() {
           nightFlying: nightFlying,
           crowdFlying: crowdFlying,
           flightAddress: flightAddress,
-          flightZipcode: flightZipcode,
+          flightCoordinates: JSON.stringify(getCoordinatesFromAddress(flightAddress)),
           flightRadius: flightRadius,
           completed: completed,
         },
@@ -112,18 +112,6 @@ function NewListing() {
                 name="flightAddress"
                 value={flightAddress}
                 onChange={(e) => setFlightAddress(e.target.value)}
-                required
-              ></input>
-            </div>
-
-            <div className="flex pb-1 pt-1 text-left ">
-              <label htmlFor="flightZipcode">Flight Area Zipcode: </label>
-              <input
-                className="pl-2 pt-1 pb-1 w-24 text-sm rounded-lg ring-2 ring-inset ring-[#9ca3af] focus-within:ring-4 focus-within:ring-inset focus-within:ring-ADJO_Keppel"
-                type="text"
-                name="flightZipcode"
-                value={flightZipcode}
-                onChange={(e) => setFlightZipcode(Number(e.target.value))}
                 required
               ></input>
             </div>

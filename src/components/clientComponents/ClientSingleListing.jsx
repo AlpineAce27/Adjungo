@@ -2,6 +2,7 @@ import axios from "axios"
 import { useLoaderData, useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { useSelector } from "react-redux"
+import { getCoordinatesFromAddress } from "../../../util/location"
 
 function ClientSingleListing() {
   //take the data from the loader and assign it to the listing variable (this should be an entire listing object)
@@ -27,7 +28,6 @@ function ClientSingleListing() {
   const [flightTime, setFlightTime] = useState(listing.flightTime)
   const [multiday, setMultiday] = useState(listing.multiday)
   const [flightAddress, setFlightAddress] = useState(listing.flightAddress)
-  const [flightZipcode, setFlightZipcode] = useState(listing.flightZipcode)
   const [flightRadius, setFlightRadius] = useState(listing.flightRadius)
   const [hardwareProvided, setHardware] = useState(listing.hardwareProvided)
   const [softwareProvided, setSoftware] = useState(listing.softwareProvided)
@@ -48,6 +48,8 @@ function ClientSingleListing() {
 
   //setup the navigate functionality
   const navigate = useNavigate()
+  // console.log(typeof(listing.flightCoordinates))
+  // console.log(JSON.parse(listing.flightCoordinates)[0])
 
   if (editing === false) {
     //Render this if they are not in edit mode
@@ -100,12 +102,19 @@ function ClientSingleListing() {
             <p>Flight Date: {listing.flightDate}</p>
             <p>Flight Time: {listing.flightTime}</p>
             <div className="flex flex-col items-start text-left text-sm">
-              <p className="text-lg">Flight Address:</p>
+              <p name="lat" className="text-lg">Flight Address:</p>
               <p>{listing.flightAddress}</p>
             </div>
             <div className="flex flex-col items-start text-left text-sm">
-              <p className="text-lg">Flight Area Zipcode:</p>
-              <p>{listing.flightZipcode}</p>
+              <p className="text-lg">Flight Coordinates:</p>
+              <div className="flex">
+              <label htmlFor="lat">Latitude:</label>
+              <p>{JSON.parse(listing.flightCoordinates)[0]}</p>
+              </div>
+              <div className="flex">
+              <label htmlFor="lng">Longitude:</label>
+              <p>{JSON.parse(listing.flightCoordinates)[1]}</p>
+              </div>
             </div>
             <div className="flex flex-col items-start text-left text-sm">
               <p className="text-lg">Description:</p>
@@ -188,7 +197,7 @@ function ClientSingleListing() {
               onClick={() => {
                 //This will delete the listing we are currently viewing from the database, and then redirect the user back to their listings
                 axios.delete(`/api/listing/${listing.listingId}`).then(() => {
-                  navigate("/mylistings")
+                  navigate("/myJobs/client")
                 })
               }}
             >
@@ -222,7 +231,7 @@ function ClientSingleListing() {
             nightFlying: nightFlying,
             crowdFlying: crowdFlying,
             flightAddress: flightAddress,
-            flightZipcode: flightZipcode,
+            flightCoordinates: JSON.stringify(getCoordinatesFromAddress(flightAddress)),
             flightRadius: flightRadius,
           },
         })
@@ -297,18 +306,6 @@ function ClientSingleListing() {
                 name="flightAddress"
                 value={flightAddress}
                 onChange={(e) => setFlightAddress(e.target.value)}
-                required
-              ></input>
-            </div>
-
-            <div className="flex pb-1 pt-1 text-left ">
-              <label htmlFor="flightZipcode">Flight Area Zipcode: </label>
-              <input
-                className="pl-2 pt-1 pb-1 w-24 text-sm rounded-lg ring-2 ring-inset ring-[#9ca3af] focus-within:ring-4 focus-within:ring-inset focus-within:ring-ADJO_Keppel"
-                type="text"
-                name="flightZipcode"
-                value={flightZipcode}
-                onChange={(e) => setFlightZipcode(e.target.value)}
                 required
               ></input>
             </div>

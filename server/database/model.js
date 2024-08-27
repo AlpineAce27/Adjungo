@@ -202,8 +202,8 @@ Listing.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    flightZipcode: {
-      type: DataTypes.TEXT,
+    flightCoordinates: {
+      type: DataTypes.JSON,
       alllowNull: false,
     },
     flightRadius: {

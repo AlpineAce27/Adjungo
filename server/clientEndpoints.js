@@ -2,6 +2,7 @@ import { Listing, Pilot, Application, PilotReview } from "./database/model.js"
 import { Sequelize } from "sequelize"
 import getRatingColor from "../src/functions/getRatingColor.js"
 import { IoEllipseSharp } from "react-icons/io5"
+import { getCoordinatesFromAddress } from "../util/location.js"
 
 //return all listings with a specific client id
 export const getListingsByClient = async (req, res) => {
@@ -37,6 +38,7 @@ export const getOneListingByClient = async (req, res) => {
 export const createListing = async (req, res) => {
   //req.body should come with an object called newListing that contains all the properties and values to be made
   const { newListing } = req.body
+  newListing.flightCoordinates = JSON.stringify(getCoordinatesFromAddress(newListing.flightAddress))
   console.log(newListing)
   if (req.session.userId) {
     newListing.clientId = req.session.userId

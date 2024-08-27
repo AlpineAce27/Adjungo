@@ -41,11 +41,16 @@ function highOddsOfTrue() {
   else return false
 }
 
+function generateLocation() {
+  const address = location.streetAddress() + ", " + location.city() +", "+ location.state()
+  return address
+}
+
 //create the listings arrray
 const listings = Array.from({ length: 50 }, () => {
   const assignedPilot = generateAssignedPilot()
   const complete = generateCompletionCriteria(assignedPilot)
-
+  
   return {
     clientId: number.int({ min: 1, max: 20 }),
     assignedPilot: assignedPilot,
@@ -69,8 +74,8 @@ const listings = Array.from({ length: 50 }, () => {
     heavyFlying: lowOddsOfTrue(),
     nightFlying: datatype.boolean(),
     crowdFlying: datatype.boolean(),
-    flightAddress: location.streetAddress() + ", " + location.city() +", "+ location.state(),
-    flightZipcode: location.zipCode(),
+    flightAddress: generateLocation(),
+    flightCoordinates: location.nearbyGPSCoordinate({origin: [40.759, -111.886], radius: 50}),
     flightRadius: number.float({ min: 0.1, max: 2.5, multipleOf: 0.1 }),
     completed: complete,
   }

@@ -27,7 +27,7 @@ import { FaWeightHanging } from "react-icons/fa6"
 
 //Google APIs
 import { APIProvider, Map, AdvancedMarker, Pin, InfoWindow } from "@vis.gl/react-google-maps"
-import { API_KEY, mapId, getCoordinatesFromAddress } from "../../../util/location"
+// import { API_KEY, mapId, getCoordinatesFromAddress } from "../../../util/location"
 
 //set up some google maps utilities
 
@@ -138,10 +138,10 @@ function Listings() {
   const asdf = async () => {
     let listingsPins = await Promise.all(
       filteredListings.map(async (listing) => {
-        const coordinates = await getCoordinatesFromAddress(listing.flightAddress)
-        //console.log(listing.listingId, coordinates)
+        const coordinates = JSON.parse(listing.flightCoordinates)
+        console.log(listing.listingId, coordinates)
         return (
-          <AdvancedMarker key={listing.listingId} position={coordinates}>
+          <AdvancedMarker key={listing.listingId} position={{lat: coordinates[0], lng: coordinates[1]}}>
             <Pin background={"#08BFA1"} borderColor={"#283B36"} glyphColor={"#283B36"} />
           </AdvancedMarker>
         )
@@ -400,7 +400,7 @@ function Listings() {
               </div>
             </div>
             <div className="bg-ADJO_Keppel w-[500px] h-[400px] p-3 rounded-lg">
-              <Map className="" zoom={range} defaultCenter={currentLocation} mapId={mapId}>
+              <Map className="" zoom={10} center={currentLocation} mapId={"fdfe287cf596e3d7"}>
                 <AdvancedMarker position={currentLocation}>
                   <Pin background={"#283B36"} borderColor={"#08BFA1"} glyphColor={"#08BFA1"} />
                 </AdvancedMarker>
