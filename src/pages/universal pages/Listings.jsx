@@ -26,7 +26,7 @@ import { FaPeopleGroup } from "react-icons/fa6"
 import { FaWeightHanging } from "react-icons/fa6"
 
 //Google APIs
-import { APIProvider, Map, AdvancedMarker, Pin, InfoWindow } from "@vis.gl/react-google-maps"
+import { APIProvider, Map, AdvancedMarker, Pin } from "@vis.gl/react-google-maps"
 // import { API_KEY, mapId, getCoordinatesFromAddress } from "../../../util/location"
 
 //set up some google maps utilities
@@ -102,10 +102,6 @@ function Listings() {
   //filter the listings
   let filteredListings = filterListings(listings)
 
-  useEffect(() => {
-    createPins()
-  }, [listings])
-
   //sort the remaining listings
   if (sortCondition.length > 1) {
     filteredListings.sort((a, b) => {
@@ -132,26 +128,23 @@ function Listings() {
 
   //make sure to only show the max number of listings
   filteredListings = filteredListings.slice(0, maxListingQty)
-  //console.log(filteredListings)
 
-  //create an array of pins to show on the map
-  const createPins = async () => {
-    let listingsPins = await Promise.all(
-      filteredListings.map(async (listing) => {
-        const coordinates = JSON.parse(listing.flightCoordinates)
-        //console.log(listing.listingId, coordinates)
-        return (
-          <AdvancedMarker key={listing.listingId} position={{lat: coordinates.lat, lng: coordinates.lng}} onClick={()=> {navigate(`/singleListing/${listing.listingId}`)}}>
-            <Pin background={"#08BFA1"} borderColor={"#283B36"} glyphColor={"#283B36"} />
-          </AdvancedMarker>
-        )
-      })
+  //create map-pin for each of the filtered listings
+  let allPins = filteredListings.map((listing) => {
+    const coordinates = JSON.parse(listing.flightCoordinates)
+    return (
+      <AdvancedMarker
+        key={listing.listingId}
+        position={{ lat: coordinates.lat, lng: coordinates.lng }}
+        onClick={() => {
+          navigate(`/singleListing/${listing.listingId}`)
+        }}>
+        <Pin background={"#08BFA1"} borderColor={"#283B36"} glyphColor={"#283B36"} />
+      </AdvancedMarker>
     )
-    setAllListingPins(listingsPins)
-  }
-  console.log("listing Pins", allListingPins)
-  
-  //create an array of listings mapped to the filtered listings array
+  })
+
+  //create table row for each of the filtered listings
   let listingsItems = filteredListings.map((listing) => {
     //change assigned pilot
     let assignedPilot
@@ -400,11 +393,11 @@ function Listings() {
               </div>
             </div>
             <div className="bg-ADJO_Keppel w-[500px] h-[400px] p-3 rounded-lg">
-              <Map className="" zoom={10} center={currentLocation} mapId={"fdfe287cf596e3d7"}>
+              <Map className="" defaultZoom={10} center={currentLocation} mapId={"fdfe287cf596e3d7"}>
                 <AdvancedMarker position={currentLocation}>
                   <Pin background={"#283B36"} borderColor={"#08BFA1"} glyphColor={"#08BFA1"} />
                 </AdvancedMarker>
-                {allListingPins}
+                {allPins}
               </Map>
             </div>
           </section>
