@@ -19,7 +19,7 @@ import {
   TbArrowBigUpLine,
   TbStarsFilled,
 } from "react-icons/tb"
-import { BiNetworkChart, BiSolidDollarCircle, BiPlusCircle, BiMinusCircle } from "react-icons/bi"
+import { BiNetworkChart, BiSolidDollarCircle, BiPlusCircle, BiMinusCircle, BiTargetLock } from "react-icons/bi"
 import { GiBombingRun } from "react-icons/gi"
 import { MdDarkMode } from "react-icons/md"
 import { FaPeopleGroup } from "react-icons/fa6"
@@ -28,6 +28,7 @@ import { FaWeightHanging } from "react-icons/fa6"
 //Google APIs
 import { APIProvider, Map, AdvancedMarker, Pin } from "@vis.gl/react-google-maps"
 // import { API_KEY, mapId, getCoordinatesFromAddress } from "../../../util/location"
+import inRange from "../../functions/inRange"
 
 //set up some google maps utilities
 
@@ -42,11 +43,11 @@ function Listings() {
 
   //40°45'33"N 111°53'14"W
   //create a state value for the entry fields on location, client, etc
-
+  let [mapLock, setMapLock] = useState(true)
   let [currentLat, setCurrentLat] = useState(40.759)
   let [currentLng, setCurrentLng] = useState(-111.886)
   let [currentLocation, setCurrentLocation] = useState({ lat: 40.759, lng: -111.886 })
-  let [range, setRange] = useState(6)
+  let [range, setRange] = useState(1)
 
   //create state values for the filters and sorting
   const [filterConditions, setFilterConditions] = useState({})
@@ -85,10 +86,19 @@ function Listings() {
 
   //create handler function for filtering the listings (Magic box)
   const filterListings = (data) => {
-    const filteredData = data.filter((item) =>
-      Object.keys(filterConditions).every((key) => item[key] === filterConditions[key])
+    const iconFilteredData = data.filter((listing) =>
+      Object.keys(filterConditions).every((key) => listing[key] === filterConditions[key])
     )
-    return filteredData
+    const rangefilteredData = iconFilteredData.filter((listing) =>
+      inRange(
+        currentLocation.lat,
+        currentLocation.lng,
+        JSON.parse(listing.flightCoordinates).lat,
+        JSON.parse(listing.flightCoordinates).lng,
+        range
+      ) === true
+    )
+    return rangefilteredData
   }
 
   //grab all the listings in the database
@@ -370,11 +380,26 @@ function Listings() {
                       onChange={(e) => setCurrentLng(+e.target.value)}
                     />
                   </div>
-                  <button
-                    className="border-2 w-[200px] border-x-ADJO_Keppel px-1 py-1 text-l uppercase font-rubik rounded-lg text-ADJO_Keppel"
-                    onClick={() => setCurrentLocation({ lat: currentLat, lng: currentLng })}>
-                    Center Map
-                  </button>
+                  {mapLock === true && (
+                    <button
+                      className="border-2 w-[150px] border-x-ADJO_Keppel px-1 py-1 text-l uppercase font-rubik rounded-lg text-ADJO_Keppel"
+                      onClick={() => {
+                        setMapLock(false)
+                        setCurrentLocation({ lat: currentLat, lng: currentLng })
+                      }}>
+                      Lock Map
+                    </button>
+                  )}
+                  {mapLock === false && (
+                    <button
+                      className="border-4 w-[150px] border-x-ADJO_Keppel px-1 py-1 text-l uppercase font-rubik font-medium rounded-lg text-ADJO_Keppel"
+                      onClick={() => {
+                        setMapLock(true)
+                        setCurrentLocation({ lat: currentLat, lng: currentLng })
+                      }}>
+                      Unlock Map
+                    </button>
+                  )}
                 </div>
                 <br />
                 <div className="flex">
@@ -393,12 +418,22 @@ function Listings() {
               </div>
             </div>
             <div className="bg-ADJO_Keppel w-[500px] h-[400px] p-3 rounded-lg">
-              <Map className="" defaultZoom={10} center={currentLocation} mapId={"fdfe287cf596e3d7"}>
-                <AdvancedMarker position={currentLocation}>
-                  <Pin background={"#283B36"} borderColor={"#08BFA1"} glyphColor={"#08BFA1"} />
-                </AdvancedMarker>
-                {allPins}
-              </Map>
+              {mapLock === true && (
+                <Map className="" defaultZoom={10} defaultCenter={currentLocation} mapId={"fdfe287cf596e3d7"}>
+                  <AdvancedMarker position={currentLocation}>
+                    <Pin background={"#ffffff"} borderColor={"#08BFA1"} glyphColor={"#08BFA1"} />
+                  </AdvancedMarker>
+                  {allPins}
+                </Map>
+              )}
+              {mapLock === false && (
+                <Map className="" defaultZoom={10} center={currentLocation} mapId={"fdfe287cf596e3d7"}>
+                  <AdvancedMarker position={currentLocation}>
+                    <Pin background={"#ffffff"} borderColor={"#08BFA1"} glyphColor={"#08BFA1"} />
+                  </AdvancedMarker>
+                  {allPins}
+                </Map>
+              )}
             </div>
           </section>
         </div>
