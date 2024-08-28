@@ -59,7 +59,7 @@ function Listings() {
   const updateLocation = async (address) => {
     setCurrentAddress(address)
     setCurrentLocation(await getCoordinatesFromAddress(address))
-    console.log(currentLocation)
+    //console.log(currentLocation)
   }
 
   //create a handler function for changing filters

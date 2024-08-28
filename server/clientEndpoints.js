@@ -5,7 +5,7 @@ import getRatingColor from "../src/functions/getRatingColor.js"
 
 //return all listings with a specific client id
 export const getListingsByClient = async (req, res) => {
-  console.log(req.session)
+  //console.log(req.session)
   if (!req.session.userId) {
     res.status(401).json({ error: "Unauthorized" })
   } else {
@@ -19,7 +19,7 @@ export const getListingsByClient = async (req, res) => {
 //return a single listing with a specific client id and listing id
 export const getOneListingByClient = async (req, res) => {
   const { listingId } = req.params
-  console.log(listingId)
+  //console.log(listingId)
   if (!req.session.userId) {
     res.status(401).json({ error: "Unauthorized" })
   } else {
@@ -38,7 +38,7 @@ export const createListing = async (req, res) => {
   //req.body should come with an object called newListing that contains all the properties and values to be made
   const { newListing } = req.body
   newListing.flightCoordinates = JSON.stringify(newListing.flightCoordinates)
-  console.log(newListing)
+  //console.log(newListing)
   if (req.session.userId) {
     newListing.clientId = req.session.userId
     Listing.create(newListing)
@@ -71,7 +71,7 @@ export const editListing = async (req, res) => {
       const ownedByUser = await Listing.findOne({
         where: { listingId: listingId, clientId: req.session.userId },
       })
-      console.log(ownedByUser)
+      //console.log(ownedByUser)
       if (ownedByUser) {
         const applications = await Application.findAll({
           include: {
@@ -161,7 +161,7 @@ export const getApplicationsbyClient = async (req, res) => {
         console.log("listing", listing.listingId, "already has an assigned pilot:", listing.assignedPilot)
         applicationCopy.listingTaken = true
       } else {
-        console.log("listing", listing.listingId, "is still seeking applicants")
+        //console.log("listing", listing.listingId, "is still seeking applicants")
         applicationCopy.listingTaken = false
       }
 
@@ -181,7 +181,7 @@ export const getApplicationsbyListing = async (req, res) => {
   const ownedByUser = await Listing.findOne({
     where: { listingId: listingId, clientId: req.session.userId },
   })
-  console.log(ownedByUser)
+  //console.log(ownedByUser)
   if (ownedByUser) {
     const applications = await Application.findAll({
       include: {
@@ -244,7 +244,7 @@ export const acceptApplication = async (req, res) => {
           console.log("listing", listing.listingId, "already has an assigned pilot:", listing.assignedPilot)
           applicationCopy.listingTaken = true
         } else {
-          console.log("listing", listing.listingId, "is still seeking applicants")
+          //console.log("listing", listing.listingId, "is still seeking applicants")
           applicationCopy.listingTaken = false
         }
 
@@ -303,7 +303,7 @@ export const denyApplication = async (req, res) => {
           console.log("listing", listing.listingId, "already has an assigned pilot:", listing.assignedPilot)
           applicationCopy.listingTaken = true
         } else {
-          console.log("listing", listing.listingId, "is still seeking applicants")
+          //console.log("listing", listing.listingId, "is still seeking applicants")
           applicationCopy.listingTaken = false
         }
 

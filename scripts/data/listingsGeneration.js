@@ -47,14 +47,14 @@ function generateLocation() {
 }
 
 function generateNearbyCoordinates() {
-  const rawCoordinates = location.nearbyGPSCoordinate({origin: [40.759, -111.886], radius: 25})
+  const rawCoordinates = location.nearbyGPSCoordinate({origin: [40.759, -111.886], radius: 50})
   //console.log(rawCoordinates)
   const coordinates = {"lat": rawCoordinates[0], "lng": rawCoordinates[1]}
   //console.log(coordinates)
   return coordinates
 }
 //create the listings arrray
-const listings = Array.from({ length: 50 }, () => {
+const listings = Array.from({ length: 200 }, () => {
   const assignedPilot = generateAssignedPilot()
   const complete = generateCompletionCriteria(assignedPilot)
   
