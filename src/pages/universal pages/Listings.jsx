@@ -29,6 +29,7 @@ import { FaWeightHanging } from "react-icons/fa6"
 import { APIProvider, Map, AdvancedMarker, Pin } from "@vis.gl/react-google-maps"
 // import { API_KEY, mapId, getCoordinatesFromAddress } from "../../../util/location"
 import inRange from "../../functions/inRange"
+import { API_KEY, mapId, getCoordinatesFromAddress } from "../../../util/location"
 
 //set up some google maps utilities
 
@@ -39,19 +40,27 @@ function Listings() {
   //create a state value for an array of listings
   let [listings, setListings] = useState([])
   let [allListingPins, setAllListingPins] = useState([])
-  let [maxListingQty, setMaxListingQty] = useState(10)
+  let [maxListingQty, setMaxListingQty] = useState(30)
 
   //40°45'33"N 111°53'14"W
   //create a state value for the entry fields on location, client, etc
   let [mapLock, setMapLock] = useState(true)
   let [currentLat, setCurrentLat] = useState(40.759)
   let [currentLng, setCurrentLng] = useState(-111.886)
+  let [currentAddress, setCurrentAddress] = useState("451 State St, Salt Lake City, Utah")
   let [currentLocation, setCurrentLocation] = useState({ lat: 40.759, lng: -111.886 })
-  let [range, setRange] = useState(1)
+  let [range, setRange] = useState(20)
 
   //create state values for the filters and sorting
   const [filterConditions, setFilterConditions] = useState({})
   const [sortCondition, setSortCondition] = useState([])
+
+  //create a handler function for geocoding the current address the user typed in
+  const updateLocation = async (address) => {
+    setCurrentAddress(address)
+    setCurrentLocation(await getCoordinatesFromAddress(address))
+    console.log(currentLocation)
+  }
 
   //create a handler function for changing filters
   const changeFilter = (key) => {
@@ -89,14 +98,15 @@ function Listings() {
     const iconFilteredData = data.filter((listing) =>
       Object.keys(filterConditions).every((key) => listing[key] === filterConditions[key])
     )
-    const rangefilteredData = iconFilteredData.filter((listing) =>
-      inRange(
-        currentLocation.lat,
-        currentLocation.lng,
-        JSON.parse(listing.flightCoordinates).lat,
-        JSON.parse(listing.flightCoordinates).lng,
-        range
-      ) === true
+    const rangefilteredData = iconFilteredData.filter(
+      (listing) =>
+        inRange(
+          currentLocation.lat,
+          currentLocation.lng,
+          JSON.parse(listing.flightCoordinates).lat,
+          JSON.parse(listing.flightCoordinates).lng,
+          range
+        ) === true
     )
     return rangefilteredData
   }
@@ -195,7 +205,6 @@ function Listings() {
         </td>
         <td className={`font-bold text-[${listing.reviewCol}]`}>{listing.reviews}</td>
         <td>${listing.offer}</td>
-        <td>{listing.flightZipcode}</td>
         <td>{listing.flightDate}</td>
         <td>{listing.flightRadius}</td>
         <td>
@@ -336,98 +345,77 @@ function Listings() {
 
   //render all the elements we created on the page
   return (
-    <APIProvider apiKey="AIzaSyAaHN0-rTbSmQ-lZ9iFo_MNKkcCz2fGkFw">
-      <div className="flex-col items-center justify-center gap-32">
-        <section className="flex flex-col justify-center items-center">
-          <h1 className="pt-10 pb-10 font-rubik font-medium text-[40px] text-AJGO_DarkSlateGray justify-center">
-            Welcome the Adjungo Listings
-          </h1>
+    <APIProvider apiKey={API_KEY}>
+      <div className="flex flex-col items-center w-full justify-center gap-6">
+        <section id="header" className="flex flex-col justify-center items-center font-rubik font-medium">
+          <h1 className="pt-10 pb-6 text-5xl text-AJGO_DarkSlateGray justify-center">Welcome the Adjungo Listings</h1>
+          <p className="text-left">
+            This page shows all the listings on the entire Adjungo site! If you are logged in, then you can click on
+            listing ID to view more details.
+          </p>
         </section>
-        <div className="flex justify-center">
-          <section className="flex justify-center items-center w-5/6">
-            <div className="flex flex-col items-center justify-center w-1/2 pr-10">
-              <section className="font-rubik text-l text-left">
-                <p>
-                  This page shows all the listings on the entire Adjungo site! If you are logged in, then you can click
-                  on listing ID to view more details.
-                </p>{" "}
-                <br />
-                <p>-Hover over a column header icon to understand more about that listing property.</p> <br />
-                <p>-You can easily sort and filter by clicking on column header icons.</p> <br />
-                <p>-You can also search for jobs by location using the map functionality</p> <br />
-              </section>
-              <div className=" flex flex-col items-start font-rubik text-l text-left ">
-                <div className="flex justify-between w-full border-2 border-ADJO_Celeste p-2 rounded-lg">
-                  <div>
-                    <label htmlFor="lat">Latitude:</label>
-                    <input
-                      className="w-[100px]"
-                      type="number"
-                      name="lat"
-                      id="lat"
-                      value={currentLat}
-                      onChange={(e) => setCurrentLat(+e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="lng">Longitude:</label>
-                    <input
-                      className="w-[100px]"
-                      type="number"
-                      name="lng"
-                      id="lng"
-                      value={currentLng}
-                      onChange={(e) => setCurrentLng(+e.target.value)}
-                    />
-                  </div>
-                  {mapLock === true && (
-                    <button
-                      className="border-2 w-[150px] border-x-ADJO_Keppel px-1 py-1 text-l uppercase font-rubik rounded-lg text-ADJO_Keppel"
-                      onClick={() => {
-                        setMapLock(false)
-                        setCurrentLocation({ lat: currentLat, lng: currentLng })
-                      }}>
-                      Lock Map
-                    </button>
-                  )}
-                  {mapLock === false && (
-                    <button
-                      className="border-4 w-[150px] border-x-ADJO_Keppel px-1 py-1 text-l uppercase font-rubik font-medium rounded-lg text-ADJO_Keppel"
-                      onClick={() => {
-                        setMapLock(true)
-                        setCurrentLocation({ lat: currentLat, lng: currentLng })
-                      }}>
-                      Unlock Map
-                    </button>
-                  )}
-                </div>
-                <br />
-                <div className="flex">
-                  <label htmlFor="range">Include jobs within:</label>
-                  <input
-                    type="number"
-                    name="range"
-                    id="range"
-                    value={range}
-                    className="w-12"
-                    onChange={(e) => setRange(e.target.value)}
-                  />
-                  <label htmlFor="range">miles</label>
-                </div>
-                <br />
-              </div>
-            </div>
-            <div className="bg-ADJO_Keppel w-[500px] h-[400px] p-3 rounded-lg">
-              {mapLock === true && (
-                <Map className="" defaultZoom={10} defaultCenter={currentLocation} mapId={"fdfe287cf596e3d7"}>
+        <section
+          id="location-fields"
+          className="flex justify-between w-11/12 border-4 border-ADJO_Celeste p-2 rounded-lg gap-3 font-rubik text-l text-left">
+          <div id="address" className="flex flex-col gap-3 w-2/3">
+            <label htmlFor="address">My Location:</label>
+            <input
+              className="flex items-center w-full bg-[#efefef] border-2 border-ADJO_Celeste rounded-lg pl-3"
+              type="text"
+              name="address"
+              id="address"
+              value={currentAddress}
+              onChange={(e) => setCurrentAddress(e.target.value)}
+            />
+          </div>
+          <div id="range" className="flex flex-col gap-3 w-1/6">
+            <label htmlFor="range">Range (miles):</label>
+            <input
+              className="flex items-center justify-center w-12 bg-[#efefef]"
+              type="number"
+              name="range"
+              id="range"
+              value={range}
+              onChange={(e) => setRange(e.target.value)}
+            />
+          </div>
+          <div id="button" className="flex w-1/6">
+            {mapLock === true && (
+              <button
+                className="border-2 w-full border-x-ADJO_Keppel px-1 py-1 text-l uppercase font-rubik  rounded-lg text-ADJO_Keppel"
+                onClick={() => {
+                  setMapLock(false)
+                  //console.log("map freed")
+                }}>
+                Unlock Map
+              </button>
+            )}
+            {mapLock === false && (
+              <button
+                className="border-4 w-full border-x-ADJO_Keppel px-1 py-1 text-l uppercase font-rubik font-medium rounded-lg text-ADJO_Keppel"
+                onClick={() => {
+                  setMapLock(true)
+                  //console.log("map locked")
+                  updateLocation(currentAddress)
+                }}>
+                Center on My Location
+              </button>
+            )}
+          </div>
+        </section>
+        <div id="map" className="flex justify-center items-center w-11/12">
+          <section className="flex flex-col items-center justify-center w-full">
+            <div className="bg-ADJO_Keppel w-full h-[400px] p-3 rounded-lg">
+              {mapLock === false && (
+                <Map className="" defaultZoom={10} defaultCenter={currentLocation} mapId={mapId}>
                   <AdvancedMarker position={currentLocation}>
                     <Pin background={"#ffffff"} borderColor={"#08BFA1"} glyphColor={"#08BFA1"} />
                   </AdvancedMarker>
                   {allPins}
                 </Map>
               )}
-              {mapLock === false && (
-                <Map className="" defaultZoom={10} center={currentLocation} mapId={"fdfe287cf596e3d7"}>
+              {mapLock === true && (
+                <Map className="" defaultZoom={10} center={currentLocation} mapId={mapId}>
                   <AdvancedMarker position={currentLocation}>
                     <Pin background={"#ffffff"} borderColor={"#08BFA1"} glyphColor={"#08BFA1"} />
                   </AdvancedMarker>
@@ -437,16 +425,13 @@ function Listings() {
             </div>
           </section>
         </div>
-        <br />
-        {/* <input type="checkbox" id="showCompleted" name="showCompleted" value="showCompleted"/>
-        <label for="showCompleted">Show Completed Jobs:</label> */}
-        <section className="flex justify-center">
+        <section id="listingsTable" className="flex justify-center w-full">
           <div className="flex justify-center bg-ADJO_Celeste bg-opacity-30 rounded-xl w-11/12 pr-10 pl-10 pt-5 pb-5">
-            <table className="border-collapse font-rubik pb-20 text-sm w-full">
+            <table className="border-collapse font-rubik text-sm w-full">
               <thead>
                 <tr className="border-b-4 border-opacity-30 border-b-AJGO_DarkSlateGray">
-                  <th className="w-[50px]">Listing</th>
-                  <th className="w-[50px]">Client</th>
+                  <th className="w-[100px]">Listing</th>
+                  <th className="w-[100px]">Client</th>
                   <th>
                     <button onClick={() => changeSort("reviews")}>
                       <Tooltip position="top" content="Client Rating">
@@ -474,11 +459,6 @@ function Listings() {
                     </button>
                   </th>
                   <th>
-                    <Tooltip position="top" content="Flight-Op location">
-                      Zipcode
-                    </Tooltip>
-                  </th>
-                  <th>
                     <Tooltip position="top" content="Flight-Op date">
                       <button onClick={() => changeSort("flightDate")}>
                         {sortCondition[0] === "flightDate" && sortCondition[1] === "H-L" && (
@@ -492,8 +472,8 @@ function Listings() {
                     </Tooltip>
                   </th>
 
-                  <th>
-                    <Tooltip position="top" content="Range (miles)">
+                  <th className="w-[60px]">
+                    <Tooltip position="top" content="Flight Range (miles)">
                       <button onClick={() => changeSort("flightRadius")}>
                         {sortCondition[0] === "flightRadius" && sortCondition[1] === "H-L" && (
                           <TbArrowBigDownLine size={25} style={{ color: "#000000" }} />
@@ -699,25 +679,34 @@ function Listings() {
             </table>
           </div>
         </section>
-        <div className="flex justify-center pt-3 pb-10">
-          <div className="flex w-1/2 justify-center">
-            {maxListingQty > 10 && (
-              <section
-                onClick={() => {
-                  setMaxListingQty(maxListingQty - 10)
-                }}
-                className="flex w-[200px] items-center justify-center hover: cursor-pointer">
-                <BiMinusCircle size={25} style={{ color: "#08BFA1" }} />
-                <section className="pl-2 font-rubik font-medium text-[20px] text-ADJO_Keppel">Show Less</section>
-              </section>
+
+        <div id="showMoreLess" className="flex w-36 justify-center pb-10">
+          <div className="flex w-full justify-center items-center border-4 border-ADJO_Celeste rounded-full">
+            {maxListingQty > 5 && (
+              <>
+                <section
+                  onClick={() => {
+                    setMaxListingQty(maxListingQty - 5)
+                  }}
+                  className="flex items-center justify-center hover: cursor-pointer">
+                  <BiMinusCircle size={40} style={{ color: "#08BFA1" }} />
+                  <section className="font-rubik font-medium text-[20px] text-ADJO_Keppel"></section>
+                </section>
+                <section className="flex justify-center w-24">
+                <p className=" font-rubik font-medium justify-center text-center text-[20px] text-[#000000]">
+                  {maxListingQty}
+                </p>
+
+                </section>
+              </>
             )}
             <section
               onClick={() => {
-                setMaxListingQty(maxListingQty + 10)
+                setMaxListingQty(maxListingQty + 5)
               }}
-              className="flex w-[200px] items-center justify-center hover: cursor-pointer">
-              <BiPlusCircle size={25} style={{ color: "#08BFA1" }} />
-              <section className="pl-2 font-rubik font-medium text-[20px] text-ADJO_Keppel">Show More</section>
+              className="flex items-center justify-start hover: cursor-pointer">
+              <BiPlusCircle size={40} style={{ color: "#08BFA1" }} />
+              <section className="font-rubik font-medium text-[20px] text-ADJO_Keppel"></section>
             </section>
           </div>
         </div>

@@ -19,7 +19,7 @@ function inRange(alat, alng, blat, blng, range) {
     //place them in the Haversine formula to calculate distance between the two points in Nautical Miles
     const distance = 3440.1 * Math.acos(  (Math.sin(alat)*Math.sin(blat)) +  (Math.cos(alat)*Math.cos(blat)  *  Math.cos(alng - blng))  )
     
-    console.log("distance between a and b is:", distance, "nautical miles")
+    //console.log("distance between a and b is:", distance, "nautical miles")
     if(distance <= range){
         //console.log("within range: TRUE")
         return true

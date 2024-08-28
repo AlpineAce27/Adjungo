@@ -103,7 +103,7 @@ function NewListing() {
                 name="flightTime"
                 value={flightTime}
                 onChange={(e) => {setFlightTime(e.target.value)
-                  console.log(flightTime)
+                  //console.log(flightTime)
                 }}
               ></input>
             </div>
