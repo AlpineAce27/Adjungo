@@ -93,7 +93,7 @@ function Welcome() {
           )}
         </div>
       </section>
-      <section id="adjungo-details" className="pb-36">
+      <section id="adjungo-details" className="pb-28">
         <div className="flex justify-center py-10">
           <h1 className=" font-rubik font-medium text-[50px] text-AJGO_DarkSlateGray justify-center">
             What does Adjungo provide?
@@ -160,7 +160,7 @@ function Welcome() {
 
           <div
             id="pilot-pros"
-            className="flex flex-col w-1/2 justify-center border-4 border-AJGO_Platnum rounded-xl px-10 gap-10 pb-10">
+            className="flex flex-col w-1/2 justify-center border-4 border-ADJO_Celeste rounded-xl px-10 gap-10 pb-10">
             <h1 className="flex font-medium text-[30px] justify-center pt-4 text-AJGO_DarkSlateGray">Pilots</h1>
 
             <div className="flex border-4 border-ADJO_Keppel rounded-lg pl-5">

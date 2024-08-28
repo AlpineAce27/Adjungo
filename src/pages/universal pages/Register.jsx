@@ -5,29 +5,29 @@ import { useState } from "react"
 
 function Register() {
   const navigate = useNavigate()
-  const [accountType, setAccountType] = useState('')
+  const [accountType, setAccountType] = useState("")
 
   //Universal properties
-  const [login, setLogin] = useState('')
-  const [password, setPassword] = useState('')
-  const [contactEmail, setContactEmail] = useState('')
-  const [contactPhone, setContactPhone] = useState('')
-  const [bio, setBio] = useState('')
+  const [login, setLogin] = useState("")
+  const [password, setPassword] = useState("")
+  const [contactEmail, setContactEmail] = useState("")
+  const [contactPhone, setContactPhone] = useState("")
+  const [bio, setBio] = useState("")
   //client properties
-  const [company, setCompany] = useState('')
-  const [website, setWebsite] = useState('')
-  const [individual, setIndividual] = useState('')
+  const [company, setCompany] = useState("")
+  const [website, setWebsite] = useState("")
+  const [individual, setIndividual] = useState("")
   //pilot properties
-  const [fname, setFname] = useState('')
-  const [lname, setLname] = useState('')
-  const [part107, setPart107] = useState('')
+  const [fname, setFname] = useState("")
+  const [lname, setLname] = useState("")
+  const [part107, setPart107] = useState("")
 
   const handleAccountCreation = (e) => {
     e.preventDefault()
     let newAccount = {}
     console.log("handler function hit")
     if (accountType === "client") {
-      console.log('if hit')
+      console.log("if hit")
       newAccount = {
         company: company,
         login: login,
@@ -38,9 +38,8 @@ function Register() {
         companyBio: bio,
         individual: individual,
       }
-    }
-    else if (accountType === "pilot") {
-      console.log('else if hit')
+    } else if (accountType === "pilot") {
+      console.log("else if hit")
       newAccount = {
         fname: fname,
         lname: lname,
@@ -56,25 +55,23 @@ function Register() {
     axios
       .post(`/api/account/${accountType}`, newAccount)
       .then((res) => {
-        console.log('post success hit')
+        console.log("post success hit")
         navigate("/login")
       })
       .catch((err) => {
-        console.log('post error', err)
+        console.log("post error", err)
       })
   }
   return (
-    <div className="flex flex-col items-center">
-
-
-      <div className="flex flex-col items-center justify-center w-1/2">
+    <div className="flex flex-col items-center w-full">
+      <div className="flex flex-col items-center justify-center w-1/2 gap-10">
         <div className="flex flex-col items-center w-full">
-          <h1 className=" font-rubik font-medium text-[50px] text-AJGO_DarkSlateGray justify-center">Account Creation</h1>
-          <p className="font-rubik text-xl">
-            Please select which account type you'd like to create
-          </p>
+          <h1 className=" font-rubik font-medium text-[50px] text-AJGO_DarkSlateGray justify-center">
+            Account Creation
+          </h1>
+          <p className="font-rubik text-xl">Please select which account type you'd like to create</p>
           <br />
-          <div className="bg-AJGO_Platnum flex w-full justify-around font-rubik text-xl">
+          <div className="bg-AJGO_Platnum flex w-1/2 justify-between font-rubik text-xl rounded-full px-10">
             <div className="flex items-center">
               <input
                 className="h-4 w-4"
@@ -83,7 +80,7 @@ function Register() {
                 id="accountType"
                 name="accountType"
               />
-              <label className="pl-3" >Client Account</label>
+              <label className="pl-3">Client Account</label>
             </div>
             <div className="flex items-center">
               <input
@@ -93,15 +90,13 @@ function Register() {
                 id="accountType"
                 name="accountType"
               />
-              <label className="pl-3" >Pilot Account</label>
+              <label className="pl-3">Pilot Account</label>
             </div>
           </div>
         </div>
 
-
-
         {accountType === "client" && (
-          <div className=" bg-ADJO_Celeste flex flex-col items-start w-full">
+          <div className=" bg-ADJO_Celeste flex flex-col items-start w-full rounded-xl">
             <form className="p-5 font-rubik text-l w-full">
               <div className="pt-1 pb-1">
                 <label htmlFor="company">Company Name:</label>
@@ -177,9 +172,7 @@ function Register() {
                   name="companyBio"
                   value={bio}
                   onChange={(e) => setBio(e.target.value)}
-                  required
-                >
-                </textarea>
+                  required></textarea>
               </div>
               <div className="pt-1 pb-1">
                 <label className="pr-3" htmlFor="individual">
@@ -192,7 +185,9 @@ function Register() {
                   checked={individual}
                   onChange={() => setIndividual(true)}
                 />
-                <label className="pr-5 pl-2" htmlFor="individual">Yes</label>
+                <label className="pr-5 pl-2" htmlFor="individual">
+                  Yes
+                </label>
                 <input
                   className="h-4 w-4"
                   type="radio"
@@ -200,16 +195,17 @@ function Register() {
                   checked={!individual}
                   onChange={() => setIndividual(false)}
                 />
-                <label className="pl-2" htmlFor="individual">No</label>
+                <label className="pl-2" htmlFor="individual">
+                  No
+                </label>
               </div>
             </form>
           </div>
         )}
         {accountType === "pilot" && (
-          <div className=" bg-ADJO_Celeste flex flex-col items-start w-full">
-
-            <form  className="p-5 font-rubik text-l w-full">
-              <div  className="pt-1 pb-1">
+          <div className=" bg-ADJO_Celeste flex flex-col items-start w-full rounded-xl">
+            <form className="p-5 font-rubik text-l w-full">
+              <div className="pt-1 pb-1">
                 <label htmlFor="fname">Pilot's First Name:</label>
                 <input
                   className="pl-2 pt-1 pb-1 w-80 rounded-lg ring-2 ring-inset ring-[#9ca3af] focus-within:ring-4 focus-within:ring-inset focus-within:ring-ADJO_Keppel"
@@ -220,7 +216,7 @@ function Register() {
                   required
                 />
               </div>
-              <div  className="pt-1 pb-1">
+              <div className="pt-1 pb-1">
                 <label htmlFor="lname">Pilot's Last Name:</label>
                 <input
                   className="pl-2 pt-1 pb-1 w-80 rounded-lg ring-2 ring-inset ring-[#9ca3af] focus-within:ring-4 focus-within:ring-inset focus-within:ring-ADJO_Keppel"
@@ -231,7 +227,7 @@ function Register() {
                   required
                 />
               </div>
-              <div  className="pt-1 pb-1">
+              <div className="pt-1 pb-1">
                 <label htmlFor="part107">Part 107 Registration #:</label>
                 <input
                   className="pl-2 pt-1 pb-1 w-80 rounded-lg ring-2 ring-inset ring-[#9ca3af] focus-within:ring-4 focus-within:ring-inset focus-within:ring-ADJO_Keppel"
@@ -242,7 +238,7 @@ function Register() {
                   required
                 />
               </div>
-              <div  className="pt-1 pb-1">
+              <div className="pt-1 pb-1">
                 <label htmlFor="email">Email:</label>
                 <input
                   className="pl-2 pt-1 pb-1 w-80 rounded-lg ring-2 ring-inset ring-[#9ca3af] focus-within:ring-4 focus-within:ring-inset focus-within:ring-ADJO_Keppel"
@@ -253,7 +249,7 @@ function Register() {
                   required
                 />
               </div>
-              <div  className="pt-1 pb-1">
+              <div className="pt-1 pb-1">
                 <label htmlFor="phone">Phone:</label>
                 <input
                   className="pl-2 pt-1 pb-1 w-80 rounded-lg ring-2 ring-inset ring-[#9ca3af] focus-within:ring-4 focus-within:ring-inset focus-within:ring-ADJO_Keppel"
@@ -264,7 +260,7 @@ function Register() {
                   required
                 />
               </div>
-              <div  className="pt-1 pb-1">
+              <div className="pt-1 pb-1">
                 <label htmlFor="login">Username:</label>
                 <input
                   className="pl-2 pt-1 pb-1 w-80 rounded-lg ring-2 ring-inset ring-[#9ca3af] focus-within:ring-4 focus-within:ring-inset focus-within:ring-ADJO_Keppel"
@@ -275,7 +271,7 @@ function Register() {
                   required
                 />
               </div>
-              <div  className="pt-1 pb-1">
+              <div className="pt-1 pb-1">
                 <label htmlFor="password">Password:</label>
                 <input
                   className="pl-2 pt-1 pb-1 w-80 rounded-lg ring-2 ring-inset ring-[#9ca3af] focus-within:ring-4 focus-within:ring-inset focus-within:ring-ADJO_Keppel"
@@ -286,7 +282,7 @@ function Register() {
                   required
                 />
               </div>
-              <div  className="pt-1 pb-1">
+              <div className="pt-1 pb-1">
                 <label htmlFor="pilotBio">Pilot Bio:</label>
                 <textarea
                   className="pl-2 pt-1 pb-1 w-full h-40 rounded-lg ring-2 ring-inset ring-[#9ca3af] focus-within:ring-4 focus-within:ring-inset focus-within:ring-ADJO_Keppel"
@@ -294,19 +290,19 @@ function Register() {
                   name="pilotBio"
                   value={bio}
                   onChange={(e) => setBio(e.target.value)}
-                  required
-                >
-                </textarea>
+                  required></textarea>
               </div>
             </form>
           </div>
         )}
         <br />
-        <button
-          className="bg-ADJO_Keppel px-8 py-1 text-xl text- uppercase font-rubik rounded-lg"
-          onClick={handleAccountCreation}>
-          Create My Account
-        </button>
+        {(accountType === "client" || accountType === "pilot") && 
+            <button
+              className="bg-ADJO_Keppel px-8 py-1 text-xl text- uppercase font-rubik rounded-lg"
+              onClick={handleAccountCreation}>
+              Create My Account
+            </button>
+          }
       </div>
     </div>
   )
