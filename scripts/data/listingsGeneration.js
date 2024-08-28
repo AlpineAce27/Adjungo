@@ -41,11 +41,23 @@ function highOddsOfTrue() {
   else return false
 }
 
+function generateLocation() {
+  const address = location.streetAddress() + ", " + location.city() +", "+ location.state()
+  return address
+}
+
+function generateNearbyCoordinates() {
+  const rawCoordinates = location.nearbyGPSCoordinate({origin: [40.759, -111.886], radius: 25})
+  //console.log(rawCoordinates)
+  const coordinates = {"lat": rawCoordinates[0], "lng": rawCoordinates[1]}
+  //console.log(coordinates)
+  return coordinates
+}
 //create the listings arrray
-const listings = Array.from({ length: 300 }, () => {
+const listings = Array.from({ length: 50 }, () => {
   const assignedPilot = generateAssignedPilot()
   const complete = generateCompletionCriteria(assignedPilot)
-
+  
   return {
     clientId: number.int({ min: 1, max: 20 }),
     assignedPilot: assignedPilot,
@@ -55,7 +67,7 @@ const listings = Array.from({ length: 300 }, () => {
       to: "2025-01-01T00:00:00Z",
       count: 1,
     })[0],
-    flightTime: date.anytime(),
+    flightTime: "12:30",
     multiday: datatype.boolean(),
     hardwareProvided: datatype.boolean(),
     softwareProvided: datatype.boolean(),
@@ -69,8 +81,8 @@ const listings = Array.from({ length: 300 }, () => {
     heavyFlying: lowOddsOfTrue(),
     nightFlying: datatype.boolean(),
     crowdFlying: datatype.boolean(),
-    flightAddress: location.streetAddress(),
-    flightZipcode: location.zipCode(),
+    flightAddress: generateLocation(),
+    flightCoordinates: generateNearbyCoordinates(),
     flightRadius: number.float({ min: 0.1, max: 2.5, multipleOf: 0.1 }),
     completed: complete,
   }
@@ -78,4 +90,5 @@ const listings = Array.from({ length: 300 }, () => {
 
 //console.log(JSON.stringify(listings, null, 4));
 const generatedListingData = listings
+//console.log(generatedListingData)
 export default generatedListingData

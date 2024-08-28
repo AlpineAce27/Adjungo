@@ -3,6 +3,7 @@ import { useLoaderData } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { useSelector } from "react-redux"
+import { API_KEY, mapId } from "../../../util/location"
 
 function PilotSingleListing() {
   const [listingState, SetListingState] = useState("new")
@@ -51,7 +52,6 @@ function PilotSingleListing() {
   //Render this if they are not in edit mode
   return (
     <div className="flex flex-col items-center">
-
       <div className="flex flex-col items-center pt-10 pb-10">
         <h1 className=" font-rubik font-medium text-[50px] text-AJGO_DarkSlateGray justify-center">Listing #{listing.listingId}</h1>
         <p className="font-rubik text-xl">
@@ -59,8 +59,8 @@ function PilotSingleListing() {
         </p>
       </div>
 
-      <div className="flex items-center justify-center w-5/6">
-          <section className="flex flex-col gap-3 items-start pt-10 pb-10 justify-between font-rubik font-medium text-[15px] text-AJGO_DarkSlateGray w-2/3 text-lg">
+      <div className="flex items-center justify-center w-5/6 gap-5 h-[40vh]">
+          <section className="flex flex-col gap-3 items-start py-8 justify-between font-rubik font-medium text-[15px] text-AJGO_DarkSlateGray w-1/3 text-lg pl-5 border-ADJO_Celeste border-4 h-full rounded-lg">
             <p className="flex items-center justify-between">
               Owner Id:{" "}
               <button
@@ -98,17 +98,10 @@ function PilotSingleListing() {
               <p className="text-lg">Flight Address:</p>
               <p>{listing.flightAddress}</p>
             </div>
-            <div className="flex flex-col items-start text-left text-sm">
-              <p className="text-lg">Flight Area Zipcode:</p>
-              <p>{listing.flightZipcode}</p>
-            </div>
-            <div className="flex flex-col items-start text-left text-sm">
-              <p className="text-lg">Description:</p>
-              <p>{listing.description}</p>
-            </div>
+            
           </section>
 
-          <section className="flex w-1/3 justify-center font-rubik font-medium text-[15px] text-AJGO_DarkSlateGray">
+          <section className="flex w-1/3 justify-center items-center font-rubik font-medium text-[15px] text-AJGO_DarkSlateGray border-ADJO_Celeste border-4 h-full rounded-lg">
             <div className="flex flex-col items-start pr-2 w-5/6">
               <section className="pl-3 pr-3 flex justify-between bg-ADJO_Celeste w-full">
                 <p>Offer</p>
@@ -168,7 +161,14 @@ function PilotSingleListing() {
               </section>
             </div>
           </section>
+          <section className="flex w-1/3 h-full border-ADJO_Celeste border-4  rounded-lg justify-center items-center">
+            <img className="rounded-lg"src={`https://maps.googleapis.com/maps/api/staticmap?center=${JSON.parse(listing.flightCoordinates).lat},${JSON.parse(listing.flightCoordinates).lng}&zoom=15&size=300x300&map_id=${mapId}&markers=color:red%7Csize:large%7Cscale:4%7C${JSON.parse(listing.flightCoordinates).lat},${JSON.parse(listing.flightCoordinates).lng}&key=${API_KEY}`} alt="" />
+          </section>
         </div>
+        <div className="flex flex-col items-start justify-center w-3/4 font-rubik font-medium text-[15px] text-left text-AJGO_DarkSlateGray pt-5">
+              <p className="text-lg">Description:</p>
+              <p>{listing.description}</p>
+            </div>
 
       <div className="pt-10 pb-10">
         {listingState === "new" && (
