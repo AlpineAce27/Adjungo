@@ -3,7 +3,7 @@ import axios from "axios"
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 import { Tooltip } from "../../components/Tooltip"
-;("use client")
+
 
 //icon imports
 import { ImCross, ImCheckmark, ImPowerCord } from "react-icons/im"
@@ -37,6 +37,7 @@ function Listings() {
   const navigate = useNavigate()
   //grabbing the usertype from redux store
   let userType = useSelector((state) => state.userType)
+  let userId = useSelector((state)=> state.userId)
   //create a state value for an array of listings
   let [listings, setListings] = useState([])
   let [allListingPins, setAllListingPins] = useState([])
@@ -151,6 +152,18 @@ function Listings() {
 
   //create map-pin for each of the filtered listings
   let allPins = filteredListings.map((listing) => {
+
+    //check if the user logged in has applied to this job already
+    let appliedForThisJob = false
+    if(userType === "pilot")
+    axios.get(`/api/applicationsOnListing/${listing.listingId}`).then((response) => {
+      const applications = response.data
+      appliedForThisJob = applications.some((application) => application.applyingPilot === userId)
+      if(appliedForThisJob){
+        console.log("user", userId, "applied to job", listing.listingId, ":", appliedForThisJob)
+      }
+    })
+    //parse the coordinates
     const coordinates = JSON.parse(listing.flightCoordinates)
     return (
       <AdvancedMarker
@@ -159,7 +172,15 @@ function Listings() {
         onClick={() => {
           navigate(`/singleListing/${listing.listingId}`)
         }}>
-        <Pin background={"#08BFA1"} borderColor={"#283B36"} glyphColor={"#283B36"} />
+          {appliedForThisJob &&
+        <Pin background={"FFFFFF"} borderColor={"#DADADA"} glyphColor={"#DADADA"} />  
+          }
+           {!appliedForThisJob &&
+           <Tooltip position="top" content="You've already applied to this listing">
+             <Pin background={"#08BFA1"} borderColor={"#283B36"} glyphColor={"#283B36"} />   
+           </Tooltip>
+           }
+        
       </AdvancedMarker>
     )
   })
@@ -700,6 +721,7 @@ function Listings() {
                 </section>
               </>
             )}
+            { filteredListings.length >= maxListingQty &&
             <section
               onClick={() => {
                 setMaxListingQty(maxListingQty + 5)
@@ -708,6 +730,7 @@ function Listings() {
               <BiPlusCircle size={40} style={{ color: "#08BFA1" }} />
               <section className="font-rubik font-medium text-[20px] text-ADJO_Keppel"></section>
             </section>
+            }
           </div>
         </div>
       </div>

@@ -82,7 +82,7 @@ app.post('/api/listing', createListing)
 app.put('/api/listing/:listingId', editListing)
 app.delete('/api/listing/:listingId', deleteListing)
 app.get('/api/applicationsForClient', getApplicationsbyClient)
-app.get('/api/applicationsForClient/:listingId', getApplicationsbyListing)
+app.get('/api/applicationsOnListing/:listingId', getApplicationsbyListing)
 app.put('/api/acceptApplication/:applicationId', acceptApplication)
 app.delete('/api/denyApplication/:applicationId', denyApplication)
 

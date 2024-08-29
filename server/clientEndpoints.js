@@ -1,8 +1,6 @@
 import { Listing, Pilot, Application, PilotReview } from "./database/model.js"
 import { Sequelize } from "sequelize"
 import getRatingColor from "../src/functions/getRatingColor.js"
-
-
 //return all listings with a specific client id
 export const getListingsByClient = async (req, res) => {
   //console.log(req.session)
@@ -15,7 +13,6 @@ export const getListingsByClient = async (req, res) => {
     res.send(allListings)
   }
 }
-
 //return a single listing with a specific client id and listing id
 export const getOneListingByClient = async (req, res) => {
   const { listingId } = req.params
@@ -32,7 +29,6 @@ export const getOneListingByClient = async (req, res) => {
     res.send(listing)
   }
 }
-
 //create a new listing
 export const createListing = async (req, res) => {
   //req.body should come with an object called newListing that contains all the properties and values to be made
@@ -49,7 +45,6 @@ export const createListing = async (req, res) => {
     })
   }
 }
-
 //edit an existing listing
 export const editListing = async (req, res) => {
   //req.params will specify which listing is being change
@@ -105,7 +100,6 @@ export const editListing = async (req, res) => {
     })
   }
 }
-
 //delete an existing listing
 export const deleteListing = async (req, res) => {
   const { listingId } = req.params
@@ -174,12 +168,11 @@ export const getApplicationsbyClient = async (req, res) => {
 
   res.send(applicationsWithRatings)
 }
-
 //send all applications from a specific listing that the client has
 export const getApplicationsbyListing = async (req, res) => {
   const { listingId } = req.params
   const ownedByUser = await Listing.findOne({
-    where: { listingId: listingId, clientId: req.session.userId },
+    where: { listingId: listingId},
   })
   //console.log(ownedByUser)
   if (ownedByUser) {
@@ -188,7 +181,6 @@ export const getApplicationsbyListing = async (req, res) => {
         model: Listing,
         where: {
           listingId: listingId,
-          clientId: req.session.userId,
         },
       },
     })
@@ -197,7 +189,6 @@ export const getApplicationsbyListing = async (req, res) => {
     res.send("This listing is not owned by the current user")
   }
 }
-
 //accept an application
 export const acceptApplication = async (req, res) => {
   const { applicationId } = req.params
@@ -259,7 +250,6 @@ export const acceptApplication = async (req, res) => {
     })
   }
 }
-
 //accept an application
 export const denyApplication = async (req, res) => {
   const { applicationId } = req.params
