@@ -40,7 +40,7 @@ function Listings() {
   //create a state value for an array of listings
   let [listings, setListings] = useState([])
   let [allListingPins, setAllListingPins] = useState([])
-  let [maxListingQty, setMaxListingQty] = useState(5)
+  let [maxListingQty, setMaxListingQty] = useState(30)
 
   //40°45'33"N 111°53'14"W
   //create a state value for the entry fields on location, client, etc
@@ -121,9 +121,6 @@ function Listings() {
 
   //filter the listings
   let filteredListings = filterListings(listings)
-  if(filteredListings.length <= maxListingQty){
-    maxListingQty = filteredListings.length
-  }
 
   //sort the remaining listings
   if (sortCondition.length > 1) {
@@ -708,11 +705,9 @@ function Listings() {
 
         <div id="showMoreLess" className="flex w-36 justify-center pb-10">
           <div className="flex w-full justify-center items-center border-4 border-ADJO_Celeste rounded-full">
-
-            {/* first case, we are showing the minimum amount (5) of listings */}
-            {maxListingQty < 5 && (
-              <>
-                <section className="flex justify-center items-center w-14 h-8"></section>
+            {(maxListingQty < filteredListings.length) || (maxListingQty <= 5) &&  
+            <>
+            <section className="flex justify-center items-center w-14 h-8"></section>
                 <p className=" font-rubik font-medium justify-center text-center text-[20px] w-32 text-[#000000]">
                   {maxListingQty}
                 </p>
@@ -724,11 +719,10 @@ function Listings() {
                   <BiPlusCircle size={40} style={{ color: "#08BFA1" }} />
                   <section className="font-rubik font-medium text-[20px] text-ADJO_Keppel"></section>
                 </section>
-              </>
-            )}
-
+            </>
+            }      
             {/* second case, we are showing the an amount of listings that doesn't exceed the filteredListings.length */}
-            {maxListingQty <= filteredListings.length && <>
+            {(maxListingQty <= filteredListings.length) && (maxListingQty > 5) && <>
               <section
                   onClick={() => {
                     if(maxListingQty < 10){
@@ -758,7 +752,7 @@ function Listings() {
             {maxListingQty > filteredListings.length && <>
               <section
                   onClick={() => {
-                    setMaxListingQty(maxListingQty - 5)
+                    setMaxListingQty(filteredListings.length - 5)
                   }}
                   className="flex items-center justify-center hover: cursor-pointer">
                   <BiMinusCircle size={40} style={{ color: "#08BFA1" }} />
