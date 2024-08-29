@@ -227,7 +227,6 @@ const MyJobs = () => {
           </>
         )}
         <td>${listing.offer}</td>
-        <td>{listing.flightZipcode}</td>
         <td>{listing.flightDate}</td>
         <td>{listing.flightRadius}</td>
         <td>
@@ -472,11 +471,6 @@ const MyJobs = () => {
                       {sortCondition[0] !== "offer" && <BiSolidDollarCircle size={30} style={{ color: "#000000" }} />}
                     </Tooltip>
                   </button>
-                </th>
-                <th>
-                  <Tooltip position="top" content="Flight-Op location">
-                    Zipcode
-                  </Tooltip>
                 </th>
                 <th>
                   <Tooltip position="top" content="Flight-Op date">
