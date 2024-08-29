@@ -167,13 +167,15 @@ const MyJobs = () => {
         {userType === "client" && (
           <td>
             {canBeCompleted === true && (
+              
               <Tooltip position="right" content='mark this job as "complete"'>
                 <button
-                  className="flex justify-center items-center h-6 w-6 rounded-full bg-ADJO_Keppel "
+                  className="flex items-center justify-center h-6 w-6 rounded-full bg-ADJO_Keppel "
                   onClick={() => completeJob(listing)}>
-                  <BiCheckCircle size={20} style={{ color: "#BDF3E7", alignSelf: "center" }} />
+                  <BiCheckCircle size={20} style={{ color: "#BDF3E7", alignSelf : "center" }} />
                 </button>
               </Tooltip>
+             
             )}
             {canBeCompleted === false && (
               <Tooltip position="right" content='cannot mark as "complete"'>

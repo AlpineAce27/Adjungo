@@ -107,9 +107,6 @@ function MyAccount() {
                 <p className="font-rubik font-medium text-[15px] text-AJGO_DarkSlateGray justify-center">
                   Username: {accountDetails.login}
                 </p>
-                <p className="font-rubik font-medium text-[15px] text-AJGO_DarkSlateGray justify-center">
-                  Password: {accountDetails.password}
-                </p>
                 <h3 className="pt-3 pb-3 font-rubik font-medium text-[20px] text-AJGO_DarkSlateGray justify-center">
                   {" "}
                   Contact Information
@@ -168,9 +165,6 @@ function MyAccount() {
                 <div>
                   <p className="font-rubik font-medium text-[15px] text-AJGO_DarkSlateGray justify-center">
                     Username: {accountDetails.login}
-                  </p>
-                  <p className="font-rubik font-medium text-[15px] text-AJGO_DarkSlateGray justify-center">
-                    Password: {accountDetails.password}
                   </p>
                   <h3 className="pt-3 pb-3 font-rubik font-medium text-[20px] text-AJGO_DarkSlateGray justify-center">
                     {" "}

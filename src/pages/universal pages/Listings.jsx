@@ -368,10 +368,10 @@ function Listings() {
               onChange={(e) => setCurrentAddress(e.target.value)}
             />
           </div>
-          <div id="range" className="flex flex-col gap-3 w-1/6">
+          <div id="range" className="flex flex-col gap-3 w-40">
             <label htmlFor="range">Range (miles):</label>
             <input
-              className="flex items-center justify-center w-12 bg-[#efefef]"
+              className="flex items-center justify-center text-center w-24 rounded-lg bg-[#efefef]"
               type="number"
               name="range"
               id="range"
