@@ -37,6 +37,7 @@ function Listings() {
   const navigate = useNavigate()
   //grabbing the usertype from redux store
   let userType = useSelector((state) => state.userType)
+  let userId = useSelector((state) => state.userId )
   //create a state value for an array of listings
   let [listings, setListings] = useState([])
   let [allListingPins, setAllListingPins] = useState([])
@@ -45,8 +46,6 @@ function Listings() {
   //40°45'33"N 111°53'14"W
   //create a state value for the entry fields on location, client, etc
   let [mapLock, setMapLock] = useState(true)
-  let [currentLat, setCurrentLat] = useState(40.759)
-  let [currentLng, setCurrentLng] = useState(-111.886)
   let [currentAddress, setCurrentAddress] = useState("451 State St, Salt Lake City, Utah")
   let [currentLocation, setCurrentLocation] = useState({ lat: 40.759, lng: -111.886 })
   let [range, setRange] = useState(20)
@@ -119,6 +118,7 @@ function Listings() {
     })
   }, [])
 
+  console.log(listings)
   //filter the listings
   let filteredListings = filterListings(listings)
 
@@ -154,17 +154,6 @@ function Listings() {
 
   //create map-pin for each of the filtered listings
   let allPins = filteredListings.map((listing) => {
-    //check if the user logged in has applied to this job already
-    let appliedForThisJob = false
-    if (userType === "pilot")
-      axios.get(`/api/applicationsOnListing/${listing.listingId}`).then((response) => {
-        const applications = response.data
-        appliedForThisJob = applications.some((application) => application.applyingPilot === userId)
-        if (appliedForThisJob) {
-          console.log("user", userId, "applied to job", listing.listingId, ":", appliedForThisJob)
-        }
-      })
-    //parse the coordinates
     const coordinates = JSON.parse(listing.flightCoordinates)
     return (
       <AdvancedMarker
@@ -173,12 +162,7 @@ function Listings() {
         onClick={() => {
           navigate(`/singleListing/${listing.listingId}`)
         }}>
-        {appliedForThisJob && <Pin background={"FFFFFF"} borderColor={"#DADADA"} glyphColor={"#DADADA"} />}
-        {!appliedForThisJob && (
-          <Tooltip position="top" content="You've already applied to this listing">
-            <Pin background={"#08BFA1"} borderColor={"#283B36"} glyphColor={"#283B36"} />
-          </Tooltip>
-        )}
+        <Pin background={"#08BFA1"} borderColor={"#283B36"} glyphColor={"#283B36"} />
       </AdvancedMarker>
     )
   })

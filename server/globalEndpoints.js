@@ -64,12 +64,6 @@ export const getAllOpenListings = async (req, res) => {
     })
   }
 
-
-  // const allListings = await Listing.findAll({
-  //   where: { completed: false, assignedPilot: null },
-  //   include: { model: Client },
-  // })
-
   const listingCopy = [...allListings]
 
   let finalCopy = await Promise.all(
@@ -100,6 +94,7 @@ export const getAllOpenListings = async (req, res) => {
 
 //return a single listing with a specific listing id
 export const getOneListing = async (req, res) => {
+  console.log("getOneListing endpoint hit")
   const { listingId } = req.params
   console.log("Listing:", listingId)
   if (!req.session.userId) {

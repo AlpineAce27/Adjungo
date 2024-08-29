@@ -179,7 +179,7 @@ export const getApplicationsbyClient = async (req, res) => {
 export const getApplicationsbyListing = async (req, res) => {
   const { listingId } = req.params
   const ownedByUser = await Listing.findOne({
-    where: { listingId: listingId, clientId: req.session.userId },
+    where: { listingId: listingId },
   })
   //console.log(ownedByUser)
   if (ownedByUser) {
@@ -188,7 +188,6 @@ export const getApplicationsbyListing = async (req, res) => {
         model: Listing,
         where: {
           listingId: listingId,
-          clientId: req.session.userId,
         },
       },
     })

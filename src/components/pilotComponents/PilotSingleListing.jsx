@@ -10,7 +10,7 @@ function PilotSingleListing() {
   //take the data from the loader and assign it to the listing variable (this should be an entire listing object)
   //this loader data comes from the loader section of this route in the App.jsx
   const listing = useLoaderData()
-  //console.log(listing)
+  console.log(listing)
 
   //figure out the user ID of this session
   let userId = useSelector((state) => state.userId)
