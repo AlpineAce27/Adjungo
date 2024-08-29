@@ -1,6 +1,6 @@
-import { Client, Pilot, Listing, ClientReview, PilotReview } from "./database/model.js"
+import { Client, Pilot, Listing, ClientReview, PilotReview, Application } from "./database/model.js"
 
-import { Sequelize } from "sequelize"
+import { Sequelize, Op } from "sequelize"
 
 import getRatingColor from "../src/functions/getRatingColor.js"
 
@@ -42,10 +42,33 @@ export const getAllListings = async (req, res) => {
 }
 //return all listings
 export const getAllOpenListings = async (req, res) => {
-  const allListings = await Listing.findAll({
-    where: { completed: false, assignedPilot: null },
-    include: { model: Client },
-  })
+  let allListings
+  console.log(req.session.userType)
+  if (req.session.userType === "pilot") {
+    allListings = await Listing.findAll({
+      where: { completed: false },
+      include: [
+        {
+          model: Application,
+          where: {
+            applyingPilot: { [Op.ne]: req.session.userId },
+          },
+        },
+        { model: Client },
+      ],
+    })
+  } else {
+    allListings = await Listing.findAll({
+      where: { completed: false },
+      include: { model: Client },
+    })
+  }
+
+
+  // const allListings = await Listing.findAll({
+  //   where: { completed: false, assignedPilot: null },
+  //   include: { model: Client },
+  // })
 
   const listingCopy = [...allListings]
 
@@ -74,6 +97,7 @@ export const getAllOpenListings = async (req, res) => {
 
   res.send(finalCopy)
 }
+
 //return a single listing with a specific listing id
 export const getOneListing = async (req, res) => {
   const { listingId } = req.params

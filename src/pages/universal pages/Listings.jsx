@@ -40,7 +40,7 @@ function Listings() {
   //create a state value for an array of listings
   let [listings, setListings] = useState([])
   let [allListingPins, setAllListingPins] = useState([])
-  let [maxListingQty, setMaxListingQty] = useState(30)
+  let [maxListingQty, setMaxListingQty] = useState(5)
 
   //40°45'33"N 111°53'14"W
   //create a state value for the entry fields on location, client, etc
@@ -121,6 +121,9 @@ function Listings() {
 
   //filter the listings
   let filteredListings = filterListings(listings)
+  if(filteredListings.length <= maxListingQty){
+    maxListingQty = filteredListings.length
+  }
 
   //sort the remaining listings
   if (sortCondition.length > 1) {
@@ -147,10 +150,24 @@ function Listings() {
   }
 
   //make sure to only show the max number of listings
-  filteredListings = filteredListings.slice(0, maxListingQty)
+  if(maxListingQty < filteredListings.length){
+    filteredListings = filteredListings.slice(0, maxListingQty)
+  }
+  
 
   //create map-pin for each of the filtered listings
   let allPins = filteredListings.map((listing) => {
+    //check if the user logged in has applied to this job already
+    let appliedForThisJob = false
+    if (userType === "pilot")
+      axios.get(`/api/applicationsOnListing/${listing.listingId}`).then((response) => {
+        const applications = response.data
+        appliedForThisJob = applications.some((application) => application.applyingPilot === userId)
+        if (appliedForThisJob) {
+          console.log("user", userId, "applied to job", listing.listingId, ":", appliedForThisJob)
+        }
+      })
+    //parse the coordinates
     const coordinates = JSON.parse(listing.flightCoordinates)
     return (
       <AdvancedMarker
@@ -159,7 +176,12 @@ function Listings() {
         onClick={() => {
           navigate(`/singleListing/${listing.listingId}`)
         }}>
-        <Pin background={"#08BFA1"} borderColor={"#283B36"} glyphColor={"#283B36"} />
+        {appliedForThisJob && <Pin background={"FFFFFF"} borderColor={"#DADADA"} glyphColor={"#DADADA"} />}
+        {!appliedForThisJob && (
+          <Tooltip position="top" content="You've already applied to this listing">
+            <Pin background={"#08BFA1"} borderColor={"#283B36"} glyphColor={"#283B36"} />
+          </Tooltip>
+        )}
       </AdvancedMarker>
     )
   })
@@ -174,6 +196,7 @@ function Listings() {
       assignedPilot = listing.assignedPilot
     }
 
+    
     //create a table row with each variable in the correct spot
     return (
       <tr key={listing.listingId} className="pt-2 pb-2 border-b-2 border-opacity-10 border-b-AJGO_DarkSlateGray">
@@ -342,7 +365,7 @@ function Listings() {
       </tr>
     )
   })
-
+  
   //render all the elements we created on the page
   return (
     <APIProvider apiKey={API_KEY}>
@@ -354,6 +377,7 @@ function Listings() {
             listing ID to view more details.
           </p>
         </section>
+
         <section
           id="location-fields"
           className="flex justify-between w-11/12 border-4 border-ADJO_Celeste p-2 rounded-lg gap-3 font-rubik text-l text-left">
@@ -403,6 +427,7 @@ function Listings() {
             )}
           </div>
         </section>
+
         <div id="map" className="flex justify-center items-center w-11/12">
           <section className="flex flex-col items-center justify-center w-full">
             <div className="bg-ADJO_Keppel w-full h-[400px] p-3 rounded-lg">
@@ -425,6 +450,7 @@ function Listings() {
             </div>
           </section>
         </div>
+
         <section id="listingsTable" className="flex justify-center w-full">
           <div className="flex justify-center bg-ADJO_Celeste bg-opacity-30 rounded-xl w-11/12 pr-10 pl-10 pt-5 pb-5">
             <table className="border-collapse font-rubik text-sm w-full">
@@ -682,9 +708,55 @@ function Listings() {
 
         <div id="showMoreLess" className="flex w-36 justify-center pb-10">
           <div className="flex w-full justify-center items-center border-4 border-ADJO_Celeste rounded-full">
-            {maxListingQty > 5 && (
+
+            {/* first case, we are showing the minimum amount (5) of listings */}
+            {maxListingQty < 5 && (
               <>
+                <section className="flex justify-center items-center w-14 h-8"></section>
+                <p className=" font-rubik font-medium justify-center text-center text-[20px] w-32 text-[#000000]">
+                  {maxListingQty}
+                </p>
                 <section
+                  onClick={() => {
+                    setMaxListingQty(maxListingQty + 5)
+                  }}
+                  className="flex items-center justify-center hover: cursor-pointer">
+                  <BiPlusCircle size={40} style={{ color: "#08BFA1" }} />
+                  <section className="font-rubik font-medium text-[20px] text-ADJO_Keppel"></section>
+                </section>
+              </>
+            )}
+
+            {/* second case, we are showing the an amount of listings that doesn't exceed the filteredListings.length */}
+            {maxListingQty <= filteredListings.length && <>
+              <section
+                  onClick={() => {
+                    if(maxListingQty < 10){
+                      setMaxListingQty(5)
+                    }else{
+                    setMaxListingQty(maxListingQty - 5)
+                    }
+                  }}
+                  className="flex items-center justify-center hover: cursor-pointer">
+                  <BiMinusCircle size={40} style={{ color: "#08BFA1" }} />
+                  <section className="font-rubik font-medium text-[20px] text-ADJO_Keppel"></section>
+                </section>
+                <p className=" font-rubik font-medium justify-center text-center text-[20px] w-32 text-[#000000]">
+                  {maxListingQty}
+                </p>
+                <section
+                  onClick={() => {
+                    setMaxListingQty(maxListingQty + 5)
+                  }}
+                  className="flex items-center justify-center hover: cursor-pointer">
+                  <BiPlusCircle size={40} style={{ color: "#08BFA1" }} />
+                  <section className="font-rubik font-medium text-[20px] text-ADJO_Keppel"></section>
+                </section>
+            </>}
+
+            {/* third case, we are showing all the listings available, and have reached filteredListings.length */}
+            {maxListingQty > filteredListings.length && <>
+              <section
                   onClick={() => {
                     setMaxListingQty(maxListingQty - 5)
                   }}
@@ -692,22 +764,11 @@ function Listings() {
                   <BiMinusCircle size={40} style={{ color: "#08BFA1" }} />
                   <section className="font-rubik font-medium text-[20px] text-ADJO_Keppel"></section>
                 </section>
-                <section className="flex justify-center w-24">
-                <p className=" font-rubik font-medium justify-center text-center text-[20px] text-[#000000]">
-                  {maxListingQty}
+                <p className=" font-rubik font-medium justify-center text-center text-[20px] w-32 text-[#000000]">
+                  {filteredListings.length}
                 </p>
-
-                </section>
-              </>
-            )}
-            <section
-              onClick={() => {
-                setMaxListingQty(maxListingQty + 5)
-              }}
-              className="flex items-center justify-start hover: cursor-pointer">
-              <BiPlusCircle size={40} style={{ color: "#08BFA1" }} />
-              <section className="font-rubik font-medium text-[20px] text-ADJO_Keppel"></section>
-            </section>
+                <section className="flex justify-center items-center w-14 h-8"></section>
+            </>}
           </div>
         </div>
       </div>
