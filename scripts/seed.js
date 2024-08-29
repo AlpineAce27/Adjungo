@@ -6,15 +6,19 @@ import generatedListingData from "./data/listingsGeneration.js"
 import applicationData from "./data/applications.json" assert { type: "json" }
 import pilotReviewData from "./data/pilotReviews.json" assert { type: "json"}
 import clientReviewData from "./data/clientReviews.json" assert { type: "json"}
+import bcrypt from "bcryptjs"
 
 console.log("Syncing database...")
 await db.sync({ force: true })
 
 const clientsInDB = await Promise.all(
   clientData.map((client) => {
+    const salt = bcrypt.genSaltSync(5)
+    const passwordHash = bcrypt.hashSync(client.password, salt)
+
     const newClient = Client.create({
       login: client.login,
-      password: client.password,
+      password: passwordHash,
       company: client.company,
       website: client.website,
       contactEmail: client.contactEmail,
@@ -30,11 +34,13 @@ const clientsInDB = await Promise.all(
 
 const pilotsInDB = await Promise.all(
   pilotData.map((pilot) => {
+    const salt = bcrypt.genSaltSync(5)
+    const passwordHash = bcrypt.hashSync(pilot.password, salt)
     const newPilot = Pilot.create({
       fname: pilot.fname,
       lname: pilot.lname,
       login: pilot.login,
-      password: pilot.password,
+      password: passwordHash,
       contactEmail: pilot.contactEmail,
       contactPhone: pilot.contactPhone,
       bio: pilot.bio,

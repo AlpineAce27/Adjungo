@@ -4,6 +4,8 @@ import { Sequelize } from "sequelize"
 
 import getRatingColor from "../src/functions/getRatingColor.js"
 
+import bcrypt from "bcryptjs"
+
 //return all listings
 export const getAllListings = async (req, res) => {
   const allListings = await Listing.findAll({
@@ -38,7 +40,6 @@ export const getAllListings = async (req, res) => {
 
   res.send(finalCopy)
 }
-
 //return all listings
 export const getAllOpenListings = async (req, res) => {
   const allListings = await Listing.findAll({
@@ -73,7 +74,6 @@ export const getAllOpenListings = async (req, res) => {
 
   res.send(finalCopy)
 }
-
 //return a single listing with a specific listing id
 export const getOneListing = async (req, res) => {
   const { listingId } = req.params
@@ -85,14 +85,14 @@ export const getOneListing = async (req, res) => {
     res.send(listing)
   }
 }
-
 //log a user in
 export const login = async (req, res) => {
   const { enteredLogin, enteredPassword, userType } = req.body
-
+  console.log(enteredPassword)
   if (userType === "client") {
     const user = await Client.findOne({ where: { login: enteredLogin } })
-    if (user && user.password === enteredPassword) {
+    const passwordCheck = bcrypt.compareSync(enteredPassword, user.password)
+    if (passwordCheck === true) {
       req.session.userId = user.clientId
       req.session.userType = "client"
       //console.log("Login:", req.session)
@@ -105,7 +105,8 @@ export const login = async (req, res) => {
     }
   } else if (userType === "pilot") {
     const user = await Pilot.findOne({ where: { login: enteredLogin } })
-    if (user && user.password === enteredPassword) {
+    const passwordCheck = bcrypt.compareSync(enteredPassword, user.password)
+    if (passwordCheck === true) {
       req.session.userId = user.pilotId
       req.session.userType = "pilot"
       res.send({
@@ -117,7 +118,6 @@ export const login = async (req, res) => {
     }
   }
 }
-
 //log a user out
 export const logout = async (req, res) => {
   if (!req.session.userId) {
@@ -127,7 +127,6 @@ export const logout = async (req, res) => {
     res.send({ success: true })
   }
 }
-
 //session check
 export const sessionCheck = async (req, res) => {
   if (req.session.userId) {
@@ -136,7 +135,6 @@ export const sessionCheck = async (req, res) => {
     res.send("No user logged in")
   }
 }
-
 //return account details based on the userID in the session
 export const getMyAccount = async (req, res) => {
   if (!req.session.userId) {
@@ -175,12 +173,14 @@ export const getMyAccount = async (req, res) => {
       userCopy.rating = (+reviewsOnPilot[0].dataValues.avgRating).toFixed(2)
       userCopy.ratingCol = getRatingColor(userCopy.rating)
 
+      //delete the password field
+      delete userCopy.password
       //console.log(userCopy)
       res.send(userCopy)
     }
   }
 }
-
+//send account details of another user
 export const getOtherAccount = async (req, res) => {
   if (req.params.userType === "client") {
     //find a client with the current userID
@@ -244,12 +244,16 @@ export const editAccount = async (req, res) => {
     }
   }
 }
-
 //create a new user account
 export const createAccount = async (req, res) => {
   //req.body should come with an object called newAccount that contains all the properties and values to be made
   const { AccountType } = req.params //userType should come as either "Client" or "Pilot"
   const newAccount = req.body
+  //encrypt their password
+  const salt = bcrypt.genSaltSync(5)
+  const passwordHash = bcrypt.hashSync(newAccount.password, salt)
+  newAccount.password = passwordHash
+
   if (AccountType === "client") {
     Client.create(newAccount)
     res.send(`New user created! ${AccountType}: ${newAccount.contactEmail}`)
@@ -258,7 +262,6 @@ export const createAccount = async (req, res) => {
     res.send(`New user created! ${AccountType}: ${newAccount.contactEmail}`)
   }
 }
-
 //send all reviews given to the current user
 export const getAllReceivedReviews = async (req, res) => {
   if (req.session.userType === "client") {
@@ -273,7 +276,6 @@ export const getAllReceivedReviews = async (req, res) => {
     res.send(reviews)
   }
 }
-
 //send a single review given to the user (by review Id)
 export const getOneReceivedReview = async (req, res) => {
   const { reviewId } = req.params
@@ -285,7 +287,6 @@ export const getOneReceivedReview = async (req, res) => {
     res.send(review)
   }
 }
-
 //get all reviews on a specific user
 export const getReviewsOnUser = async (req, res) => {
   const { userType, userId } = req.params
@@ -305,7 +306,6 @@ export const getReviewsOnUser = async (req, res) => {
     res.send(reviews)
   }
 }
-
 //send all reviews that were created by the current user
 export const getAllGivenReviews = async (req, res) => {
   if (req.session.userType === "client") {
@@ -320,7 +320,6 @@ export const getAllGivenReviews = async (req, res) => {
     res.send(reviews)
   }
 }
-
 //create a new review
 export const createReview = async (req, res) => {
   if (req.session.userId) {
@@ -371,7 +370,6 @@ export const createReview = async (req, res) => {
     res.status(401).send({ error: "Unauthorized, must be logged in to create a review" })
   }
 }
-
 //get a single review
 export const getSingleReview = async (req, res) => {
   const { authorUserType, reviewId } = req.params
@@ -386,7 +384,6 @@ export const getSingleReview = async (req, res) => {
     res.send(review)
   }
 }
-
 //send a single review created by the current user (by review Id)
 export const getOneGivenReview = async (req, res) => {
   const { reviewId } = req.params
@@ -398,7 +395,6 @@ export const getOneGivenReview = async (req, res) => {
     res.send(review)
   }
 }
-
 export const editGivenReview = async (req, res) => {
   const { reviewId } = req.params
   const { changes } = req.body //req.body should come with an object called changes that contains all the properties and values to be changed
@@ -428,7 +424,6 @@ export const deleteGivenReview = async (req, res) => {
     res.send(`review ${reviewId} has been deleted`)
   }
 }
-
 export const getMyCompletedJobs = async (req, res) => {
   //find jobs that are labeled "complete" with the owner Id mathcing the current user Id
   if (req.session.userType === "client") {
