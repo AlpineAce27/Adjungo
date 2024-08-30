@@ -4,11 +4,11 @@ import { useState } from "react"
 import { useSelector } from "react-redux"
 import { getCoordinatesFromAddress, API_KEY, mapId } from "../../../util/location"
 
-function ClientSingleListing() {
+function ClientSingleListing({oneListing, setListing}) {
   //take the data from the loader and assign it to the listing variable (this should be an entire listing object)
   //this loader data comes from the loader section of this route in the App.jsx
-  const [listing, setListing] = useState(useLoaderData())
-  console.log(listing)
+  // const [listing, setListing] = useState(useLoaderData())
+  // console.log(listing)
   //create a value to determine if we are viewing this listing, or editing this listing
   const [editing, setEditing] = useState(false)
 
@@ -23,29 +23,29 @@ function ClientSingleListing() {
   //console.log(userId)
 
   //values in case the user edits this listing
-  const [offer, setOffer] = useState(listing.offer)
-  const [flightDate, setFlightDate] = useState(listing.flightDate)
-  const [flightTime, setFlightTime] = useState(listing.flightTime)
-  const [multiday, setMultiday] = useState(listing.multiday)
-  const [flightAddress, setFlightAddress] = useState(listing.flightAddress)
-  const [flightRadius, setFlightRadius] = useState(listing.flightRadius)
-  const [hardwareProvided, setHardware] = useState(listing.hardwareProvided)
-  const [softwareProvided, setSoftware] = useState(listing.softwareProvided)
-  const [internetProvided, setInternetProvided] = useState(listing.internetProvided)
-  const [powerProvided, setPowerProvided] = useState(listing.powerProvided)
-  const [highFlying, setHighFlying] = useState(listing.highFlying)
-  const [blosFlying, setBlosFlying] = useState(listing.blosFlying)
-  const [payloadDropping, setPayloadDropping] = useState(listing.payloadDropping)
-  const [hazmatFlying, setHazmatFlying] = useState(listing.hazmatFlying)
-  const [heavyFlying, setHeavyFlying] = useState(listing.heavyFlying)
-  const [nightFlying, setNightflying] = useState(listing.nightFlying)
-  const [crowdFlying, setCrowdflying] = useState(listing.crowdFlying)
-  const [description, setDescription] = useState(listing.description)
+  const [offer, setOffer] = useState(oneListing.offer)
+  const [flightDate, setFlightDate] = useState(oneListing.flightDate)
+  const [flightTime, setFlightTime] = useState(oneListing.flightTime)
+  const [multiday, setMultiday] = useState(oneListing.multiday)
+  const [flightAddress, setFlightAddress] = useState(oneListing.flightAddress)
+  const [flightRadius, setFlightRadius] = useState(oneListing.flightRadius)
+  const [hardwareProvided, setHardware] = useState(oneListing.hardwareProvided)
+  const [softwareProvided, setSoftware] = useState(oneListing.softwareProvided)
+  const [internetProvided, setInternetProvided] = useState(oneListing.internetProvided)
+  const [powerProvided, setPowerProvided] = useState(oneListing.powerProvided)
+  const [highFlying, setHighFlying] = useState(oneListing.highFlying)
+  const [blosFlying, setBlosFlying] = useState(oneListing.blosFlying)
+  const [payloadDropping, setPayloadDropping] = useState(oneListing.payloadDropping)
+  const [hazmatFlying, setHazmatFlying] = useState(oneListing.hazmatFlying)
+  const [heavyFlying, setHeavyFlying] = useState(oneListing.heavyFlying)
+  const [nightFlying, setNightflying] = useState(oneListing.nightFlying)
+  const [crowdFlying, setCrowdflying] = useState(oneListing.crowdFlying)
+  const [description, setDescription] = useState(oneListing.description)
 
   //setup the navigate functionality
   const navigate = useNavigate()
-  // console.log(typeof(listing.flightCoordinates))
-  // console.log(JSON.parse(listing.flightCoordinates)[0])
+  // console.log(typeof(oneListing.flightCoordinates))
+  // console.log(JSON.parse(oneListing.flightCoordinates)[0])
 
   if (editing === false) {
     //Render this if they are not in edit mode
@@ -53,10 +53,10 @@ function ClientSingleListing() {
       <div className="flex flex-col items-center justify-center text-center w-5/6">
         <div className="flex flex-col items-center pt-10 pb-10">
           <h1 className=" font-rubik font-medium text-[50px] text-AJGO_DarkSlateGray justify-center">
-            Listing #{listing.listingId}
+            Listing #{oneListing.listingId}
           </h1>
           <p className="font-rubik text-xl">
-            This show's all the details for listing {listing.listingId}, here you can edit or delete the listing, as
+            This show's all the details for listing {oneListing.listingId}, here you can edit or delete the listing, as
             well as accept or deny applications
           </p>
         </div>
@@ -68,43 +68,43 @@ function ClientSingleListing() {
               <button
                 className="flex items-center text-center justify-center border-2 border-ADJO_Keppel opacity-70 rounded-full h-[20px] w-[50px] text-ADJO_Keppel text-sm font-medium"
                 onClick={() => {
-                  navigate(`/userProfile/client/${listing.clientId}`)
+                  navigate(`/userProfile/client/${oneListing.clientId}`)
                 }}>
                 {" "}
-                {listing.clientId}
+                {oneListing.clientId}
               </button>
             </p>
-            {listing.assignedPilot && (
+            {oneListing.assignedPilot && (
               <p className="flex items-center justify-between">
                 Assigned Pilot:
                 <button
                   className="flex items-center text-center justify-center border-2 border-ADJO_Keppel opacity-70 rounded-full h-[20px] w-[50px] text-ADJO_Keppel text-sm font-medium"
                   onClick={() => {
-                    navigate(`/userProfile/pilot/${listing.assignedPilot}`)
+                    navigate(`/userProfile/pilot/${oneListing.assignedPilot}`)
                   }}>
                   {" "}
-                  {listing.clientId}
+                  {oneListing.clientId}
                 </button>
               </p>
             )}
-            {!listing.assignedPilot && <p className="flex items-center justify-between">Assigned Pilot: None</p>}
-            <p>Flight Date: {listing.flightDate}</p>
-            <p>Flight Time: {listing.flightTime}</p>
+            {!oneListing.assignedPilot && <p className="flex items-center justify-between">Assigned Pilot: None</p>}
+            <p>Flight Date: {oneListing.flightDate}</p>
+            <p>Flight Time: {oneListing.flightTime}</p>
             <div className="flex flex-col items-start text-left text-sm">
               <p name="lat" className="text-lg">
                 Flight Address:
               </p>
-              <p>{listing.flightAddress}</p>
+              <p>{oneListing.flightAddress}</p>
             </div>
             <div className="flex flex-col items-start text-left text-sm">
               <p className="text-lg">Flight Coordinates:</p>
               <div className="flex">
                 <label htmlFor="lat">Latitude:</label>
-                <p>{JSON.parse(listing.flightCoordinates).lat}</p>
+                <p>{JSON.parse(oneListing.flightCoordinates).lat}</p>
               </div>
               <div className="flex">
                 <label htmlFor="lng">Longitude:</label>
-                <p>{JSON.parse(listing.flightCoordinates).lng}</p>
+                <p>{JSON.parse(oneListing.flightCoordinates).lng}</p>
               </div>
             </div>
           </section>
@@ -113,74 +113,74 @@ function ClientSingleListing() {
             <div className="flex flex-col items-start w-full">
               <section className="pl-3 pr-3 flex justify-between bg-ADJO_Celeste w-full">
                 <p>Offer</p>
-                <p>${listing.offer}</p>
+                <p>${oneListing.offer}</p>
               </section>
               <section className="pl-3 pr-3 flex justify-between w-full">
                 <p>Flight Radius</p>
-                <p>{listing.flightRadius} miles</p>
+                <p>{oneListing.flightRadius} miles</p>
               </section>
               <section className="pl-3 pr-3 flex justify-between bg-ADJO_Celeste w-full">
                 <p>Multi-Day</p>
-                <p>{listing.multiday.toString()}</p>
+                <p>{oneListing.multiday.toString()}</p>
               </section>
               <section className="pl-3 pr-3 flex justify-between w-full">
                 <p>Hardware Provided</p>
-                <p>{listing.hardwareProvided.toString()}</p>
+                <p>{oneListing.hardwareProvided.toString()}</p>
               </section>
               <section className="pl-3 pr-3 flex justify-between bg-ADJO_Celeste w-full">
                 <p>Software Provided</p>
-                <p>{listing.softwareProvided.toString()}</p>
+                <p>{oneListing.softwareProvided.toString()}</p>
               </section>
               <section className="pl-3 pr-3 flex justify-between w-full">
                 <p>Internet Access</p>
-                <p>{listing.internetProvided.toString()}</p>
+                <p>{oneListing.internetProvided.toString()}</p>
               </section>
               <section className="pl-3 pr-3 flex justify-between bg-ADJO_Celeste w-full">
                 <p>Power Access</p>
-                <p>{listing.powerProvided.toString()}</p>
+                <p>{oneListing.powerProvided.toString()}</p>
               </section>
               <section className="pl-3 pr-3 flex justify-between w-full">
                 <p>Flying over 400ft</p>
-                <p>{listing.highFlying.toString()}</p>
+                <p>{oneListing.highFlying.toString()}</p>
               </section>
               <section className="pl-3 pr-3 flex justify-between bg-ADJO_Celeste w-full">
                 <p>Beyond-line-of-sight</p>
-                <p>{listing.blosFlying.toString()}</p>
+                <p>{oneListing.blosFlying.toString()}</p>
               </section>
               <section className="pl-3 pr-3 flex justify-between w-full">
                 <p>Payload Drop</p>
-                <p>{listing.payloadDropping.toString()}</p>
+                <p>{oneListing.payloadDropping.toString()}</p>
               </section>
               <section className="pl-3 pr-3 flex justify-between bg-ADJO_Celeste w-full">
                 <p>Carrying Hazmat</p>
-                <p>{listing.hazmatFlying.toString()}</p>
+                <p>{oneListing.hazmatFlying.toString()}</p>
               </section>
               <section className="pl-3 pr-3 flex justify-between w-full">
                 <p>Liftoff Weight Over 55lbs</p>
-                <p>{listing.heavyFlying.toString()}</p>
+                <p>{oneListing.heavyFlying.toString()}</p>
               </section>
               <section className="pl-3 pr-3 flex justify-between bg-ADJO_Celeste w-full">
                 <p>Operating at Night</p>
-                <p>{listing.nightFlying.toString()}</p>
+                <p>{oneListing.nightFlying.toString()}</p>
               </section>
               <section className="pl-3 pr-3 flex justify-between w-full">
                 <p>Operating over People</p>
-                <p>{listing.crowdFlying.toString()}</p>
+                <p>{oneListing.crowdFlying.toString()}</p>
               </section>
             </div>
           </section>
           <section className="flex w-1/3 h-full border-ADJO_Celeste border-4  rounded-lg justify-center items-center">
-            <img className="rounded-lg"src={`https://maps.googleapis.com/maps/api/staticmap?center=${JSON.parse(listing.flightCoordinates).lat},${JSON.parse(listing.flightCoordinates).lng}&zoom=15&size=300x300&map_id=${mapId}&markers=color:red%7Csize:large%7Cscale:4%7C${JSON.parse(listing.flightCoordinates).lat},${JSON.parse(listing.flightCoordinates).lng}&key=${API_KEY}`} alt="" />
+            <img className="rounded-lg"src={`https://maps.googleapis.com/maps/api/staticmap?center=${JSON.parse(oneListing.flightCoordinates).lat},${JSON.parse(oneListing.flightCoordinates).lng}&zoom=15&size=300x300&map_id=${mapId}&markers=color:red%7Csize:large%7Cscale:4%7C${JSON.parse(oneListing.flightCoordinates).lat},${JSON.parse(oneListing.flightCoordinates).lng}&key=${API_KEY}`} alt="" />
           </section>
         </div>
 
         <div className="flex flex-col items-start justify-center w-3/4 font-rubik font-medium text-[15px] text-left text-AJGO_DarkSlateGray pt-5">
               <p className="text-lg">Description:</p>
-              <p>{listing.description}</p>
-           
+              <p>{oneListing.description}</p>
+
         </div>
 
-        {listing.clientId === userId && (
+        {oneListing.clientId === userId && (
           <div className=" w-1/2 pt-10 pb-10 flex justify-around">
             <button
               className="bg-ADJO_Keppel px-8 py-1 text-xl text- uppercase font-rubik rounded-lg"
@@ -191,7 +191,7 @@ function ClientSingleListing() {
               className="border-2 w-[200px] border-[#dd7d7d] px-3 py-1 text-xl uppercase font-rubik rounded-lg text-[#dd7d7d]"
               onClick={() => {
                 //This will delete the listing we are currently viewing from the database, and then redirect the user back to their listings
-                axios.delete(`/api/listing/${listing.listingId}`).then(() => {
+                axios.delete(`/api/listing/${oneListing.listingId}`).then(() => {
                   navigate("/myJobs/client")
                 })
               }}>
@@ -199,7 +199,7 @@ function ClientSingleListing() {
             </button>
           </div>
         )}
-        
+
       </div>
     )
   } else if (editing === true) {
@@ -209,7 +209,7 @@ function ClientSingleListing() {
       let coordinates = await getCoordinatesFromAddress(flightAddress)
       coordinates = JSON.stringify(coordinates)
       axios
-        .put(`/api/listing/${listing.listingId}`, {
+        .put(`/api/listing/${oneListing.listingId}`, {
           changes: {
             offer: offer,
             flightDate: flightDate,
@@ -245,7 +245,7 @@ function ClientSingleListing() {
             Edit this Listing
           </h1>
           <p className="font-rubik text-xl">
-            This show's all the details for listing {listing.listingId}, here you can edit or delete the listing, as
+            This show's all the details for listing {oneListing.listingId}, here you can edit or delete the listing, as
             well as accept or deny applications
           </p>
           <p className="font-rubik text-xl">
@@ -255,17 +255,17 @@ function ClientSingleListing() {
 
         <form className="flex items-center justify-center w-full">
           <section className="flex flex-col w-1/2 gap-3 items-start pt-10 pb-10 justify-between font-rubik font-medium text-[15px] text-AJGO_DarkSlateGray text-lg">
-            <p>Listing Id: {listing.listingId}</p>
+            <p>Listing Id: {oneListing.listingId}</p>
 
             <p className="flex items-center justify-between">
               Owner Id:{" "}
               <button
                 className="flex items-center text-center justify-center border-2 border-ADJO_Keppel opacity-70 rounded-full h-[20px] w-[50px] text-ADJO_Keppel text-sm font-medium"
                 onClick={() => {
-                  navigate(`/userProfile/client/${listing.clientId}`)
+                  navigate(`/userProfile/client/${oneListing.clientId}`)
                 }}>
                 {" "}
-                {listing.clientId}
+                {oneListing.clientId}
               </button>
             </p>
 

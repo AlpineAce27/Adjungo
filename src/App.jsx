@@ -38,7 +38,9 @@ import PilotReviews from "./pages/pilot pages/PilotReviews.jsx"
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Home />} errorElement={<ErrorPage />}>
+    <Route path="/" element={<Home />}
+    errorElement={<ErrorPage />}
+    >
       {/* universal routes */}
       <Route index element={<Welcome />} />
       <Route path="/myAccount" element={<MyAccount />} />
@@ -84,7 +86,7 @@ const router = createBrowserRouter(
       <Route
         path="/singleListing/:listingId"
         element={<SingleListing />}
-        loader={getOneListing}
+        // loader={getOneListing}
       />
 
       {/* client routes */}

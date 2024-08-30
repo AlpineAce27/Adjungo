@@ -5,11 +5,13 @@ import { useState } from "react"
 import { useSelector } from "react-redux"
 import { API_KEY, mapId } from "../../../util/location"
 
-function PilotSingleListing() {
+function PilotSingleListing({oneListing}) {
   const [listingState, SetListingState] = useState("new")
   //take the data from the loader and assign it to the listing variable (this should be an entire listing object)
   //this loader data comes from the loader section of this route in the App.jsx
-  const listing = useLoaderData()
+  // const listing = useLoaderData()
+
+  const listing = oneListing
   console.log(listing)
 
   //figure out the user ID of this session
@@ -98,7 +100,7 @@ function PilotSingleListing() {
               <p className="text-lg">Flight Address:</p>
               <p>{listing.flightAddress}</p>
             </div>
-            
+
           </section>
 
           <section className="flex w-1/3 justify-center items-center font-rubik font-medium text-[15px] text-AJGO_DarkSlateGray border-ADJO_Celeste border-4 h-full rounded-lg">
