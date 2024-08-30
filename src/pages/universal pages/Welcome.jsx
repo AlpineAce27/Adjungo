@@ -6,6 +6,9 @@ import { MdInfoOutline } from "react-icons/md";
 import { LuClipboardCheck } from "react-icons/lu";
 import { TbStars, TbFilterSearch } from "react-icons/tb";
 import { FaSearchDollar } from "react-icons/fa";
+
+import mitchnielsenDJIDroneshot from '../../public/photos/mitchnielsenDJIDroneshot.jpg';
+
 function Welcome() {
   let userType = useSelector((state) => state.userType)
   const navigate = useNavigate()
@@ -54,7 +57,7 @@ function Welcome() {
         </div>
         <div className="w-1/2">
           <img
-            src="src\assets\photos\mitch-nielsen-pWtNPCpvVA8-unsplash.jpg"
+            src={mitchnielsenDJIDroneshot}
             alt="A photo by Mitch Nielsen showing a hovering drone"
           />
         </div>

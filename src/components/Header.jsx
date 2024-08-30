@@ -15,6 +15,7 @@ import { useEffect } from "react"
 
 import LogoTransparentBG from '../../public/LogoTransparentBG.png'
 
+
 function Header() {
   //grab the usertype property from redux
   let usertype = useSelector((state) => state.userType)

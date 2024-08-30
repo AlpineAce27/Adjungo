@@ -1,3 +1,6 @@
+
+import KimballgossRocketLaunch from '../../public/photos/KimballgossRocketLaunch.jpg'
+
 function About() {
     return (
         <div className="flex flex-col items-center justify-center">
@@ -26,7 +29,7 @@ function About() {
                 </div>
                 <div className="flex w-[400px] h-auto justify-center items-center">
                     <img className="w-full rounded-3xl"
-                        src="src\assets\photos\Kimbal Goss - rocket launch.jpg"
+                        src= {KimballgossRocketLaunch}
                         alt="A photo of Kimball Goss working on his UAS Senior Project for USU"
                     />
                 </div>
