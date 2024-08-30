@@ -1,5 +1,5 @@
 
-import KimballgossRocketLaunch from '../../public/photos/KimballgossRocketLaunch.jpg'
+import KimballgossRocketLaunch from '../../../public/KimballgossRocketLaunch.jpg'
 
 function About() {
     return (
