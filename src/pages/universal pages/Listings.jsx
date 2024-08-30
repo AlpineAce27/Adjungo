@@ -113,12 +113,30 @@ function Listings() {
   //grab all the listings in the database
   useEffect(() => {
     axios.get("/api/openListings").then((response) => {
-      //console.log(response.data)
-      setListings(response.data)
+      //console.log("respponse data", response.data)
+      if(userType === "pilot"){
+        const listings = response.data.filter((listing) => {
+          if(!listing.applications.some((application)=>application.applyingPilot === userId)){
+            console.log()
+            return listing
+          }
+          // listing.application.forEach((application) => {
+          //   applyingPilot !== userId
+          // })
+        })
+        
+        listings.sort((a,b)=>a.listingId - b.listingId)
+        console.log(listings)
+        setListings(listings)
+      }
+      else{
+        setListings(response.data)
+      }
+      
     })
   }, [])
 
-  console.log(listings)
+  //console.log(listings)
   //filter the listings
   let filteredListings = filterListings(listings)
 

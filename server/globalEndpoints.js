@@ -50,9 +50,9 @@ export const getAllOpenListings = async (req, res) => {
       include: [
         {
           model: Application,
-          where: {
-            applyingPilot: { [Op.ne]: req.session.userId },
-          },
+          // where: {
+          //   applyingPilot: { [Op.ne]: req.session.userId },
+          // },
         },
         { model: Client },
       ],
