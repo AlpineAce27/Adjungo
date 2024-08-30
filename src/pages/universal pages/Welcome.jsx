@@ -7,7 +7,7 @@ import { LuClipboardCheck } from "react-icons/lu";
 import { TbStars, TbFilterSearch } from "react-icons/tb";
 import { FaSearchDollar } from "react-icons/fa";
 
-import mitchnielsenDJIDroneshot from '../../public/photos/mitchnielsenDJIDroneshot.jpg';
+import mitchnielsenDJIDroneshot from '../../public/mitchnielsenDJIDroneshot.jpg';
 
 function Welcome() {
   let userType = useSelector((state) => state.userType)
